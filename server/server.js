@@ -1,8 +1,10 @@
-var path = require('path');
-var express = require('express');
+const path = require('path');
+const express = require('express');
 
-var app = express();
+const app = express();
 
 app.use(express.static(path.join(__dirname, '../dist/')));
 
-app.listen(process.env.PORT || 3000);
+app.listen(process.env.PORT || 3333);
+
+console.log("Now listening on Port 3000"); 
