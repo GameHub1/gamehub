@@ -4,9 +4,9 @@
   "description": "A social network site for gaming written in React",
   "main": "server/server.js",
   "scripts": {
-    "start": "nodemon server/server.js",
+    "start": "node server/server.js",
     "dev": "webpack -d --watch",
-    "build": "webpack -p",
+    "build": "nodemon server/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
