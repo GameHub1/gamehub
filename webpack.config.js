@@ -8,7 +8,8 @@ const config = {
   entry: `${APP_DIR}/index.js`,
   output: {
     path: BUILD_DIR,
-    filename: '/bundle.js'
+    publicPath: '/',
+    filename: 'bundle.js'
   },
   module: {
     loaders: [
