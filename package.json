@@ -1,0 +1,30 @@
+{
+  "name": "gamehub",
+  "version": "0.0.0",
+  "description": "A social network site for gaming written in React",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "nodemon server/server.js",
+    "es6": "webpack --progress && nodemon server/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gamehub1/gamehub/README.md"
+  },
+  "author": "Michael Chen <chen.liu.michael@gmail.com>, Sam Richards, Kyle McGourty, Gina Zhou",
+  "license": "Proprietary",
+  "homepage": "https://github.com/gamehub1/gamehub",
+  "dependencies": {
+    "express": "4.13.4",
+    "html-webpack-plugin": "2.15.0",
+    "jquery": "^2.2.3",
+    "node-sass": "^3.4.2",
+    "react": "0.14.8",
+    "react-dom": "0.14.8",
+    "resolve-url-loader": "^1.4.3",
+    "webpack": "1.12.14"
+  },
+  "private": true
+}
