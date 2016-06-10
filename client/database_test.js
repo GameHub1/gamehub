@@ -1,3 +1,5 @@
+'use strict';
+
 const bookshelf = require('../server/psqldb.js');
 
 const User = bookshelf.Model.extend({
