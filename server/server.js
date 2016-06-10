@@ -1,6 +1,6 @@
 const path = require('path');
 const express = require('express');
-const psql_db = require('./psqldb.js');
+//const psql_db = require('./psqldb.js');
 const app = express();
 
 app.use(express.static(path.join(__dirname, '../dist/')));
@@ -11,7 +11,7 @@ console.log("Listening on port 3000");
 
 /*
 var pg = require('pg');
-var conString = "postgres://postgres:mksg37@localhost:5432/postgres";
+var conString = 'postgres://iqspixikhtzidh:g39XiVqGNwtrIeqTNhBqpsPM4B@ec2-50-17-237-148.compute-1.amazonaws.com:5432/da3d1mfq2nkfbk';
 
 var client = new pg.Client(conString);
 client.connect();
