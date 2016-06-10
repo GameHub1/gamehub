@@ -15,7 +15,8 @@ const config = {
   plugins: [
     new HtmlWebpackPlugin({
       title: 'GameHub',
-      filename: 'client/index.html'
+      template: 'client/index.html',
+      filename: 'index.html'
     })
   ],
   module: {
