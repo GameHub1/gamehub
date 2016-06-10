@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import FbLogin from './fb_login';
-import Login from '../containers/login';
+import FbLogin from '../containers/fb_login';
+// import Login from '../containers/login';
 
 export default class App extends Component {
   render() {    
@@ -10,7 +10,6 @@ export default class App extends Component {
         <h1>GameHub</h1>
         <h2>slogan...</h2>
         <FbLogin />
-        <Login />
       </div>
     );
   }
