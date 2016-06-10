@@ -1,10 +1,10 @@
 const bookshelf = require('../server/psqldb.js');
 
-let User = bookshelf.Model.extend({
+const User = bookshelf.Model.extend({
   tableName: 'users'
 });
 
-let Users = new bookshelf.Collection();
+const Users = new bookshelf.Collection();
 
 Users.model = User;
 
