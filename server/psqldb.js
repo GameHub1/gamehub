@@ -2,11 +2,11 @@ var db = require('knex')({
   client: 'pg',
   connection: {
     charset: 'utf8',
-    host : 'localhost',
+    host : 'ec2-50-17-237-148.compute-1.amazonaws.com',
     port : 5432,
-    user : 'postgres',
-    password : 'mksg37',
-    database : 'postgres',
+    user : 'iqspixikhtzidh',
+    password : 'g39XiVqGNwtrIeqTNhBqpsPM4B',
+    database : 'da3d1mfq2nkfbk',
   }
 });
 
