@@ -1,111 +1,78 @@
 import React, {Component} from 'react';
 import FbLogin from 'react-facebook-login';
 
-// // This is called with the results from from FB.getLoginStatus().
-// function statusChangeCallback(response) {
-//   console.log('statusChangeCallback');
-//   console.log(response);
-//   // The response object is returned with a status field that lets the
-//   // app know the current login status of the person.
-//   // Full docs on the response object can be found in the documentation
-//   // for FB.getLoginStatus().
-//   if (response.status === 'connected') {
-//     // Logged into your app and Facebook.
-//     testAPI();
-//   } else if (response.status === 'not_authorized') {
-//     // The person is logged into Facebook, but not your app.
-//     document.getElementById('status').innerHTML = 'Please log ' +
-//       'into this app.';
-//   } else {
-//     // The person is not logged into Facebook, so we're not sure if
-//     // they are logged into this app or not.
-//     document.getElementById('status').innerHTML = 'Please log ' +
-//       'into Facebook.';
-//   }
-// }
-
-// // This function is called when someone finishes with the Login
-// // Button.  See the onlogin handler attached to it in the sample
-// // code below.
-// function checkLoginState() {
-//   FB.getLoginStatus(function(response) {
-//     statusChangeCallback(response);
-//   });
-// }
-
-// window.fbAsyncInit = function() {
-// FB.init({
-//   appId      : '248196652218267',
-//   cookie     : true,  // enable cookies to allow the server to access 
-//                       // the session
-//   xfbml      : true,  // parse social plugins on this page
-//   version    : 'v2.5' // use graph api version 2.5
-// });
-
-// // Now that we've initialized the JavaScript SDK, we call 
-// // FB.getLoginStatus().  This function gets the state of the
-// // person visiting this page and can return one of three states to
-// // the callback you provide.  They can be:
-// //
-// // 1. Logged into your app ('connected')
-// // 2. Logged into Facebook, but not your app ('not_authorized')
-// // 3. Not logged into Facebook and can't tell if they are logged into
-// //    your app or not.
-// //
-// // These three cases are handled in the callback function.
-
-// FB.getLoginStatus(function(response) {
-//   statusChangeCallback(response);
-// });
-
-// };
-
-// // Load the SDK asynchronously
-// (function(d, s, id) {
-//   var js, fjs = d.getElementsByTagName(s)[0];
-//   if (d.getElementById(id)) return;
-//   js = d.createElement(s); js.id = id;
-//   js.src = "//connect.facebook.net/en_US/sdk.js";
-//   fjs.parentNode.insertBefore(js, fjs);
-// }(document, 'script', 'facebook-jssdk'));
-
-// // Here we run a very simple test of the Graph API after login is
-// // successful.  See statusChangeCallback() for when this call is made.
-// function testAPI() {
-//   console.log('Welcome!  Fetching your information.... ');
-//   FB.api('/me', {fields: ['name', 'email']}, function(response) {
-//     console.log(response);
-//     console.log('Successful login for: ' + response.name);
-//   });
-// }
-
 export default class FacebookLogin extends Component {
+
   constructor(props) {
     super(props);
 
-    this.state = {accessToken: ''};
+    this.state = {loggedIn: false, accessToken: '', userEmail: ''};
     this.responseFacebook = this.responseFacebook.bind(this);
+    this.stateReset = this.stateReset.bind(this);
+    this.logOut = this.logOut.bind(this);
+    this.cssClass = 'kep-login-facebook';
+  }
+
+  renderWithFontAwesome() {
+    return (
+      <div>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+         <button
+            className={this.cssClass}
+            onClick={this.click}>
+         Log Out
+        </button>
+
+        <style dangerouslySetInnerHTML={{ __html: styles }}></style>
+      </div>
+    )
+  }
+
+  logOut() {
+    const that = this;
+    const reset = this.stateReset;
+    FB.logout(function(response){
+      console.log("Logged out! ");
+      reset();
+    });
+    setTimeout(function(){
+      console.log(that.state);
+    }, 500);
+  }
+
+  stateReset() {
+    this.setState({loggedIn: false, accessToken: '', userEmail: ''});
   }
 
   responseFacebook(response) {
     console.log(response);
-    this.setState({accessToken: response.accessToken});
+    this.setState({accessToken: response.accessToken, userEmail: response.email});
+    if (this.state.accessToken !== undefined){
+      this.setState({loggedIn: true});
+    }
     console.log(this.state);
   }
-  // render() {
-  //   return (
-  //   <div className="fb-login-button" data-max-rows="1" 
-  //   data-size="large" data-show-faces="false" data-auto-logout-link="true">
-  //   </div>
-  //   );
-  // }
+
   render() {
-    return (
-      <FbLogin
-        appId="248196652218267"
-        autoLoad={true}
-        fields="name,email,picture"
-        callback={this.responseFacebook} />
-    );
+    if (this.state.loggedIn) {
+      return (
+        <div>
+          <button
+              className={this.props.cssClass + ' ' + this.props.size}
+              onClick={this.logOut}>
+            Log Out
+          </button>
+        </div>
+      );
+    } else {
+      return (
+        <FbLogin
+          appId="248196652218267"
+          autoLoad={true}
+          fields="name,email,picture"
+          callback={this.responseFacebook} />
+      );
+    }
+
   }
 }
