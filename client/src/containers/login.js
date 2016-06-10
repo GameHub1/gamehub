@@ -1,22 +1,29 @@
 import React, {Component} from 'react';
 
 export default class Login extends Component {
-  constructor() {
+  constructor(props) {
+    super(props);
+
     this.state = {
       user: '',
       password: ''
     };
   }
 
+  login(event) {
+    event.preventDefault();
+    console.log(event);
+  }
+
   render() {
     return (
-      <form onSubmit={() => console.log('hii there')}>
-        <div>
+      <div>
+        <form onSubmit={this.login.bind(this)}>
           <input type="text" placeholder="Username" />
           <input type="text" placeholder="Password" />
-        </div>
-        <button type="submit">Submit</button>
-      </form>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
     );
   }
 }

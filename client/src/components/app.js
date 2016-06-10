@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
 import FbLogin from './fb_login';
-import Login from './login';
+import Login from '../containers/login';
 
 export default class App extends Component {
-  render() {
+  render() {    
     return (
       <div>
         <h1>GameHub</h1>
