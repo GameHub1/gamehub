@@ -21852,92 +21852,154 @@
 	  value: true
 	});
 	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
 	var _react = __webpack_require__(/*! react */ 1);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _reactFacebookLogin = __webpack_require__(/*! react-facebook-login */ 188);
+	
+	var _reactFacebookLogin2 = _interopRequireDefault(_reactFacebookLogin);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	// This is called with the results from from FB.getLoginStatus().
-	function statusChangeCallback(response) {
-	  console.log('statusChangeCallback');
-	  console.log(response);
-	  // The response object is returned with a status field that lets the
-	  // app know the current login status of the person.
-	  // Full docs on the response object can be found in the documentation
-	  // for FB.getLoginStatus().
-	  if (response.status === 'connected') {
-	    // Logged into your app and Facebook.
-	    testAPI();
-	  } else if (response.status === 'not_authorized') {
-	    // The person is logged into Facebook, but not your app.
-	    document.getElementById('status').innerHTML = 'Please log ' + 'into this app.';
-	  } else {
-	    // The person is not logged into Facebook, so we're not sure if
-	    // they are logged into this app or not.
-	    document.getElementById('status').innerHTML = 'Please log ' + 'into Facebook.';
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	// // This is called with the results from from FB.getLoginStatus().
+	// function statusChangeCallback(response) {
+	//   console.log('statusChangeCallback');
+	//   console.log(response);
+	//   // The response object is returned with a status field that lets the
+	//   // app know the current login status of the person.
+	//   // Full docs on the response object can be found in the documentation
+	//   // for FB.getLoginStatus().
+	//   if (response.status === 'connected') {
+	//     // Logged into your app and Facebook.
+	//     testAPI();
+	//   } else if (response.status === 'not_authorized') {
+	//     // The person is logged into Facebook, but not your app.
+	//     document.getElementById('status').innerHTML = 'Please log ' +
+	//       'into this app.';
+	//   } else {
+	//     // The person is not logged into Facebook, so we're not sure if
+	//     // they are logged into this app or not.
+	//     document.getElementById('status').innerHTML = 'Please log ' +
+	//       'into Facebook.';
+	//   }
+	// }
+	
+	// // This function is called when someone finishes with the Login
+	// // Button.  See the onlogin handler attached to it in the sample
+	// // code below.
+	// function checkLoginState() {
+	//   FB.getLoginStatus(function(response) {
+	//     statusChangeCallback(response);
+	//   });
+	// }
+	
+	// window.fbAsyncInit = function() {
+	// FB.init({
+	//   appId      : '248196652218267',
+	//   cookie     : true,  // enable cookies to allow the server to access
+	//                       // the session
+	//   xfbml      : true,  // parse social plugins on this page
+	//   version    : 'v2.5' // use graph api version 2.5
+	// });
+	
+	// // Now that we've initialized the JavaScript SDK, we call
+	// // FB.getLoginStatus().  This function gets the state of the
+	// // person visiting this page and can return one of three states to
+	// // the callback you provide.  They can be:
+	// //
+	// // 1. Logged into your app ('connected')
+	// // 2. Logged into Facebook, but not your app ('not_authorized')
+	// // 3. Not logged into Facebook and can't tell if they are logged into
+	// //    your app or not.
+	// //
+	// // These three cases are handled in the callback function.
+	
+	// FB.getLoginStatus(function(response) {
+	//   statusChangeCallback(response);
+	// });
+	
+	// };
+	
+	// // Load the SDK asynchronously
+	// (function(d, s, id) {
+	//   var js, fjs = d.getElementsByTagName(s)[0];
+	//   if (d.getElementById(id)) return;
+	//   js = d.createElement(s); js.id = id;
+	//   js.src = "//connect.facebook.net/en_US/sdk.js";
+	//   fjs.parentNode.insertBefore(js, fjs);
+	// }(document, 'script', 'facebook-jssdk'));
+	
+	// // Here we run a very simple test of the Graph API after login is
+	// // successful.  See statusChangeCallback() for when this call is made.
+	// function testAPI() {
+	//   console.log('Welcome!  Fetching your information.... ');
+	//   FB.api('/me', {fields: ['name', 'email']}, function(response) {
+	//     console.log(response);
+	//     console.log('Successful login for: ' + response.name);
+	//   });
+	// }
+	
+	var FacebookLogin = function (_Component) {
+	  _inherits(FacebookLogin, _Component);
+	
+	  function FacebookLogin(props) {
+	    _classCallCheck(this, FacebookLogin);
+	
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(FacebookLogin).call(this, props));
+	
+	    _this.state = { accessToken: '' };
+	    _this.responseFacebook = _this.responseFacebook.bind(_this);
+	    return _this;
 	  }
-	}
 	
-	// This function is called when someone finishes with the Login
-	// Button.  See the onlogin handler attached to it in the sample
-	// code below.
-	function checkLoginState() {
-	  FB.getLoginStatus(function (response) {
-	    statusChangeCallback(response);
-	  });
-	}
+	  _createClass(FacebookLogin, [{
+	    key: 'responseFacebook',
+	    value: function responseFacebook(response) {
+	      console.log(response);
+	      this.setState({ accessToken: response.accessToken });
+	      console.log(this.state);
+	    }
+	    // render() {
+	    //   return (
+	    //   <div className="fb-login-button" data-max-rows="1"
+	    //   data-size="large" data-show-faces="false" data-auto-logout-link="true">
+	    //   </div>
+	    //   );
+	    // }
 	
-	window.fbAsyncInit = function () {
-	  FB.init({
-	    appId: '248196652218267',
-	    cookie: true, // enable cookies to allow the server to access
-	    // the session
-	    xfbml: true, // parse social plugins on this page
-	    version: 'v2.5' // use graph api version 2.5
-	  });
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(_reactFacebookLogin2.default, {
+	        appId: '248196652218267',
+	        autoLoad: true,
+	        fields: 'name,email,picture',
+	        callback: this.responseFacebook });
+	    }
+	  }]);
 	
-	  // Now that we've initialized the JavaScript SDK, we call
-	  // FB.getLoginStatus().  This function gets the state of the
-	  // person visiting this page and can return one of three states to
-	  // the callback you provide.  They can be:
-	  //
-	  // 1. Logged into your app ('connected')
-	  // 2. Logged into Facebook, but not your app ('not_authorized')
-	  // 3. Not logged into Facebook and can't tell if they are logged into
-	  //    your app or not.
-	  //
-	  // These three cases are handled in the callback function.
+	  return FacebookLogin;
+	}(_react.Component);
 	
-	  FB.getLoginStatus(function (response) {
-	    statusChangeCallback(response);
-	  });
-	};
-	
-	// Load the SDK asynchronously
-	(function (d, s, id) {
-	  var js,
-	      fjs = d.getElementsByTagName(s)[0];
-	  if (d.getElementById(id)) return;
-	  js = d.createElement(s);js.id = id;
-	  js.src = "//connect.facebook.net/en_US/sdk.js";
-	  fjs.parentNode.insertBefore(js, fjs);
-	})(document, 'script', 'facebook-jssdk');
-	
-	// Here we run a very simple test of the Graph API after login is
-	// successful.  See statusChangeCallback() for when this call is made.
-	function testAPI() {
-	  console.log('Welcome!  Fetching your information.... ');
-	  FB.api('/me', function (response) {
-	    console.log('Successful login for: ' + response.name);
-	    document.getElementById('status').innerHTML = 'Thanks for logging in, ' + response.name + '!';
-	  });
-	}
-	
-	exports.default = function () {
-	  return _react2.default.createElement('div', { className: 'fb-login-button', 'data-max-rows': '1',
-	    'data-size': 'large', 'data-show-faces': 'false', 'data-auto-logout-link': 'true' });
-	};
+	exports.default = FacebookLogin;
+
+/***/ },
+/* 188 */
+/*!*******************************************************!*\
+  !*** ./~/react-facebook-login/dist/facebook-login.js ***!
+  \*******************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	!function(e,t){ true?module.exports=t(__webpack_require__(/*! react */ 1)):"function"==typeof define&&define.amd?define(["react"],t):"object"==typeof exports?exports.FacebookLogin=t(require("react")):e.FacebookLogin=t(e.react)}(this,function(e){return function(e){function t(n){if(o[n])return o[n].exports;var r=o[n]={exports:{},id:n,loaded:!1};return e[n].call(r.exports,r,r.exports,t),r.loaded=!0,r.exports}var o={};return t.m=e,t.c=o,t.p="",t(0)}([function(e,t,o){e.exports=o(2)},function(e,t,o){"use strict";function n(e){return e&&e.__esModule?e:{"default":e}}function r(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function s(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function, not "+typeof t);e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}}),t&&(Object.setPrototypeOf?Object.setPrototypeOf(e,t):e.__proto__=t)}t.__esModule=!0;var i=function(){function e(e,t){for(var o=0;o<t.length;o++){var n=t[o];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(e,n.key,n)}}return function(t,o,n){return o&&e(t.prototype,o),n&&e(t,n),t}}(),a=o(5),c=n(a),p=o(3),l=n(p),u=function(e){function t(o){var n=this;r(this,t),e.call(this,o),this.responseApi=function(e){FB.api("/me",{fields:n.props.fields},function(t){t.accessToken=e.accessToken,n.props.callback(t)})},this.checkLoginState=function(e){e.authResponse?n.responseApi(e.authResponse):n.props.callback&&n.props.callback({status:e.status})},this.click=function(){FB.login(n.checkLoginState,{scope:n.props.scope})}}return s(t,e),i(t,null,[{key:"propTypes",value:{callback:a.PropTypes.func.isRequired,appId:a.PropTypes.string.isRequired,xfbml:a.PropTypes.bool,cookie:a.PropTypes.bool,scope:a.PropTypes.string,textButton:a.PropTypes.string,autoLoad:a.PropTypes.bool,size:a.PropTypes.string,fields:a.PropTypes.string,cssClass:a.PropTypes.string,version:a.PropTypes.string,icon:a.PropTypes.string,language:a.PropTypes.string},enumerable:!0},{key:"defaultProps",value:{textButton:"Login with Facebook",scope:"public_profile, email",xfbml:!1,cookie:!1,size:"metro",fields:"name",cssClass:"kep-login-facebook",version:"2.3",language:"en_US"},enumerable:!0}]),t.prototype.componentDidMount=function(){var e=this,t=document.createElement("div");t.id="fb-root",document.body.appendChild(t),window.fbAsyncInit=function(){FB.init({appId:e.props.appId,xfbml:e.props.xfbml,cookie:e.props.cookie,version:"v"+e.props.version}),e.props.autoLoad&&FB.getLoginStatus(e.checkLoginState)},function(t,o,n){var r=t.getElementsByTagName(o)[0],s=r,i=r;t.getElementById(n)||(i=t.createElement(o),i.id=n,i.src="//connect.facebook.net/"+e.props.language+"/all.js",s.parentNode.insertBefore(i,s))}(document,"script","facebook-jssdk")},t.prototype.renderWithFontAwesome=function(){return c["default"].createElement("div",null,c["default"].createElement("link",{rel:"stylesheet",href:"//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"}),c["default"].createElement("button",{className:this.props.cssClass+" "+this.props.size,onClick:this.click},c["default"].createElement("i",{className:"fa "+this.props.icon})," ",this.props.textButton),c["default"].createElement("style",{dangerouslySetInnerHTML:{__html:l["default"]}}))},t.prototype.render=function(){return this.props.icon?this.renderWithFontAwesome():c["default"].createElement("div",null,c["default"].createElement("button",{className:this.props.cssClass+" "+this.props.size,onClick:this.click},this.props.textButton),c["default"].createElement("style",{dangerouslySetInnerHTML:{__html:l["default"]}}))},t}(c["default"].Component);t["default"]=u,e.exports=t["default"]},function(e,t,o){"use strict";function n(e){return e&&e.__esModule?e:{"default":e}}t.__esModule=!0;var r=o(1),s=n(r);t["default"]=s["default"],e.exports=t["default"]},function(e,t,o){t=e.exports=o(4)(),t.push([e.id,".kep-login-facebook{font-family:Helvetica,sans-serif;font-weight:700;-webkit-font-smoothing:antialiased;color:#fff;cursor:pointer;display:inline-block;font-size:calc(.27548vw + 12.71074px);text-decoration:none;text-transform:uppercase;transition:background-color .3s,border-color .3s;background-color:#4c69ba;border:calc(.06887vw + .67769px) solid #4c69ba;padding:calc(.34435vw + 13.38843px) calc(.34435vw + 18.38843px)}.kep-login-facebook.small{padding:calc(.34435vw + 3.38843px) calc(.34435vw + 8.38843px)}.kep-login-facebook.medium{padding:calc(.34435vw + 8.38843px) calc(.34435vw + 13.38843px)}.kep-login-facebook.metro{border-radius:0}.kep-login-facebook .fa{margin-right:calc(.34435vw + 3.38843px)}",""]),t.locals={"kep-login-facebook":"kep-login-facebook",small:"small",medium:"medium",metro:"metro",fa:"fa"}},function(e,t){e.exports=function(){var e=[];return e.toString=function(){for(var e=[],t=0;t<this.length;t++){var o=this[t];o[2]?e.push("@media "+o[2]+"{"+o[1]+"}"):e.push(o[1])}return e.join("")},e.i=function(t,o){"string"==typeof t&&(t=[[null,t,""]]);for(var n={},r=0;r<this.length;r++){var s=this[r][0];"number"==typeof s&&(n[s]=!0)}for(r=0;r<t.length;r++){var i=t[r];"number"==typeof i[0]&&n[i[0]]||(o&&!i[2]?i[2]=o:o&&(i[2]="("+i[2]+") and ("+o+")"),e.push(i))}},e}},function(t,o){t.exports=e}])});
 
 /***/ }
 /******/ ]);
