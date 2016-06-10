@@ -1,10 +1,10 @@
 const bookshelf = require('../server/psqldb.js');
 
-var User = bookshelf.Model.extend({
+let User = bookshelf.Model.extend({
   tableName: 'users'
 });
 
-var Users = new bookshelf.Collection();
+let Users = new bookshelf.Collection();
 
 Users.model = User;
 
@@ -16,7 +16,7 @@ new User({ username: 'Michael' }).fetch().then(function(found) {
     }
     else {
     	console.log("NOT FOUND! ADDED!");
-		var testUser = new User({
+		let testUser = new User({
 			username: 'Michael',
 			password: 'asdf',
 			fullname: 'Michael Chen',
