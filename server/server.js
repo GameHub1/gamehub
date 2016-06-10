@@ -1,8 +1,7 @@
-var path = require('path');
-var express = require('express');
-var psql_db = require('./psqldb.js');
-
-var app = express();
+const path = require('path');
+const express = require('express');
+const psql_db = require('./psqldb.js');
+const app = express();
 
 app.use(express.static(path.join(__dirname, '../dist/')));
 
@@ -38,7 +37,7 @@ query.on('row', function(row) {
   console.log(row);
 });
 
-query.on('end', function() { 
+query.on('end', function() {
   client.end();
   console.log("end of query1");
 });
