@@ -1,7 +1,6 @@
 const path = require('path');
 const express = require('express');
 const psql_db = require('./psqldb.js');
-
 const app = express();
 
 app.use(express.static(path.join(__dirname, '../dist/')));
