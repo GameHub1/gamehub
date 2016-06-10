@@ -15,15 +15,15 @@ export default class Login extends Component {
     console.log(event);
   }
 
-  render() {
-    return (
-      <div>
-        <form onSubmit={this.login.bind(this)}>
-          <input type="text" placeholder="Username" />
-          <input type="text" placeholder="Password" />
-          <button type="submit">Submit</button>
-        </form>
-      </div>
-    );
-  }
+  // render() {
+  //   return (
+  //     <div>
+  //       <form onSubmit={this.login.bind(this)}>
+  //         <input type="text" placeholder="Username" />
+  //         <input type="text" placeholder="Password" />
+  //         <button type="submit">Submit</button>
+  //       </form>
+  //     </div>
+  //   );
+  // }
 }

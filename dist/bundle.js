@@ -20175,13 +20175,9 @@
 	
 	var _reactRedux = __webpack_require__(/*! react-redux */ 163);
 	
-	var _fb_login = __webpack_require__(/*! ./fb_login */ 160);
+	var _fb_login = __webpack_require__(/*! ../containers/fb_login */ 187);
 	
 	var _fb_login2 = _interopRequireDefault(_fb_login);
-	
-	var _login = __webpack_require__(/*! ../containers/login */ 162);
-	
-	var _login2 = _interopRequireDefault(_login);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -20190,6 +20186,8 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	// import Login from '../containers/login';
 	
 	var App = function (_Component) {
 	  _inherits(App, _Component);
@@ -20216,8 +20214,7 @@
 	          null,
 	          'slogan...'
 	        ),
-	        _react2.default.createElement(_fb_login2.default, null),
-	        _react2.default.createElement(_login2.default, null)
+	        _react2.default.createElement(_fb_login2.default, null)
 	      );
 	    }
 	  }]);
@@ -20228,181 +20225,9 @@
 	exports.default = App;
 
 /***/ },
-/* 160 */
-/*!*******************************************!*\
-  !*** ./client/src/components/fb_login.js ***!
-  \*******************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	// This is called with the results from from FB.getLoginStatus().
-	function statusChangeCallback(response) {
-	  console.log('statusChangeCallback');
-	  console.log(response);
-	  // The response object is returned with a status field that lets the
-	  // app know the current login status of the person.
-	  // Full docs on the response object can be found in the documentation
-	  // for FB.getLoginStatus().
-	  if (response.status === 'connected') {
-	    // Logged into your app and Facebook.
-	    testAPI();
-	  } else if (response.status === 'not_authorized') {
-	    // The person is logged into Facebook, but not your app.
-	    document.getElementById('status').innerHTML = 'Please log ' + 'into this app.';
-	  } else {
-	    // The person is not logged into Facebook, so we're not sure if
-	    // they are logged into this app or not.
-	    document.getElementById('status').innerHTML = 'Please log ' + 'into Facebook.';
-	  }
-	}
-	
-	// This function is called when someone finishes with the Login
-	// Button.  See the onlogin handler attached to it in the sample
-	// code below.
-	function checkLoginState() {
-	  FB.getLoginStatus(function (response) {
-	    statusChangeCallback(response);
-	  });
-	}
-	
-	window.fbAsyncInit = function () {
-	  FB.init({
-	    appId: '248196652218267',
-	    cookie: true, // enable cookies to allow the server to access
-	    // the session
-	    xfbml: true, // parse social plugins on this page
-	    version: 'v2.5' // use graph api version 2.5
-	  });
-	
-	  // Now that we've initialized the JavaScript SDK, we call
-	  // FB.getLoginStatus().  This function gets the state of the
-	  // person visiting this page and can return one of three states to
-	  // the callback you provide.  They can be:
-	  //
-	  // 1. Logged into your app ('connected')
-	  // 2. Logged into Facebook, but not your app ('not_authorized')
-	  // 3. Not logged into Facebook and can't tell if they are logged into
-	  //    your app or not.
-	  //
-	  // These three cases are handled in the callback function.
-	
-	  FB.getLoginStatus(function (response) {
-	    statusChangeCallback(response);
-	  });
-	};
-	
-	// Load the SDK asynchronously
-	(function (d, s, id) {
-	  var js,
-	      fjs = d.getElementsByTagName(s)[0];
-	  if (d.getElementById(id)) return;
-	  js = d.createElement(s);js.id = id;
-	  js.src = "//connect.facebook.net/en_US/sdk.js";
-	  fjs.parentNode.insertBefore(js, fjs);
-	})(document, 'script', 'facebook-jssdk');
-	
-	// Here we run a very simple test of the Graph API after login is
-	// successful.  See statusChangeCallback() for when this call is made.
-	function testAPI() {
-	  console.log('Welcome!  Fetching your information.... ');
-	  FB.api('/me', function (response) {
-	    console.log('Successful login for: ' + response.name);
-	    document.getElementById('status').innerHTML = 'Thanks for logging in, ' + response.name + '!';
-	  });
-	}
-	
-	exports.default = function () {
-	  return _react2.default.createElement('div', { className: 'fb-login-button', 'data-max-rows': '1',
-	    'data-size': 'large', 'data-show-faces': 'false', 'data-auto-logout-link': 'true' });
-	};
-
-/***/ },
+/* 160 */,
 /* 161 */,
-/* 162 */
-/*!****************************************!*\
-  !*** ./client/src/containers/login.js ***!
-  \****************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Login = function (_Component) {
-	  _inherits(Login, _Component);
-	
-	  function Login(props) {
-	    _classCallCheck(this, Login);
-	
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Login).call(this, props));
-	
-	    _this.state = {
-	      user: '',
-	      password: ''
-	    };
-	    return _this;
-	  }
-	
-	  _createClass(Login, [{
-	    key: 'login',
-	    value: function login(event) {
-	      event.preventDefault();
-	      console.log(event);
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(
-	          'form',
-	          { onSubmit: this.login.bind(this) },
-	          _react2.default.createElement('input', { type: 'text', placeholder: 'Username' }),
-	          _react2.default.createElement('input', { type: 'text', placeholder: 'Password' }),
-	          _react2.default.createElement(
-	            'button',
-	            { type: 'submit' },
-	            'Submit'
-	          )
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return Login;
-	}(_react.Component);
-	
-	exports.default = Login;
-
-/***/ },
+/* 162 */,
 /* 163 */
 /*!************************************!*\
   !*** ./~/react-redux/lib/index.js ***!
@@ -22011,6 +21836,108 @@
 	module.exports = invariant;
 	
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./~/process/browser.js */ 4)))
+
+/***/ },
+/* 185 */,
+/* 186 */,
+/* 187 */
+/*!*******************************************!*\
+  !*** ./client/src/containers/fb_login.js ***!
+  \*******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	// This is called with the results from from FB.getLoginStatus().
+	function statusChangeCallback(response) {
+	  console.log('statusChangeCallback');
+	  console.log(response);
+	  // The response object is returned with a status field that lets the
+	  // app know the current login status of the person.
+	  // Full docs on the response object can be found in the documentation
+	  // for FB.getLoginStatus().
+	  if (response.status === 'connected') {
+	    // Logged into your app and Facebook.
+	    testAPI();
+	  } else if (response.status === 'not_authorized') {
+	    // The person is logged into Facebook, but not your app.
+	    document.getElementById('status').innerHTML = 'Please log ' + 'into this app.';
+	  } else {
+	    // The person is not logged into Facebook, so we're not sure if
+	    // they are logged into this app or not.
+	    document.getElementById('status').innerHTML = 'Please log ' + 'into Facebook.';
+	  }
+	}
+	
+	// This function is called when someone finishes with the Login
+	// Button.  See the onlogin handler attached to it in the sample
+	// code below.
+	function checkLoginState() {
+	  FB.getLoginStatus(function (response) {
+	    statusChangeCallback(response);
+	  });
+	}
+	
+	window.fbAsyncInit = function () {
+	  FB.init({
+	    appId: '248196652218267',
+	    cookie: true, // enable cookies to allow the server to access
+	    // the session
+	    xfbml: true, // parse social plugins on this page
+	    version: 'v2.5' // use graph api version 2.5
+	  });
+	
+	  // Now that we've initialized the JavaScript SDK, we call
+	  // FB.getLoginStatus().  This function gets the state of the
+	  // person visiting this page and can return one of three states to
+	  // the callback you provide.  They can be:
+	  //
+	  // 1. Logged into your app ('connected')
+	  // 2. Logged into Facebook, but not your app ('not_authorized')
+	  // 3. Not logged into Facebook and can't tell if they are logged into
+	  //    your app or not.
+	  //
+	  // These three cases are handled in the callback function.
+	
+	  FB.getLoginStatus(function (response) {
+	    statusChangeCallback(response);
+	  });
+	};
+	
+	// Load the SDK asynchronously
+	(function (d, s, id) {
+	  var js,
+	      fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s);js.id = id;
+	  js.src = "//connect.facebook.net/en_US/sdk.js";
+	  fjs.parentNode.insertBefore(js, fjs);
+	})(document, 'script', 'facebook-jssdk');
+	
+	// Here we run a very simple test of the Graph API after login is
+	// successful.  See statusChangeCallback() for when this call is made.
+	function testAPI() {
+	  console.log('Welcome!  Fetching your information.... ');
+	  FB.api('/me', function (response) {
+	    console.log('Successful login for: ' + response.name);
+	    document.getElementById('status').innerHTML = 'Thanks for logging in, ' + response.name + '!';
+	  });
+	}
+	
+	exports.default = function () {
+	  return _react2.default.createElement('div', { className: 'fb-login-button', 'data-max-rows': '1',
+	    'data-size': 'large', 'data-show-faces': 'false', 'data-auto-logout-link': 'true' });
+	};
 
 /***/ }
 /******/ ]);
