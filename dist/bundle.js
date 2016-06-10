@@ -20170,6 +20170,10 @@
 	
 	var _fb_login2 = _interopRequireDefault(_fb_login);
 	
+	var _login = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./login\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	
+	var _login2 = _interopRequireDefault(_login);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -20203,7 +20207,8 @@
 	          null,
 	          'slogan...'
 	        ),
-	        _react2.default.createElement(_fb_login2.default, null)
+	        _react2.default.createElement(_fb_login2.default, null),
+	        _react2.default.createElement(_login2.default, null)
 	      );
 	    }
 	  }]);
