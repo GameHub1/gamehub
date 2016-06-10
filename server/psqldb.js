@@ -18,5 +18,5 @@ db.schema.hasTable('users').then(function(exists){
 });
 
 const bookshelf = require('bookshelf')(db);
-module.exports = Bookshelf;
+module.exports = bookshelf;
 
