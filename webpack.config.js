@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const BUILD_DIR = path.resolve(__dirname, 'dist');
 const APP_DIR = path.resolve(__dirname, 'client');
@@ -11,6 +12,12 @@ const config = {
     publicPath: '/',
     filename: 'bundle.js'
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      title: 'GameHub',
+      filename: 'client/index.html'
+    })
+  ],
   module: {
     loaders: [
       {
