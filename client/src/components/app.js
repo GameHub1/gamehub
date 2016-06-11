@@ -10,7 +10,13 @@ export default class App extends Component {
         <h1>GameHub</h1>
         <h2>slogan...</h2>
         <FbLogin />
+        Test, 1,2
+      {this.props.children}
       </div>
+
+      
+      
+      
     );
   }
 }
