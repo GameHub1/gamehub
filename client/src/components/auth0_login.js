@@ -24,20 +24,25 @@ export default class Auth0Login extends Component {
 
   getInfo() {
     console.log('this is the !!', this.state.accessToken);
-    let accessToken = this.state.accessToken;
+    let that = this;
     axios.get('https://g1na1011.auth0.com/userinfo', {
         headers: {
-          Authorization: 'Bearer ' + accessToken
+          Authorization: 'Bearer ' + that.state.accessToken
         }
       })
       .then((response) => {
         console.log(response);
+        that.setState({
+          name: response.data.name,
+          email: response.data.email
+        });
       })
       .catch((response) => {
         console.log('Error: ', response);
       });
+      console.log(this.state);
   }
-
+  
   getAccessToken() {
     let authHash = this.lock.parseHash(window.location.hash);
     let accessToken;
