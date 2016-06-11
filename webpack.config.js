@@ -32,7 +32,11 @@ const config = {
         test: /\.css$/,
         include: APP_DIR,
         loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
-      }
+      },
+      { 
+        test: /\.(png|jpg)$/,
+        include: APP_DIR,
+        loader: 'url-loader?limit=8192' }
     ]
   }
 }
