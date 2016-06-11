@@ -1,4 +1,3 @@
-
 import React from 'react';
 import {Route, IndexRoute} from 'react-router';
 import ProfileForm from './src/containers/profile_form';
@@ -15,12 +14,8 @@ export const createStoreMiddleware = createStore(
   {lol: "ok"},
   applyMiddleware(promise));
 
-
-
-// applyMiddleware (promise)(createStore);
-
 export default (
-  <Route path='/' component = {App} >
+  <Route path='/' component={App} >
     <Route path='profile_setup' component={ProfileForm}/>
   </Route>
 );
