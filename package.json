@@ -24,7 +24,10 @@
     "babel-preset-stage-1": "^6.5.0",
     "bookshelf": "^0.9.5",
     "buffer-writer": "1.0.1",
+    "core-js": "^2.4.0",
+    "css-loader": "^0.23.1",
     "express": "4.13.4",
+    "extract-text-webpack-plugin": "^1.0.1",
     "generic-pool": "2.4.2",
     "html-webpack-plugin": "^2.15.0",
     "jquery": "^2.2.3",
@@ -45,6 +48,7 @@
     "redux-thunk": "^2.1.0",
     "resolve-url-loader": "^1.4.3",
     "semver": "4.3.2",
+    "style-loader": "^0.13.1",
     "webpack": "^1.12.14"
   },
   "private": true
