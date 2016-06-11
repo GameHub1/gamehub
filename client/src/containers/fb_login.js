@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import FbLogin from 'react-facebook-login';
+import hashMaker from './hash_maker';
 
 export default class FacebookLogin extends Component {
 
   constructor(props) {
     super(props);
 
-    this.state = {loggedIn: false, fbAccessToken: '', locaAccessToken: '', userName: '', userEmail: ''};
+    this.state = {loggedIn: false, fbAccessToken: '', localAccessToken: '', userName: '', userEmail: ''};
     this.responseFacebook = this.responseFacebook.bind(this);
     this.stateReset = this.stateReset.bind(this);
     this.logOut = this.logOut.bind(this);
@@ -28,6 +29,11 @@ export default class FacebookLogin extends Component {
     )
   }
 
+  makeHash(){
+    alert("Serving up some tasty hashbrowns!");
+    return hashMaker(this.state.userName + this.state.userEmail + this.state.fbAccessToken);
+  }
+
   logOut() {
     const that = this;
     const reset = this.stateReset;
@@ -46,9 +52,9 @@ export default class FacebookLogin extends Component {
 
   responseFacebook(response) {
     console.log(response);
-    this.setState({fbAccessToken: response.fbAccessToken, userName: response.name, userEmail: response.email});
+    this.setState({fbAccessToken: response.accessToken, userName: response.name, userEmail: response.email});
     if (this.state.fbAccessToken !== undefined){
-      this.setState({loggedIn: true});
+      this.setState({loggedIn: true, localAccessToken: this.makeHash()});
     }
     console.log(this.state);
   }
