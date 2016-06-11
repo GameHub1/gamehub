@@ -6,12 +6,13 @@ import { createStore, applyMiddleware } from 'redux';
 import App from './src/components/app';
 import {Router, browserHistory} from 'react-router';
 import routes, { createStoreMiddleware } from './routes';
+import storeHolder from './reducers/index';
 // import LoginReducer from './src/reducers/login_reducer';
 
 require(__dirname + "/css/style.css");
 
 ReactDOM.render(
-  <Provider store={createStoreMiddleware}>
+  <Provider store={storeHolder}>
     <Router history={browserHistory} routes={routes} />
   </Provider>,
   document.getElementById('app'));
