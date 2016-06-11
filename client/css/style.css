@@ -10,8 +10,11 @@ body {
 
 /*------------------------------ HEADER ------------------------------*/
 #header {
+	background-color: #C0C0C0;
 	width: 960px;
 	margin: 0 auto;
+	font-size: 30px;
+	font-weight: bold;
 	padding: 40px 0;
 	position: relative;
 }
