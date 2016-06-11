@@ -1,5 +1,3 @@
-
-
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -14,7 +12,6 @@ require(__dirname + "/css/style.css");
 
 ReactDOM.render(
   <Provider store={createStoreMiddleware}>
-    <Router history = {browserHistory} routes ={routes} />
+    <Router history={browserHistory} routes={routes} />
   </Provider>,
   document.getElementById('app'));
-
