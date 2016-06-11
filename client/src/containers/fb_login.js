@@ -6,7 +6,7 @@ export default class FacebookLogin extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {loggedIn: false, accessToken: '', userEmail: ''};
+    this.state = {loggedIn: false, fbAccessToken: '', locaAccessToken: '', userName: '', userEmail: ''};
     this.responseFacebook = this.responseFacebook.bind(this);
     this.stateReset = this.stateReset.bind(this);
     this.logOut = this.logOut.bind(this);
@@ -41,13 +41,13 @@ export default class FacebookLogin extends Component {
   }
 
   stateReset() {
-    this.setState({loggedIn: false, accessToken: '', userEmail: ''});
+    this.setState({loggedIn: false, fbAccessToken: '', localAccessToken: '', userName: '', userEmail: ''});
   }
 
   responseFacebook(response) {
     console.log(response);
-    this.setState({accessToken: response.accessToken, userEmail: response.email});
-    if (this.state.accessToken !== undefined){
+    this.setState({fbAccessToken: response.fbAccessToken, userName: response.name, userEmail: response.email});
+    if (this.state.fbAccessToken !== undefined){
       this.setState({loggedIn: true});
     }
     console.log(this.state);
