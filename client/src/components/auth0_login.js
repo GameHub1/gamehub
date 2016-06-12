@@ -5,7 +5,12 @@ export default class Auth0Login extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {idToken: '', accessToken: ''};
+    this.state = {
+      idToken: '', 
+      accessToken: '', 
+      name: '', 
+      email: ''
+    };
     this.showLock = this.showLock.bind(this);
     this.logOut = this.logOut.bind(this);
     this.AUTHO_CLIENTID = 'LubDWPneUGD6bFqQbGEfnbMwJtVUHe3P';
@@ -17,6 +22,22 @@ export default class Auth0Login extends Component {
     this.setState({idToken: this.getIdToken(), accessToken: this.getAccessToken()});
   }
 
+  getInfo() {
+    console.log('this is the !!', this.state.accessToken);
+    let accessToken = this.state.accessToken;
+    axios.get('https://g1na1011.auth0.com/userinfo', {
+        headers: {
+          Authorization: 'Bearer ' + accessToken
+        }
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((response) => {
+        console.log('Error: ', response);
+      });
+  }
+
   getAccessToken() {
     let authHash = this.lock.parseHash(window.location.hash);
     let accessToken;
@@ -25,6 +46,7 @@ export default class Auth0Login extends Component {
       if (authHash.access_token) {
         accessToken = authHash.access_token;
         console.log('hash', authHash.access_token);
+
         localStorage.setItem('access_token', authHash.access_token);
       }
       if (authHash.error) {
@@ -32,6 +54,7 @@ export default class Auth0Login extends Component {
         console.log("Error signing in", authHash);
       }
     }
+
     return accessToken;
   }
 
@@ -46,6 +69,7 @@ export default class Auth0Login extends Component {
         idToken = authHash.id_token;
         // console.log('hash', authHash.access_token);
         // accessToken = authHash.access_token;
+
         localStorage.setItem('id_token', authHash.id_token);
       }
       if (authHash.error) {
@@ -71,17 +95,19 @@ export default class Auth0Login extends Component {
     // Redirect to the home route after logout
     let that = this;
     localStorage.removeItem('id_token');
-    console.log('beforelogout', that.state)
+
+    console.log('beforelogout', this.state)
     this.stateReset();
     setTimeout(function() {
       console.log('logged out', that.state);
     }, 600);
-
   }
 
   render() {
     if (this.state.idToken) {
       console.log(this.state.idToken);
+
+      this.getInfo();
       return (
         <div>
           <button onClick={this.logOut}>LOGGED OUT HERE</button>
