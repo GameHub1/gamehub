@@ -7,7 +7,7 @@ import {Link} from 'react-router'
 
 export default class App extends Component {
 
-  render() {    
+  render() {
     return (
       <div>
         <div id="header">
