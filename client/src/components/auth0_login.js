@@ -5,7 +5,12 @@ export default class Auth0Login extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {idToken: '', accessToken: ''};
+    this.state = {
+      idToken: '', 
+      accessToken: '', 
+      name: '', 
+      email: ''
+    };
     this.showLock = this.showLock.bind(this);
     this.logOut = this.logOut.bind(this);
     this.AUTHO_CLIENTID = 'LubDWPneUGD6bFqQbGEfnbMwJtVUHe3P';
@@ -17,6 +22,43 @@ export default class Auth0Login extends Component {
     this.setState({idToken: this.getIdToken(), accessToken: this.getAccessToken()});
   }
 
+  getInfo() {
+    let that = this;
+    axios.get('https://g1na1011.auth0.com/userinfo', {
+        headers: {
+          Authorization: 'Bearer ' + that.state.accessToken
+        }
+      })
+      .then((response) => {
+        console.log(response);
+        
+        that.setState({
+          name: response.data.name,
+          email: response.data.email
+        });
+
+        console.log(this.state);
+      })
+      .catch((response) => {
+        console.log('Error: ', response);
+      });
+  }
+
+  addNewUser() {
+    let newUser = {
+      name: this.state.name,
+      email: this.state.email
+    }
+
+    axios.post('/signup', newUser)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((response) => {
+        console.log('Error: ', response);
+      });
+  }
+  
   getAccessToken() {
     let authHash = this.lock.parseHash(window.location.hash);
     let accessToken;
@@ -25,6 +67,7 @@ export default class Auth0Login extends Component {
       if (authHash.access_token) {
         accessToken = authHash.access_token;
         console.log('hash', authHash.access_token);
+
         localStorage.setItem('access_token', authHash.access_token);
       }
       if (authHash.error) {
@@ -32,6 +75,7 @@ export default class Auth0Login extends Component {
         console.log("Error signing in", authHash);
       }
     }
+
     return accessToken;
   }
 
@@ -46,6 +90,7 @@ export default class Auth0Login extends Component {
         idToken = authHash.id_token;
         // console.log('hash', authHash.access_token);
         // accessToken = authHash.access_token;
+
         localStorage.setItem('id_token', authHash.id_token);
       }
       if (authHash.error) {
@@ -63,28 +108,38 @@ export default class Auth0Login extends Component {
   }
 
   stateReset() {
-    this.setState({idToken: '', accessToken: ''});
+    this.setState({
+      idToken: '',
+      accessToken: '',
+      name: '', 
+      email: ''
+    });
+
     window.location.href = window.location.href.split('#')[0];
   }
 
   logOut() {
     // Redirect to the home route after logout
-    let that = this;
     localStorage.removeItem('id_token');
-    console.log('beforelogout', that.state)
-    this.stateReset();
-    setTimeout(function() {
-      console.log('logged out', that.state);
-    }, 600);
 
+    console.log('beforelogout', this.state);
+    this.stateReset();
+    
+  }
+
+  checkState() {
+    if (!this.state.name && !this.state.email) {
+      this.getInfo();
+      this.addNewUser();
+    }
   }
 
   render() {
     if (this.state.idToken) {
-      console.log(this.state.idToken);
+      this.checkState();
       return (
         <div>
-          <button onClick={this.logOut}>LOGGED OUT HERE</button>
+          <button onClick={this.logOut}>LOG OUT HERE</button>
         </div>
       );
     } else {
