@@ -1,3 +1,5 @@
+"use strict"; 
+
 const path = require('path');
 const express = require('express');
 const bookshelf = require('./psqldb.js');
@@ -43,6 +45,5 @@ app.post('/signup', function (req,res) {
 	    }
 	});
 
-  
-});
 
+});

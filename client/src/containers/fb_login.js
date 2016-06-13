@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import FbLogin from 'react-facebook-login';
-import hashMaker from './hash_maker';
+import { makeJwt, decodeJwt } from './jwt_maker';
 
 export default class FacebookLogin extends Component {
 
@@ -35,6 +35,7 @@ export default class FacebookLogin extends Component {
   }
 
   logOut() {
+    console.log(decodeJwt(this.state.localAccessToken, this.state.fbAccessToken));
     const that = this;
     const reset = this.stateReset;
     FB.logout(function(response){
@@ -54,7 +55,8 @@ export default class FacebookLogin extends Component {
     console.log(response);
     this.setState({fbAccessToken: response.accessToken, userName: response.name, userEmail: response.email});
     if (this.state.fbAccessToken !== undefined){
-      this.setState({loggedIn: true, localAccessToken: this.makeHash()});
+      this.setState({loggedIn: true,
+        localAccessToken: makeJwt({name: this.state.userName, email: this.state.userEmail}, this.state.fbAccessToken)});
     }
     console.log(this.state);
   }
