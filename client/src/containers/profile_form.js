@@ -1,10 +1,18 @@
 import React, {Component, PropTypes} from 'react';
 import {reduxForm} from 'redux-form';
 import {bindActionCreators} from 'redux';
-import {postProfile} from '../actions/index.js'
+import {postProfile} from '../actions/index.js';
 
 class ProfileForm extends Component {
 
+  onSubmit(props) {
+
+    this.props.postProfile(props).
+    then(() => {
+      let x = 7
+      // change pages
+    })
+  }
 
   render () {
 
@@ -14,7 +22,7 @@ class ProfileForm extends Component {
         <h1> Set up Profile! </h1>
 
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
           <div>
             <label> Location </label>
             <input type="text" {...location}/>
