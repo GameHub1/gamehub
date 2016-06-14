@@ -14,7 +14,7 @@ Users.model = User;
 
 new User({ username: 'Michael' }).fetch().then(found => {
     if (found) {
-   		console.log(found);
+   		console.log('found it!', found);
     }
     else {
     	console.log("NOT FOUND! ADDED!");
