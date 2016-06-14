@@ -6,9 +6,9 @@ export default class Auth0Login extends Component {
     super(props);
 
     this.state = {
-      idToken: '', 
-      accessToken: '', 
-      name: '', 
+      idToken: '',
+      accessToken: '',
+      name: '',
       email: ''
     };
     this.showLock = this.showLock.bind(this);
@@ -31,13 +31,11 @@ export default class Auth0Login extends Component {
       })
       .then((response) => {
         console.log(response);
-        
+
         that.setState({
           name: response.data.name,
           email: response.data.email
         });
-
-        console.log(this.state);
       })
       .catch((response) => {
         console.log('Error: ', response);
@@ -52,13 +50,13 @@ export default class Auth0Login extends Component {
 
     axios.post('/signup', newUser)
       .then((response) => {
-        console.log(response);
+        console.log("Inside addNewUser: ", response);
       })
       .catch((response) => {
         console.log('Error: ', response);
       });
   }
-  
+
   getAccessToken() {
     let authHash = this.lock.parseHash(window.location.hash);
     let accessToken;
@@ -66,8 +64,6 @@ export default class Auth0Login extends Component {
     if (authHash) {
       if (authHash.access_token) {
         accessToken = authHash.access_token;
-        console.log('hash', authHash.access_token);
-
         localStorage.setItem('access_token', authHash.access_token);
       }
       if (authHash.error) {
@@ -111,7 +107,7 @@ export default class Auth0Login extends Component {
     this.setState({
       idToken: '',
       accessToken: '',
-      name: '', 
+      name: '',
       email: ''
     });
 
@@ -122,9 +118,9 @@ export default class Auth0Login extends Component {
     // Redirect to the home route after logout
     localStorage.removeItem('id_token');
 
-    console.log('beforelogout', this.state);
+    console.log('Before logout:', this.state);
     this.stateReset();
-    
+
   }
 
   checkState() {

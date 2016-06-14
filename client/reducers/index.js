@@ -1,9 +1,11 @@
 import {createStore, combineReducers} from 'redux';
 import {reducer as formReducer} from 'redux-form';
+import JWT from './jwt_reducer'
 
 const reducers = {
 
-    form: formReducer
+    form: formReducer,
+    JWT: JWT
 
 }
 
