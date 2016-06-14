@@ -17,7 +17,7 @@ const User = bookshelf.Model.extend({
 const Users = new bookshelf.Collection();
 Users.model = User;
 
-app.post('/signup', function (req,res) {
+app.post('/signup', function(req,res) {
   let name = req.body.name;
   let email = req.body.email;
 
@@ -39,6 +39,10 @@ app.post('/signup', function (req,res) {
 	});
 
   res.send('SERVER POST: ', name, email);
+});
+
+app.post('/favmedia', function(req, res) {
+  console.log(req.body.favMediaURL);
 });
 
 app.use(function(req, res) {
