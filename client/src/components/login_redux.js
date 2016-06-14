@@ -83,7 +83,7 @@ export class ReduxLogin extends Component {
       })
       .then((response) => {
         this.addNewUser();
-      }) 
+      })
       .catch((response) => {
         console.log('Error: ', response);
       });
@@ -131,8 +131,7 @@ export class ReduxLogin extends Component {
     } else {
       return (
         <div className="login-box">
-          <a onClick={this.showLock}>Sign In</a>
-          <button onClick={this.logState}>Log state</button>
+          <button onClick={this.showLock}>LOG IN</button>
         </div>
       );
     }
