@@ -16,7 +16,7 @@ export default class App extends Component {
         <h2 id="headerSub">Come join the dark side...</h2>
         <FbLogin />
         {this.props.children}
-        <Auth0 />
+        <ReduxLogin />
         <Link to="/profile_setup"> Go to profile setup </Link>
       </div> 
     );
