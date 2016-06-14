@@ -1,9 +1,8 @@
-"use strict"; 
+"use strict";
 
 const path = require('path');
 const express = require('express');
 const bookshelf = require('./psqldb.js');
-const db_test = require('../client/database_test.js');
 const bodyParser = require('body-parser');
 const app = express();
 
