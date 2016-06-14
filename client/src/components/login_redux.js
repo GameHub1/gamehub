@@ -62,7 +62,6 @@ export class ReduxLogin extends Component {
   checkState() {
     if ((!this.props.authData.name || !this.props.authData.email) && window.location.hash.length) {
       this.getInfo();
-      this.addNewUser();
     }
   }
 
@@ -82,6 +81,9 @@ export class ReduxLogin extends Component {
         });
         //console.log("Inside getInfo:", this.state);
       })
+      .then((response) => {
+        this.addNewUser();
+      }) 
       .catch((response) => {
         console.log('Error: ', response);
       });
@@ -92,10 +94,10 @@ export class ReduxLogin extends Component {
       name: this.props.authData.name,
       email: this.props.authData.email
     }
-
+    console.log('newuser: ', newUser)
     axios.post('/signup', newUser)
       .then((response) => {
-        console.log("Inside addNewUser: ", response);
+        console.log("Inside addNewUser SUCCESSS: ", response);
       })
       .catch((response) => {
         console.log('Error: ', response);
@@ -135,7 +137,6 @@ export class ReduxLogin extends Component {
       );
     }
   }
-
 }
 
 function mapStateToProps(state) {
