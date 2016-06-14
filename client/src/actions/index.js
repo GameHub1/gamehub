@@ -13,7 +13,7 @@ export function postProfile (profile) {
 
   return {
     type: POST_PROFILE,
-    payload: postRequest
+    payload: profile
   }
 }
 
