@@ -2,11 +2,11 @@ import React, {Component, PropTyes} from 'react';
 import {bindActionCreators} from 'redux';
 
 
-class Profile extends Component {
+export default class Profile extends Component {
 
   render () {
 
-    return () {
+    return ( 
         <div>
           <div>
             <h1> 
@@ -26,8 +26,15 @@ class Profile extends Component {
           //insert games element
           </div>
         </div>
-    }
+    );
 
   }
 
 }
+
+function mapStateToProps(state) {
+  return {
+    profile: state.profile
+  };
+}
+
