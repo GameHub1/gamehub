@@ -9,20 +9,16 @@ import {authentication} from '../actions/index';
 import ReduxLogin from './login_redux';
 
 export default class App extends Component {
-
   render() {
     return (
-      <div>
-        <div id="header">
-        <img src={require(__dirname + "/../../images/GameHub_logo.png")} />
-        </div>
-        <h1>GameHub</h1>
-        <h2>slogan...</h2>
+      <div background={require(__dirname + "/../../images/mario.jpg")}>
+        <h1 id="headerTitle">GameHub</h1>
+        <h2 id="headerSub">Come join the dark side...</h2>
         <FbLogin />
         {this.props.children}
         <ReduxLogin />
         <Link to="/profile_setup"> Go to profile setup </Link>
-      </div>
+      </div> 
     );
   }
 }
