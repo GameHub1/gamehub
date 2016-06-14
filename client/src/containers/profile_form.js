@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import {reduxForm} from 'redux-form';
 import {bindActionCreators} from 'redux';
-import {postProfile} from '../../actions/index.js'
+import {postProfile} from '../actions/index.js'
 
 class ProfileForm extends Component {
 
@@ -12,7 +12,7 @@ class ProfileForm extends Component {
     return (
       <div>
         <h1> Set up Profile! </h1>
-      
+
 
         <form onSubmit={handleSubmit}>
           <div>
@@ -26,7 +26,7 @@ class ProfileForm extends Component {
             <textarea rows = '10' cols = '50' {...bio} />
           </div>
           <br/>
-        
+
           <button type="submit">Create profile </button>
 
         </form>
@@ -40,11 +40,11 @@ class ProfileForm extends Component {
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({postProfile}, dispatch)
 }
-  
 
-export default ProfileForm = reduxForm({ 
-  form: 'profile',                           
-  fields: ['location', 'bio'] 
+
+export default ProfileForm = reduxForm({
+  form: 'profile',
+  fields: ['location', 'bio']
 })(ProfileForm);
 
 

@@ -3,7 +3,10 @@ import { connect } from 'react-redux';
 import FbLogin from '../containers/fb_login';
 // import Login from '../containers/login';
 import Auth0 from './auth0_login';
-import {Link} from 'react-router'
+import {Link} from 'react-router';
+import {bindActionCreators} from 'redux';
+import {authentication} from '../actions/index';
+import ReduxLogin from './login_redux';
 
 export default class App extends Component {
 
@@ -17,9 +20,13 @@ export default class App extends Component {
         <h2>slogan...</h2>
         <FbLogin />
         {this.props.children}
-        <Auth0 />
+        <ReduxLogin />
         <Link to="/profile_setup"> Go to profile setup </Link>
-      </div> 
+      </div>
     );
   }
+}
+
+function mapDispatchToProps (dispatch) {
+  return bindActionCreators({authentication: authentication}, dispatch)
 }

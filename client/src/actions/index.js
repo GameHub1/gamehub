@@ -18,7 +18,6 @@ const postRequest = axios.post(url, profile);
 }
 
 export function authFunc (authData) {
-
     return {
       type: AUTHENTICATION,
       payload: authData
