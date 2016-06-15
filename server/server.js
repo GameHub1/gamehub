@@ -23,6 +23,12 @@ const Game = bookshelf.Model.extend({
 const Games = new bookshelf.Collection();
 Games.model = Game;
 
+const FavMedia = bookshelf.Model.extend({
+  tableName: 'favmedia'
+});
+const FavMedias = new bookshelf.Collection();
+FavMedias.model = FavMedia;
+
 app.post('/signup', function(req,res) {
   let name = req.body.name;
   let email = req.body.email;
@@ -48,7 +54,6 @@ app.post('/signup', function(req,res) {
 });
 
 app.post('/games', function(req, res) {
-  console.log(req.body);
   let gameTitle = req.body[0].gameTitle;
   let email = req.body[1];
   console.log(gameTitle, email);
@@ -68,12 +73,28 @@ app.post('/games', function(req, res) {
       });
     }
   });
-
-
 });
 
 app.post('/favmedia', function(req, res) {
-  console.log(req.body);
+  let favMediaURL = req.body[0].favMediaURL;
+  let email = req.body[1];
+  console.log(favMediaURL, email);
+  new FavMedia({ url: favMediaURL, email: email }).fetch().then(found => {
+    if (found) {
+      console.log("already in database!");
+    }
+    else {
+      console.log("NOT FOUND! ADDED!");
+      let newFavMedia = new FavMedia({
+        url: favMediaURL,
+        email: email
+      });
+
+      newFavMedia.save().then(newFavMedia2 => {
+        FavMedias.add(newFavMedia2);
+      });
+    }
+  });
 });
 
 app.use(function(req, res) {

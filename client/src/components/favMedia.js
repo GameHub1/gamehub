@@ -4,7 +4,7 @@ import {createFavMedia} from '../actions/index';
 
 class FavMedia extends Component {
   onSubmit(prop) {
-    this.props.createFavMedia([this.props.authData.email, prop]);
+    this.props.createFavMedia([prop, this.props.authData.email]);
   }
 
   render() {
