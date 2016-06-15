@@ -1,11 +1,16 @@
 import React, {Component, PropTyes} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import Games from '../components/games';
+import FavMedia from '../components/favMedia';
 
 
 export class Profile extends Component {
  
-   
+   getState () {
+      console.log('This is media ', this.props.media);
+      console.log('This is games ', this.props.games);
+   }
 
   render () {
 
@@ -28,11 +33,18 @@ export class Profile extends Component {
               </h2>
             </div>
             <div>
-              add media element
+              Here is the media element:
+              {this.props.media[1]}
             </div>
           </div>
           <div>
-          insert games element
+          Here is a the games:
+           {this.props.games[1]}
+          </div>
+          <div>
+            <button onClick = {this.getState.bind(this)}> Get state </button>
+            <Games />
+            <FavMedia />
           </div>
         </div>
     );
@@ -46,7 +58,9 @@ function mapStateToProps(state) {
   return {
     profile: state.profile,
     authData: state.authData,
-    form: state.form
+    form: state.form,
+    games: state.games,
+    media: state.media
   }
 }
 
