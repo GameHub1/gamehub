@@ -3,8 +3,7 @@ import {reduxForm} from 'redux-form';
 import {bindActionCreators} from 'redux';
 import {postProfile} from '../actions/index.js';
 import {Link} from 'react-router';
-import Games from '../components/games';
-import FavMedia from '../components/favMedia';
+
 
 class ProfileForm extends Component {
   onSubmit(prop) {
@@ -35,8 +34,7 @@ class ProfileForm extends Component {
 
         </form>
         <Link to="/profile"> Go to profile </Link>
-        <FavMedia />
-        <Games />
+       
       </div>
     );
   }

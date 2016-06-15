@@ -36,7 +36,7 @@ export function createGame(props) {
   const request = axios.post('/games', props);
   return {
     type: CREATE_GAME,
-    payload: request
+    payload: props
   };
 }
 
@@ -46,6 +46,6 @@ export function createFavMedia (props) {
   
   return {
     type: CREATE_FAVMEDIA,
-    payload: request
+    payload: props
   };
 }
