@@ -6,13 +6,10 @@ import {Link} from 'react-router';
 
 class ProfileForm extends Component {
 
-  onSubmit(props) {
+  onSubmit(prop) {
+    console.log('This is props', prop);
+    this.props.postProfile(prop);
 
-    this.props.postProfile(props).
-    then(() => {
-      let x = 7
-      // change pages
-    })
   }
 
   render () {
@@ -55,7 +52,7 @@ function mapDispatchToProps (dispatch) {
 export default ProfileForm = reduxForm({
   form: 'profile',
   fields: ['location', 'bio']
-})(ProfileForm);
+}, null, mapDispatchToProps)(ProfileForm);
 
 
 // export default reduxForm ({
