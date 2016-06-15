@@ -46,7 +46,7 @@ app.post('/games', function(req, res) {
 });
 
 app.post('/favmedia', function(req, res) {
-  console.log(req.body.favMediaURL);
+  console.log(req.body);
 });
 
 app.use(function(req, res) {
