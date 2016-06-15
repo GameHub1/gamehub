@@ -1,6 +1,6 @@
 "use strict";
 
-const bookshelf = require('./db_client.js');
+const bookshelf = require('./pgsqldb.js');
 
 const User = bookshelf.Model.extend({
   tableName: 'users2'

@@ -2,7 +2,7 @@
 
 const path = require('path');
 const express = require('express');
-const bookshelf = require('./db_client.js');
+const bookshelf = require('./pgsqldb.js');
 const bodyParser = require('body-parser');
 const app = express();
 
