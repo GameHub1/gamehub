@@ -97,6 +97,10 @@ app.post('/favmedia', function(req, res) {
   });
 });
 
+app.get('/get_users', function(req, res) {
+  console.log(req.body);
+});
+
 app.use(function(req, res) {
   res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
