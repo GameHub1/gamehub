@@ -8,13 +8,14 @@ import ReduxLogin from './login_redux';
 export default class App extends Component {
   render() {
     return (
-      <div background={require(__dirname + "/../../images/mario.jpg")}>
+      <div class="mario" background={require(__dirname + "/../../images/mario.jpg")}>
         <h1 id="headerTitle">GameHub</h1>
         <h2 id="headerSub">Come join the dark side...</h2>
-        {this.props.children}
+        
         <ReduxLogin />
         <Link to="/profile_setup"> Go to profile setup </Link>
       </div>
+      
     );
   }
 }
