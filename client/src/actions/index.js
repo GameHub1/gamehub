@@ -7,9 +7,12 @@ export const AUTHENTICATION = 'AUTHENTICATION';
 export const LOG_OUT = 'LOG_OUT'
 
 export function postProfile (profile) {
+
  const url = `/post_profile`;
 
 const postRequest = axios.post(url, profile);
+
+
 
   return {
     type: POST_PROFILE,
