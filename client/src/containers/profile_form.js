@@ -4,22 +4,19 @@ import {bindActionCreators} from 'redux';
 import {postProfile} from '../actions/index.js';
 import {Link} from 'react-router';
 import Games from '../components/games';
+import FavMedia from '../components/favMedia';
 
 class ProfileForm extends Component {
-
   onSubmit(prop) {
     console.log('This is props', prop);
     this.props.postProfile(prop);
-
   }
 
   render () {
-
     const {fields: {location, bio}, handleSubmit} = this.props;
     return (
       <div>
         <h1> Set up Profile! </h1>
-
 
         <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
           <div>
@@ -38,25 +35,21 @@ class ProfileForm extends Component {
 
         </form>
         <Link to="/profile"> Go to profile </Link>
-
+        <FavMedia />
         <Games />
       </div>
-
-      )
+    );
   }
-
 }
 
 function mapDispatchToProps (dispatch) {
-  return bindActionCreators({postProfile}, dispatch)
+  return bindActionCreators({postProfile}, dispatch);
 }
-
 
 export default ProfileForm = reduxForm({
   form: 'profile',
   fields: ['location', 'bio']
 }, null, mapDispatchToProps)(ProfileForm);
-
 
 // export default reduxForm ({
 //   form: "ProfileForm",
