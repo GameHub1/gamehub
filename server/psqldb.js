@@ -57,5 +57,4 @@ db.schema.hasTable('favgames').then(exists => {
   }
 });
 
-const bookshelf = require('bookshelf')(db);
-module.exports = bookshelf;
+module.exports = db;
