@@ -8,8 +8,15 @@ body {
 	/*background-image: url('../images/space_invaders.png');
 	background-position: 50% 0;*/
 }
+#mario{
+  background-color: #212421; 
+  text-align: center;
+  /*background-image: url('../images/space_invaders.png');
+  background-position: 50% 0;*/
+}
 
-body:after {
+
+#mario:after {
   content : "";
   display: block;
   position: absolute;
@@ -22,8 +29,8 @@ body:after {
   height: 100%;
   opacity : 0.5;
   z-index: -1;
-}
 
+}
 
 /*------------------------------ HEADER ------------------------------*/
 #header {
