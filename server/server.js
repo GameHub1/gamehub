@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, '../dist/')));
 
 const User = bookshelf.Model.extend({
-  tableName: 'users'
+  tableName: 'users2'
 });
 const Users = new bookshelf.Collection();
 Users.model = User;
