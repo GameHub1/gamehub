@@ -4,6 +4,8 @@ import {Link} from 'react-router';
 import {bindActionCreators} from 'redux';
 import {authentication} from '../actions/index';
 import ReduxLogin from './login_redux';
+//gina wrote this
+import SearchBar from '../containers/search_bar';
 
 export default class App extends Component {
   render() {
@@ -14,6 +16,7 @@ export default class App extends Component {
         
         <ReduxLogin />
         <Link to="/profile_setup"> Go to profile setup </Link>
+        <SearchBar />
       </div>
 
     );

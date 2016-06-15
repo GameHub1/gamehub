@@ -97,8 +97,12 @@ app.post('/favmedia', function(req, res) {
   });
 });
 
-app.get('/get_users', function(req, res) {
+app.post('/get_users', function(req, res) {
   console.log(req.body);
+  bookshelf.knex.raw("SELECT * FROM USERS2 WHERE LOWER(fullname) LIKE LOWER('%" + req.body.searchTerm + "%') OR LOWER(email) LIKE LOWER('%" + req.body.searchTerm + "%')")
+    .then(response => {
+      console.log(response.rows);
+    });
 });
 
 app.use(function(req, res) {
