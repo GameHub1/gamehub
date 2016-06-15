@@ -4,7 +4,6 @@ import {Link} from 'react-router';
 import {bindActionCreators} from 'redux';
 import {authentication} from '../actions/index';
 import ReduxLogin from './login_redux';
-import Games from './games';
 
 export default class App extends Component {
   render() {
@@ -15,7 +14,6 @@ export default class App extends Component {
         {this.props.children}
         <ReduxLogin />
         <Link to="/profile_setup"> Go to profile setup </Link>
-        <Games />
       </div>
     );
   }

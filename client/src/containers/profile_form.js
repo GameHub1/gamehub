@@ -3,6 +3,7 @@ import {reduxForm} from 'redux-form';
 import {bindActionCreators} from 'redux';
 import {postProfile} from '../actions/index.js';
 import {Link} from 'react-router';
+import Games from '../components/games';
 
 class ProfileForm extends Component {
 
@@ -37,6 +38,8 @@ class ProfileForm extends Component {
 
         </form>
         <Link to="/profile"> Go to profile </Link>
+
+        <Games />
       </div>
 
       )
