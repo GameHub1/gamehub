@@ -33,14 +33,26 @@ db.schema.hasTable('friends').then(exists => {
   }
 });
 
-db.schema.hasTable('favMedia').then(exists => {
+db.schema.hasTable('favmedia').then(exists => {
   if (!exists){
-    db.schema.createTable('favMedia', favMedia => {
-      favMedia.increments('id').primary();
-      favMedia.string('url', 128);
-      favMedia.string('email').unique();
+    db.schema.createTable('favmedia', favmedia => {
+      favmedia.increments('id').primary();
+      favmedia.string('url', 128);
+      favmedia.string('email').unique();
     }).then(function(table){
-      console.log("Created favMedia table");
+      console.log("Created favmedia table");
+    })
+  }
+});
+
+db.schema.hasTable('favgames').then(exists => {
+  if (!exists){
+    db.schema.createTable('favgames', favgames => {
+      favgames.increments('id').primary();
+      favgames.string('game', 128);
+      favgames.string('email').unique();
+    }).then(function(table){
+      console.log("Created favgames table");
     })
   }
 });
