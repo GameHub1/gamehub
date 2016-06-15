@@ -41,6 +41,10 @@ app.post('/signup', function(req,res) {
   res.send('SERVER POST: ', name, email);
 });
 
+app.post('/games', function(req, res) {
+  console.log(req.body);
+});
+
 app.post('/favmedia', function(req, res) {
   console.log(req.body.favMediaURL);
 });
