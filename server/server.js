@@ -17,6 +17,12 @@ const User = bookshelf.Model.extend({
 const Users = new bookshelf.Collection();
 Users.model = User;
 
+const Game = bookshelf.Model.extend({
+  tableName: 'favgames'
+});
+const Games = new bookshelf.Collection();
+Games.model = Game;
+
 app.post('/signup', function(req,res) {
   let name = req.body.name;
   let email = req.body.email;
@@ -43,6 +49,27 @@ app.post('/signup', function(req,res) {
 
 app.post('/games', function(req, res) {
   console.log(req.body);
+  let gameTitle = req.body[0].gameTitle;
+  let email = req.body[1];
+  console.log(gameTitle, email);
+  new Game({ game: gameTitle, email: email }).fetch().then(found => {
+    if (found) {
+      console.log("already in database!");
+    }
+    else {
+      console.log("NOT FOUND! ADDED!");
+      let newGame = new Game({
+        game: gameTitle,
+        email: email
+      });
+
+      newGame.save().then(newGame2 => {
+        Games.add(newGame2);
+      });
+    }
+  });
+
+
 });
 
 app.post('/favmedia', function(req, res) {
