@@ -12,19 +12,25 @@ class ProfileForm extends Component {
   }
 
   render () {
-    const {fields: {location, bio}, handleSubmit} = this.props;
+    const {fields: {name, location, bio}, handleSubmit} = this.props;
     return (
       <div>
         <h1> Set up Profile! </h1>
 
         <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
           <div>
+            <label>First name and last name </label>
+            <input type="text"  {...name}/>
+          </div>
+          <br/>
+
+          <div>
             <label> Location </label>
             <input type="text" {...location}/>
           </div>
           <br/>
 
-           <div>
+          <div>
             <label> Small bio </label>
             <textarea rows = '10' cols = '50' {...bio} />
           </div>
@@ -46,7 +52,7 @@ function mapDispatchToProps (dispatch) {
 
 export default ProfileForm = reduxForm({
   form: 'profile',
-  fields: ['location', 'bio']
+  fields: ['name', 'location', 'bio']
 }, null, mapDispatchToProps)(ProfileForm);
 
 // export default reduxForm ({

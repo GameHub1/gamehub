@@ -18,8 +18,12 @@ export class Profile extends Component {
         <div>
           <div>
             <h1> 
-            {this.props.authData.name}
+            {this.props.profile.name}
             </h1>
+            <h2>
+            Contact:
+            {this.props.authData.name}
+            </h2>
           </div>
           <div>
             insert profile pic element
