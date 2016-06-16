@@ -99,11 +99,16 @@ app.post('/favmedia', function(req, res) {
 
 app.post('/get_users', function(req, res) {
   console.log(req.body);
-  bookshelf.knex.raw("SELECT * FROM USERS2 WHERE LOWER(fullname) LIKE LOWER('%" + req.body.searchTerm + "%') OR LOWER(email) LIKE LOWER('%" + req.body.searchTerm + "%')")
+  if (req.body.searchTerm === '') {
+    res.send([]);
+  } else {
+    bookshelf.knex.raw("SELECT * FROM USERS2 WHERE LOWER(fullname) LIKE LOWER('%" + req.body.searchTerm + "%') OR LOWER(email) LIKE LOWER('%" + req.body.searchTerm + "%')")
     .then(response => {
       console.log(response.rows);
       res.send(response.rows);
     });
+  }
+  
 });
 
 app.get('/get_friends', function(req, res){

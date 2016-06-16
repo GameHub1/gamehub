@@ -2,27 +2,30 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {fetchUsers} from '../actions/index';
+import _ from 'underscore';
 
 class SearchBar extends Component {
   constructor(props) {
     super(props);
 
     this.state = {searchTerm: ''};
-    // // do this bind instead of making onclick an anonymous function
     this.onInputChange = this.onInputChange.bind(this);
+    this.onChangeSubmit = _.debounce(this.onChangeSubmit.bind(this), 200);
     this.onFormSubmit = this.onFormSubmit.bind(this);
   }
 
   onInputChange(event) {
-    this.setState({searchTerm: event.target.value});
+    event.persist();
+    this.setState({searchTerm: event.target.value}, this.onChangeSubmit(event));
+  }
+
+  onChangeSubmit(event) {
+    this.props.fetchUsers({searchTerm: this.state.searchTerm});
   }
 
   onFormSubmit(event) {
     event.preventDefault();
-    // we need to go and fetch weather data
     this.props.fetchUsers({searchTerm: this.state.searchTerm});
-    console.log(this.state.searchTerm);
-    // this.setState({searchTerm: ''});
   }
 
   render() {
@@ -47,5 +50,4 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({fetchUsers: fetchUsers}, dispatch);
 }
 
-// we are passing 'null' because we dont have any mapStateToProps argument 
 export default connect(null, mapDispatchToProps)(SearchBar);
