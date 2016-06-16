@@ -32,14 +32,19 @@ FavMedias.model = FavMedia;
 app.post('/signup', function(req,res) {
   let name = req.body.name;
   let email = req.body.email;
+
   let pic_path = req.body.pic_path;
   console.log(req.body);
+  let routeProp = 'val';
 
 	new User({ email: email }).fetch().then(found => {
     if (found) {
    		console.log("already in database!");
+      routeProp = 'found';
+      res.send({name: name, email: email, routeProp: routeProp});
     }
     else {
+      routeProp = 'not found'
     	console.log("NOT FOUND! ADDED!");
 		  let testUser = new User({
 			  fullname: name,
@@ -50,10 +55,12 @@ app.post('/signup', function(req,res) {
 			testUser.save().then(newUser => {
 				Users.add(newUser);
 			});
+
+      res.send({name: name,email: email,routeProp: routeProp});
     }
 	});
 
-  res.send('SERVER POST: ', name, email);
+  
 });
 
 app.post('/games', function(req, res) {
