@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 
 class SearchedUsers extends Component {
   render() {
+    console.log(this.props.searched_users)
     return (
       <div>
         hi

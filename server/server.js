@@ -102,6 +102,7 @@ app.post('/get_users', function(req, res) {
   bookshelf.knex.raw("SELECT * FROM USERS2 WHERE LOWER(fullname) LIKE LOWER('%" + req.body.searchTerm + "%') OR LOWER(email) LIKE LOWER('%" + req.body.searchTerm + "%')")
     .then(response => {
       console.log(response.rows);
+      res.send(response.rows);
     });
 });
 
