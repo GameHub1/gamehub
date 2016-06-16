@@ -3,21 +3,35 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import Games from '../components/games';
 import FavMedia from '../components/favMedia';
-
+import axios from 'axios';
 
 export class Profile extends Component {
- 
+
    getState () {
       console.log('This is media ', this.props.media);
       console.log('This is games ', this.props.games);
    }
 
+   findFriends() {
+     axios.get('/get_friends', "test")
+       .then((response) => {
+         let friendArr = response.data.data;
+         console.log("Inside findFriends SUCCESSS: ", friendArr);
+         friendArr.forEach(friend => {
+           console.log(friend.name);
+         });
+       })
+       .catch((response) => {
+         console.log('Error: ', response);
+       });
+   }
+
   render () {
 
-    return ( 
+    return (
         <div>
           <div>
-            <h1> 
+            <h1>
             {this.props.profile.name}
             </h1>
             <h2>
@@ -27,10 +41,10 @@ export class Profile extends Component {
           </div>
           <div>
             insert profile pic element
-            <h2> Location : 
+            <h2> Location :
             {this.props.profile.location}
             </h2>
-            <div> 
+            <div>
               <h2>
               Bio:
             {this.props.profile.bio}
@@ -47,6 +61,7 @@ export class Profile extends Component {
           </div>
           <div>
             <button onClick = {this.getState.bind(this)}> Get state </button>
+            <button onClick = {this.findFriends.bind(this)}> Find friends </button>
             <Games />
             <FavMedia />
           </div>

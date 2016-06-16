@@ -2,7 +2,7 @@
 
 const path = require('path');
 const express = require('express');
-const bookshelf = require('./pgsqldb.js');
+const bookshelf = require('./psqldb.js');
 const bodyParser = require('body-parser');
 const app = express();
 
@@ -102,6 +102,19 @@ app.post('/get_users', function(req, res) {
   bookshelf.knex.raw("SELECT * FROM USERS2 WHERE LOWER(fullname) LIKE LOWER('%" + req.body.searchTerm + "%') OR LOWER(email) LIKE LOWER('%" + req.body.searchTerm + "%')")
     .then(response => {
       console.log(response.rows);
+    });
+});
+
+app.get('/get_friends', function(req, res){
+  console.log(req.body);
+  bookshelf.knex.raw("SELECT fullname FROM users2 WHERE users2.id IN (SELECT friends.friend2_fk FROM users2 inner JOIN friends ON users2.id = friends.friend1_fk WHERE users2.email = 'chen.liu.michael@gmail.com');")
+    .then(response => {
+      let info = response.rows.reduce((acc, cur) => {
+        acc.push({name: cur.fullname});
+        return acc; 
+      }, []);
+      console.log(info);
+      res.send({data: info});
     });
 });
 
