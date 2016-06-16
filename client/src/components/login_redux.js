@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import { authFunc, resetAuth } from "../actions/index.js";
 import {connect} from 'react-redux';
+import {browserHistory} from 'react-router';
 
 export class ReduxLogin extends Component {
 
@@ -98,7 +99,15 @@ export class ReduxLogin extends Component {
     console.log('newuser: ', newUser)
     axios.post('/signup', newUser)
       .then((response) => {
-        console.log("Inside addNewUser SUCCESSS: ", response);
+
+        // set routing based on result of routeProp;
+        console.log("this is the route prop: ", response)
+        if (response.data.routeProp === 'found') {
+            browserHistory.push('/profile');
+        }
+        if (response.data.routeProp === 'not found') {
+            browserHistory.push('/profile_setup');
+        }
       })
       .catch((response) => {
         console.log('Error: ', response);
@@ -106,7 +115,8 @@ export class ReduxLogin extends Component {
   }
 
   logOut() {
-    // Redirect to the home route after logout
+    
+    //Redirect to the home route after logout
     localStorage.removeItem('id_token');
     resetAuth();
     window.location.href = window.location.href.split('#')[0];
@@ -132,7 +142,7 @@ export class ReduxLogin extends Component {
     } else {
       return (
         <div className="login-box">
-          <button onClick={this.showLock}>LOG IN</button>
+          <button onClick={this.showLock}>LOG IN OR SIGN UP</button>
         </div>
       );
     }
