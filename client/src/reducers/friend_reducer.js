@@ -6,6 +6,6 @@ export default function (state=[], action) {
      console.log('inside reducer switch');
       return action.payload;
     default:
-      return state
+      return state;
   }
 }
