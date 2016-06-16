@@ -112,7 +112,7 @@ app.get('/get_friends', function(req, res){
     .then(response => {
       let info = response.rows.reduce((acc, cur) => {
         acc.push({name: cur.fullname});
-        return acc; 
+        return acc;
       }, []);
       console.log(info);
       res.send({data: info});

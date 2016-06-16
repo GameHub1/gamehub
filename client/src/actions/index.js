@@ -9,6 +9,17 @@ export const CREATE_GAME = 'CREATE_GAME';
 export const CREATE_FAVMEDIA = 'CREATE_FAVMEDIA';
 // gina wrote this...
 export const FETCH_USERS = 'FETCH_USERS';
+export const FIND_FRIENDS = 'FIND_FRIENDS';
+
+
+export function showFriends (data) {
+  console.log("SHow friends is called, and data: ", data);
+    return {
+      type: FIND_FRIENDS,
+      payload: data
+    }
+
+}
 
 export function postProfile (profile) {
   const url = `/post_profile`;
@@ -45,7 +56,7 @@ export function createGame(props) {
 export function createFavMedia (props) {
   const request = axios.post('/favmedia', props);
   console.log('in the action', props);
-  
+
   return {
     type: CREATE_FAVMEDIA,
     payload: props
