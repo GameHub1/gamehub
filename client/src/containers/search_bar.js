@@ -30,18 +30,26 @@ class SearchBar extends Component {
 
   render() {
     return (
-      <div>
-        <form onSubmit={this.onFormSubmit} className="input-group">
-          <input 
-            className="form-control"
-            placeholder="search for a friend"
-            value={this.state.searchTerm}
-            onChange={this.onInputChange}/>
-          <span className="input-group-btn">
-            <button type="submit" className="btn btn-secondary">Submit</button>
-          </span>
-        </form>
-      </div>
+      <nav className="navbar navbar-inverse">
+        <div class="container-fluid">
+          
+            <br/>
+            <span id="navHeader">GameHub</span>
+            <form onSubmit={this.onFormSubmit} className="navbar-form navbar-right" role="search">
+              <div className="form-group">
+                <input 
+                  className="form-control"
+                  type="text"
+                  placeholder="search for a friend"
+                  value={this.state.searchTerm}
+                  onChange={this.onInputChange}/>
+                  &nbsp;
+                  <button type="submit" className="btn btn-secondary">Submit</button>
+              </div>
+            </form>
+          
+        </div>
+      </nav>
     )
   }
 }
