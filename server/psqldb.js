@@ -38,7 +38,7 @@ db.schema.hasTable('favmedia').then(exists => {
     db.schema.createTable('favmedia', favmedia => {
       favmedia.increments('id').primary();
       favmedia.string('url', 128);
-      favmedia.string('email').unique();
+      favmedia.string('email');
     }).then(function(table){
       console.log("Created favmedia table");
     })
@@ -50,7 +50,7 @@ db.schema.hasTable('favgames').then(exists => {
     db.schema.createTable('favgames', favgames => {
       favgames.increments('id').primary();
       favgames.string('game', 128);
-      favgames.string('email').unique();
+      favgames.string('email');
     }).then(function(table){
       console.log("Created favgames table");
     })
