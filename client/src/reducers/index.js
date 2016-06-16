@@ -6,6 +6,7 @@ import profile from './profile_reducer';
 import games from './games_reducer';
 import media from './favmedia_reducer.js';
 import promise from 'redux-promise'
+import searchedUsers from './searched_users_reducer';
 
 const logger = createLogger();
 
@@ -14,10 +15,10 @@ const reducers = {
   authData: authData,
   profile: profile,
   games: games,
-  media: media
+  media: media,
+  searched_users: searchedUsers
 
-
-}
+};
 
 const reducer = combineReducers(reducers);
 

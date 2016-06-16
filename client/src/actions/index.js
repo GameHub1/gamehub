@@ -62,6 +62,6 @@ export function fetchUsers(props) {
     // redux-promise (middleware) will resolve the request promise for us so we will get the resolved data as the payload instead
     // redux-promise will ask if the payload is a promise or not
       // if so, it will stop the action, and it will create a new action and send it to the reducers ONLY when promise resolves
-    payload: props
+    payload: request
   };
 }
