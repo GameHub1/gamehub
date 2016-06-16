@@ -105,6 +105,19 @@ app.post('/get_users', function(req, res) {
     });
 });
 
+app.get('/get_friends', function(req, res){
+  console.log(req.body);
+  bookshelf.knex.raw("SELECT fullname FROM users2 WHERE users2.id IN (SELECT friends.friend2_fk FROM users2 inner JOIN friends ON users2.id = friends.friend1_fk WHERE users2.email = 'chen.liu.michael@gmail.com');")
+    .then(response => {
+      let info = response.rows.reduce((acc, cur) => {
+        acc.push({name: cur.fullname});
+        return acc; 
+      }, []);
+      console.log(info);
+      res.send({data: info});
+    });
+});
+
 app.use(function(req, res) {
   res.sendFile(path.join(__dirname, '../dist/index.html'));
 });

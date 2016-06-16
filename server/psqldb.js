@@ -23,8 +23,8 @@ db.schema.hasTable('friends').then(exists => {
   if (!exists) {
     db.schema.createTable('friends', friendship => {
       friendship.increments('id').primary();
-      friendship.integer('friend1_fk');
-      friendship.integer('friend2_fk');
+      friendship.integer('friend1_fk');//id user2
+      friendship.integer('friend2_fk'); //return array of these
       friendship.foreign('friend1_fk').references('users2.id');
       friendship.foreign('friend2_fk').references('users2.id');
     }).then(function(table){
