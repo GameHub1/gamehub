@@ -5,8 +5,8 @@ export default function (state=[], action) {
     case CREATE_GAME:
     console.log("Game reducer consoled")
      let game = [action.payload[0].gameTitle]
-      return [state, ...game]
+      return [state, ...game];
     default:
-      return state
+      return state;
   }
 }

@@ -32,6 +32,8 @@ FavMedias.model = FavMedia;
 app.post('/signup', function(req,res) {
   let name = req.body.name;
   let email = req.body.email;
+  let pic_path = req.body.pic_path;
+  console.log(req.body);
 
 	new User({ email: email }).fetch().then(found => {
     if (found) {
@@ -41,7 +43,8 @@ app.post('/signup', function(req,res) {
     	console.log("NOT FOUND! ADDED!");
 		  let testUser = new User({
 			  fullname: name,
-			  email: email
+			  email: email,
+        pic_path: pic_path
 		  });
 
 			testUser.save().then(newUser => {
@@ -122,6 +125,37 @@ app.get('/get_friends', function(req, res){
       console.log(info);
       res.send({data: info});
     });
+});
+
+app.post('/post_profile', function(req, res) {
+  console.log(req.body);
+  let fullname = req.body[0].name;
+  let location = req.body[0].location;
+  let bio = req.body[0].bio;
+  let email = req.body[1];
+  
+  new User({ email: email }).fetch().then(found => {
+    if (found) {
+      var fullname_change = found.attributes.fullname
+      if(found.attributes.fullname === found.attributes.email) {
+        fullname_change = fullname;
+      }
+      console.log(found.attributes);
+      let updateUser = new User({
+        id: found.attributes.id,
+        fullname: fullname_change,
+        email: email,
+        location: location,
+        bio: bio
+      });
+      updateUser.save({email: email}, {method: "update"}).then(newUser => {
+        Users.add(newUser);
+      });
+    }
+    else {
+      console.log("EMAIL ADDRESS NOT FOUND!");
+    }
+  });
 });
 
 app.use(function(req, res) {

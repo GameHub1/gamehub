@@ -8,7 +8,7 @@ import {Link} from 'react-router';
 class ProfileForm extends Component {
   onSubmit(prop) {
     console.log('This is props', prop);
-    this.props.postProfile(prop);
+    this.props.postProfile([prop,this.props.authData.email]);
   }
 
   render () {
@@ -50,10 +50,16 @@ function mapDispatchToProps (dispatch) {
   return bindActionCreators({postProfile}, dispatch);
 }
 
+function mapStateToProps(state) {
+  return {
+    authData: state.authData
+  };
+}
+
 export default ProfileForm = reduxForm({
   form: 'profile',
   fields: ['name', 'location', 'bio']
-}, null, mapDispatchToProps)(ProfileForm);
+}, mapStateToProps, mapDispatchToProps)(ProfileForm);
 
 // export default reduxForm ({
 //   form: "ProfileForm",
