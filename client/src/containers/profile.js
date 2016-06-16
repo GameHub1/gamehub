@@ -4,6 +4,8 @@ import {connect} from 'react-redux';
 import Games from '../components/games';
 import FavMedia from '../components/favMedia';
 import axios from 'axios';
+import FriendList from './friend_list';
+import {showFriends} from '../actions/index';
 
 export class Profile extends Component {
 
@@ -16,6 +18,7 @@ export class Profile extends Component {
      axios.get('/get_friends', "test")
        .then((response) => {
          let friendArr = response.data.data;
+         this.props.showFriends(friendArr);
          console.log("Inside findFriends SUCCESSS: ", friendArr);
          friendArr.forEach(friend => {
            console.log(friend.name);
@@ -51,6 +54,10 @@ export class Profile extends Component {
               </h2>
             </div>
             <div>
+              Here are all your friends:
+              <FriendList />
+            </div>
+            <div>
               Here is the media element:
               {this.props.media[1]}
             </div>
@@ -83,4 +90,8 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, null)(Profile)
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({showFriends}, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);
