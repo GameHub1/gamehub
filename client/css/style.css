@@ -8,13 +8,13 @@ body {
 	/*background-image: url('../images/space_invaders.png');
 	background-position: 50% 0;*/
 }
+
 #mario{
   background-color: #212421; 
   text-align: center;
   /*background-image: url('../images/space_invaders.png');
   background-position: 50% 0;*/
 }
-
 
 #mario:after {
   content : "";
@@ -67,6 +67,12 @@ body {
 #favMedia {
   text-align: right;
   padding-right: 30px;
+}
+
+/*------------------------------ Searched Users List Component ------------------------------*/
+#userList {
+  width: 60%;
+  background-color: #dbe2d3;
 }
 
 /*------------------------------ Blog Page ------------------------------*/
