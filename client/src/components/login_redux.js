@@ -90,10 +90,12 @@ export class ReduxLogin extends Component {
   }
 
   addNewUser(response) {
+    console.log(response);
+    let pic = response.data.picture_large || response.data.picture
     let newUser = {
       name: this.props.authData.name,
       email: this.props.authData.email,
-      pic_path: response.data.picture_large
+      pic_path: pic
     }
     console.log('newuser: ', newUser)
     axios.post('/signup', newUser)
