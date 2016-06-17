@@ -31,18 +31,19 @@ class SearchBar extends Component {
 
   render() {
     return (
-      <div>
-        <form onSubmit={this.onFormSubmit} role="search">
-          <div>
+  
+        <form onSubmit={this.onFormSubmit} className="navbar-form navbar-left" role="search">
+          <div className="form-group">
             <input className="searchBar"
               type="text"
               placeholder="search for a friend"
               value={this.state.searchTerm}
-              onChange={this.onInputChange}/>&nbsp;<button type="submit" className="btn btn-default">Submit</button>
+              onChange={this.onInputChange}/>&nbsp;
               <SearchedUsersList />
           </div>
+          <button type="submit" className="btn btn-default">Submit</button>
         </form>
-      </div>
+  
     )
   }
 }

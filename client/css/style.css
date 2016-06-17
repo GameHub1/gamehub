@@ -125,6 +125,11 @@ div.mario {
   padding-bottom: 6px;
 }
 
+#searchedUsersRow a {
+  text-decoration: none;
+  color: #ffffff;
+}
+
 /*------------------------------ Blog Page ------------------------------*/
 #blogs {
 	display: inline-block;

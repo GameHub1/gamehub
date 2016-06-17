@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import ReduxLogin from './login_redux';
 import SearchBar from '../containers/search_bar';
-// import SearchedUsersList from '../containers/searched_users_list';
 import Logout from '../components/logout';
 
 export default class RootComponent extends Component {
