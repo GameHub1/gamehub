@@ -19,7 +19,7 @@ export const createStoreMiddleware = createStore(
 export default (
   <Route path='/' component={Root} >
     <IndexRoute component={App}/>
-    <Route path='profile_setup' component={ProfileForm}/>
-    <Route path='profile' component = {Profile}/>
+    <Route path="profile_setup" component={ProfileForm}/>
+    <Route path='/profile/:id' component = {Profile}/>
   </Route>
 );

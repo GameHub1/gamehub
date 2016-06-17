@@ -101,7 +101,7 @@ export class ReduxLogin extends Component {
         // set routing based on result of routeProp;
         console.log("this is the route prop: ", response)
         if (response.data.routeProp === 'found') {
-            browserHistory.push('/profile');
+            browserHistory.push(`/profile/${this.props.authData.name}`);
         }
         if (response.data.routeProp === 'not found') {
             browserHistory.push('/profile_setup');
@@ -119,7 +119,9 @@ export class ReduxLogin extends Component {
   }
 
   showLock() {
-    this.lock.show();
+    this.lock.show({
+      icon: 'http://icons.iconarchive.com/icons/ph03nyx/super-mario/128/Retro-Mushroom-Super-3-icon.png'
+    });
   }
 
   logState() {
