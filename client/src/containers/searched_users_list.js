@@ -3,17 +3,6 @@ import {connect} from 'react-redux';
 import { Router, Route, Link, browserHistory } from 'react-router';
 
 class SearchedUsers extends Component {
-  // constructor(props) {
-  //   super(props);
-
-  //   this.goToUserProfile = this.goToUserProfile.bind(this);
-  // }
-
-  // goToUserProfile(event) {
-  //   console.log(event)
-  //   // browserHistory.push(`/profile/${email}`);
-  // }
-
   renderUsers(userData) {
     const fullname = userData.fullname;
     const email = userData.email;

@@ -17,8 +17,8 @@ export default class RootComponent extends Component {
             </div>
             <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <SearchBar />
-              <Logout />
             </div>
+            <Logout />
           </div>
         </nav>
       );
