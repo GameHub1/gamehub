@@ -12,6 +12,7 @@ export class Profile extends Component {
    getState () {
       console.log('This is media ', this.props.media);
       console.log('This is games ', this.props.games);
+      console.log('THis is profile', this.props.profile);
    }
 
    findFriends() {
@@ -35,7 +36,7 @@ export class Profile extends Component {
         <div>
           <div>
             <h1>
-            {this.props.profile.name}
+            {this.props.profile[0].name}
             </h1>
             <h2>
             Contact:
@@ -45,12 +46,12 @@ export class Profile extends Component {
           <div>
             insert profile pic element
             <h2> Location :
-            {this.props.profile.location}
+            {this.props.profile[0].location}
             </h2>
             <div>
               <h2>
               Bio:
-            {this.props.profile.bio}
+            {this.props.profile[0].bio}
               </h2>
             </div>
             <div>
