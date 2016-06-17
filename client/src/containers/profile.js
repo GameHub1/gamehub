@@ -9,6 +9,13 @@ import {showFriends} from '../actions/index';
 
 export class Profile extends Component {
 
+  componentWillMount () {
+    axios.post('/get_user_info',{email: this.state.authData.email})
+      .then((response) => {
+
+      });
+  }
+
    getState () {
       console.log('This is media ', this.props.media);
       console.log('This is games ', this.props.games);
