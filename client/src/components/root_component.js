@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import ReduxLogin from './login_redux';
 import SearchBar from '../containers/search_bar';
-// import SearchedUsersList from '../containers/searched_users_list';
 import Logout from '../components/logout';
 
 export default class RootComponent extends Component {
@@ -10,17 +9,10 @@ export default class RootComponent extends Component {
     console.log('root', Array.isArray(this.props.authData));
     if (!Array.isArray(this.props.authData)) {
       return (
-        <nav className="navbar navbar-inverse">
-          <div className="container-fluid">
-            <div className="navbar-header">
-              <span className="navbar-brand">GameHub</span>
-            </div>
-            <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-              <SearchBar />
-            </div>
-            <Logout />
-          </div>
-        </nav>
+        <div>
+          <span id="navHeader">GameHub</span> <SearchBar /> <Logout />
+          {this.props.children}
+        </div>
       );
     } else {
       return (
