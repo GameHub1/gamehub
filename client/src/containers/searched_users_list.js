@@ -17,7 +17,6 @@ class SearchedUsers extends Component {
   }
 
   render() {
-    console.log(this.props.searched_users)
     return (
       <table id="userList">
         <tbody>

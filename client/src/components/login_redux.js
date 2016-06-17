@@ -94,7 +94,7 @@ export class ReduxLogin extends Component {
       email: this.props.authData.email,
       pic_path: pic
     }
-    console.log('newuser: ', newUser)
+
     axios.post('/signup', newUser)
       .then((response) => {
 
@@ -130,7 +130,6 @@ export class ReduxLogin extends Component {
   }
 
   render() {
-    console.log("Localstoraage.idTOken", this.props.authData.name);
     if (this.props.authData.name) {
       return (
         <div>
