@@ -48,50 +48,104 @@ export class Profile extends Component {
 
   render () {
     console.log("PROFILE: ", this.props.profile);
+
     return (
-        <div>
-          <div>
-            <h1>
-            {this.props.profile.name}
+      <div id="profile">
+        <div class="row" id="profile_heading">
+          <div class="col-lg-12">
+            <h1 class="page-header">{this.props.profile.name}
+              <small>{this.props.profile.location}</small>
             </h1>
-            <h2>
-            Contact:
-            {this.props.authData.name}
-            </h2>
-          </div>
-          <div>
-            insert profile pic element
-            <img src={this.props.profile.pic_path}/>
-            <h2> Location :
-            {this.props.profile.location}
-            </h2>
-            <div>
-              <h2>
-              Bio:
-            {this.props.profile.bio}
-              </h2>
-            </div>
-            <div>
-              Here are all your friends:
-              <FriendList />
-            </div>
-            <div>
-              Here is the media element:
-              {this.props.media[1]}
-            </div>
-          </div>
-          <div>
-          Here is a the games:
-           {this.props.games[1]}
-          </div>
-          <div>
-            <button onClick = {this.getState.bind(this)}> Get state </button>
-            <button onClick = {this.findFriends.bind(this)}> Find friends </button>
-            <Games />
-            <FavMedia />
           </div>
         </div>
+
+        <div class="col-md-4" id="user_friends">
+          <div class="row" id="user">
+            <div id="profile_pic">
+              <img src={this.props.profile.pic_path}/>
+              </div>
+              <button>Send Friend Request</button>
+              </div>
+          <div class="row" id="friends-component">
+            <h3>Friends</h3>
+            <p>Kyle</p>
+            <p>Michael</p>
+            <p>Gina</p>
+            <a>See All Friends</a>
+          </div>
+        </div>
+
+        <div class="col-md-8" id="bio_games">
+          <div class="row" id="bio">
+            {this.props.profile.bio}
+          </div>
+          <div class="row">
+            <h3>Games</h3>
+            <p><strong>Really Good At:</strong></p>
+            <p>Altered Beast, Twilight Imperium, Boss Monster, We Did Not Playtest This At All, Android: Netrunner</p>
+            <p><strong>Enjoys Playing:</strong></p>
+            <p>Gloom, Magic: the Gathering, WWE Smackdown 2012, Limbo, Settlers of Catan, Shadow Hunters</p>
+            <p><strong>Interested In Trying:</strong></p>
+            <p>Fast Food Magnate, Vampire: the Masquerade</p>
+            <a>Add Game</a>
+          </div>
+          <div class="row">
+            <h3>Media</h3>
+            <div>
+              <iframe width="560" height="315" src="https://www.youtube.com/embed/mLyOj_QD4a4" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <a>Add Media</a>
+          </div>
+      </div>
+    </div>
     );
+
+    //Old profile rendering code:
+
+    // return (
+    //     <div>
+    //       <div>
+    //         <h1>
+    //         {this.props.profile.name}
+    //         </h1>
+    //         <h2>
+    //         Contact:
+    //         {this.props.authData.name}
+    //         </h2>
+    //       </div>
+    //       <div>
+    //         insert profile pic element
+    //         <img src={this.props.profile.pic_path}/>
+    //         <h2> Location :
+    //         {this.props.profile.location}
+    //         </h2>
+    //         <div>
+    //           <h2>
+    //           Bio:
+    //         {this.props.profile.bio}
+    //           </h2>
+    //         </div>
+    //         <div>
+    //           Here are all your friends:
+    //           <FriendList />
+    //         </div>
+    //         <div>
+    //           Here is the media element:
+    //           {this.props.media[1]}
+    //         </div>
+    //       </div>
+    //       <div>
+    //       Here is a the games:
+    //        {this.props.games[1]}
+    //       </div>
+    //       <div>
+    //         <button onClick = {this.getState.bind(this)}> Get state </button>
+    //         <button onClick = {this.findFriends.bind(this)}> Find friends </button>
+    //         <Games />
+    //         <FavMedia />
+    //       </div>
+    //     </div>
+    // );
 
   }
 
