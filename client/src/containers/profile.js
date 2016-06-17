@@ -66,7 +66,6 @@ export class Profile extends Component {
             <h1>
               <span className="user-name">{this.props.profile.name}</span>
               <small className="location">{this.props.profile.location || "San Francisco, CA"}</small>
-              <button onClick = {this.addFriend.bind(this)}> Add friend </button>
             </h1>
           </div>
         </div>
@@ -76,7 +75,7 @@ export class Profile extends Component {
             <div className="profile_pic">
               <img className="img-responsive" src={this.props.profile.pic_path}/>
             </div>
-            <button className="btn">Send Friend Request</button>
+            <button className="btn" onClick = {this.addFriend.bind(this)}> Follow </button>
           </div>
           <div className="row" id="friends-component">
             <h3>Friends</h3>
