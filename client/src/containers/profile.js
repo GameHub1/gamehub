@@ -55,31 +55,31 @@ export class Profile extends Component {
         {/* Profile Header */}
         <div className="row" id="profile_heading">
           <div className="col-lg-12">
-            <h1 className="page-header">Sam Richards
-              <small>San Jose, CA</small>
+            <h1>
+              <span className="user-name">{this.props.profile.name}</span>
+              <small className="location">{this.props.profile.location || "San Francisco, CA"}</small>
             </h1>
           </div>
         </div>
         {/* Profile Grid */}
         <div className="col-md-4" id="user_friends">
           <div className="row" id="user">
-            <div id="profile_pic">
-              <img src="http://philosophy.ucr.edu/wp-content/uploads/2013/08/1-Sam3-225x300.jpg" />
+            <div className="profile_pic">
+              <img src={this.props.profile.pic_path}/>
             </div>
             <button>Send Friend Request</button>
           </div>
           <div className="row" id="friends-component">
             <h3>Friends</h3>
-            <p>Kyle</p>
-            <p>Michael</p>
-            <p>Gina</p>
+            <FriendList />
             <a>See All Friends</a>
           </div>
         </div>
-        <div className="col-md-8" id="bio_games">
+        <div className="col-md-1" id="barrier">
+        </div>
+        <div className="col-md-7" id="bio_games">
           <div className="row" id="bio">
-            <p>I am a chill dude, always down for a quick game of Twilight Imperium. Hit me up for dice and drinks sometime.</p>
-            <p>I'm a pretty big fan of the first two Equilibrium albums, even though they apparently sound like music from fantasy-themed video games. My dad played traditional Celtic music in the car all the time when I was growing up, so I associate their sound more with that than with video games (...which, based on interviews, seems to be what's up with the band itself).</p>
+            <p>{this.props.profile.bio || "Hi, I haven\'t filled out my bio yet!"}</p>
             <a>Edit Profile</a>
           </div>
           <div className="row">
@@ -95,7 +95,7 @@ export class Profile extends Component {
           <div className="row">
             <h3>Media</h3>
             <div>
-              <iframe width={560} height={315} src="https://www.youtube.com/embed/mLyOj_QD4a4" frameBorder={0} allowFullScreen />
+              <iframe width={336} height={189} src="https://www.youtube.com/embed/mLyOj_QD4a4" frameBorder={0} allowFullScreen />
             </div>
             <a>Add Media</a>
           </div>
