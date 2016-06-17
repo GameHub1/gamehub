@@ -50,7 +50,7 @@ export class Profile extends Component {
         <div>
           <div>
             <h1>
-            {this.props.profile[0].name}
+            {this.props.profile.name}
             </h1>
             <h2>
             Contact:
@@ -61,12 +61,12 @@ export class Profile extends Component {
             insert profile pic element
             <img src={this.props.profile[2]}/>
             <h2> Location :
-            {this.props.profile[0].location}
+            {this.props.profile.location}
             </h2>
             <div>
               <h2>
               Bio:
-            {this.props.profile[0].bio}
+            {this.props.profile.bio}
               </h2>
             </div>
             <div>

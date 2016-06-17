@@ -34,8 +34,7 @@ class SearchBar extends Component {
       <div>
         <form onSubmit={this.onFormSubmit} role="search">
           <div>
-            <input
-              className="searchBar"
+            <input className="searchBar"
               type="text"
               placeholder="search for a friend"
               value={this.state.searchTerm}

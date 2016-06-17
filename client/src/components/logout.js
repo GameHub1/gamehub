@@ -13,6 +13,7 @@ export class Logout extends Component {
 
   logOut() {
     localStorage.removeItem('id_token');
+    resetAuth();
     window.location.href = window.location.href;
   }
 
