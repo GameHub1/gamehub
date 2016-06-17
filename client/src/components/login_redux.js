@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import { authFunc, resetAuth } from "../actions/index.js";
+import {authFunc, resetAuth} from "../actions/index";
 import {connect} from 'react-redux';
 import {browserHistory} from 'react-router';
 
 export class ReduxLogin extends Component {
-
   constructor(props){
     super(props);
     this.state = {};
@@ -19,7 +18,6 @@ export class ReduxLogin extends Component {
   componentWillMount() {
     this.lock = new Auth0Lock(this.AUTHO_CLIENTID, this.AUTHO_DOMAIN);
     this.checkState();
-    // this.props.authFunc({idToken: this.getIdToken(), accessToken: this.getAccessToken()});
   }
 
   getAccessToken() {
@@ -32,7 +30,6 @@ export class ReduxLogin extends Component {
         localStorage.setItem('access_token', authHash.access_token);
       }
       if (authHash.error) {
-        // Handle any error conditions
         console.log("Error signing in", authHash);
       }
     }
@@ -58,7 +55,6 @@ export class ReduxLogin extends Component {
     }
     return idToken;
   }
-
 
   checkState() {
     if ((!this.props.authData.name || !this.props.authData.email) && window.location.hash.length) {
@@ -117,10 +113,7 @@ export class ReduxLogin extends Component {
   }
 
   logOut() {
-    
-    //Redirect to the home route after logout
     localStorage.removeItem('id_token');
-    resetAuth();
     window.location.href = window.location.href.split('#')[0];
   }
 
@@ -138,13 +131,13 @@ export class ReduxLogin extends Component {
     if (this.props.authData.name) {
       return (
         <div>
-          <button onClick={this.logOut}>LOG OUT HERE</button>
+          <button type="button" className="btn btn-secondary" onClick={this.logOut}>Log Out</button>
         </div>
       );
     } else {
       return (
-        <div className="login-box">
-          <button onClick={this.showLock}>LOG IN OR SIGN UP</button>
+        <div>
+          <button type="button" className="btn btn-secondary" onClick={this.showLock}>Log In / Sign Up</button>
         </div>
       );
     }
@@ -157,6 +150,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, {
-  authFunc
-})(ReduxLogin)
+export default connect(mapStateToProps, {authFunc})(ReduxLogin);

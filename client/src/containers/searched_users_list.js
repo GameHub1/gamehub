@@ -6,22 +6,23 @@ class SearchedUsers extends Component {
     const fullname = userData.fullname;
     const email = userData.email;
 
-    return (
-      <tr key={email}>
-        <td><div>{fullname}</div></td>
-        <td><div>{email}</div></td>
-      </tr>
+    return ( 
+      <table>
+          <tr id="searchedUsersRow" key={email}>
+            <td><span className="glyphicon glyphicon-user">&nbsp;</span></td>
+            <td>&nbsp;{fullname}&nbsp;&nbsp;|&nbsp;</td>
+            <td>&nbsp;{email}</td>
+          </tr>
+      </table>
     )
   }
 
   render() {
     console.log(this.props.searched_users)
     return (
-      <table id="userList" className="table table-hover">
-        <tbody>
-          {this.props.searched_users.map(this.renderUsers)}
-        </tbody>
-      </table>
+      <ul id="userList">
+        {this.props.searched_users.map(this.renderUsers)}
+      </ul>
     );
   }
 }
