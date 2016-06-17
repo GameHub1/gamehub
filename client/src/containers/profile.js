@@ -65,7 +65,7 @@ export class Profile extends Component {
         <div className="col-md-4" id="user_friends">
           <div className="row" id="user">
             <div className="profile_pic">
-              <img src={this.props.profile.pic_path}/>
+              <img className="img-responsive" src={this.props.profile.pic_path}/>
             </div>
             <button>Send Friend Request</button>
           </div>
