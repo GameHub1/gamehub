@@ -3,6 +3,7 @@ import {reduxForm} from 'redux-form';
 import {bindActionCreators} from 'redux';
 import {postProfile} from '../actions/index.js';
 import {Link} from 'react-router';
+import {browserHistory} from 'react-router';
 
 
 class ProfileForm extends Component {
@@ -15,6 +16,10 @@ class ProfileForm extends Component {
       email: this.props.authData.email
     };
     this.props.postProfile(prop2);
+
+    setTimeout(function () {
+    browserHistory.push(`/profile/${this.props.authData.name}`);
+    }.bind(this), 500)
   }
 
   render () {
@@ -45,7 +50,7 @@ class ProfileForm extends Component {
           <button type="submit">Create profile </button>
 
         </form>
-        <Link to="/profile"> Go to profile </Link>
+        
        
       </div>
     );
