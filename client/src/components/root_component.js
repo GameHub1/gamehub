@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import ReduxLogin from './login_redux';
 import SearchBar from '../containers/search_bar';
 // import SearchedUsersList from '../containers/searched_users_list';
-import Logout from '../components/logout';
+// import Logout from '../components/logout';
 
 export default class RootComponent extends Component {
   render() {
@@ -11,7 +11,7 @@ export default class RootComponent extends Component {
     if (!Array.isArray(this.props.authData)) {
       return (
         <div>
-          <span id="navHeader">GameHub</span> <SearchBar /> <Logout />
+          <span id="navHeader">GameHub</span> <SearchBar /> 
           {this.props.children}
         </div>
       );
