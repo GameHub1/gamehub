@@ -135,7 +135,6 @@ app.get('/get_friends', function(req, res){
 });
 
 app.post('/get_user_info', function(req, res){
-  console.log('get user info', req.body);
   let email = req.body.email;
   new User({ email: email }).fetch().then(found => {
     if (found) {
@@ -144,8 +143,11 @@ app.post('/get_user_info', function(req, res){
   });
 });
 
-app.post('/post_profile', function(req, res) {
+app.post('/add_friend', function(req, res) {
   console.log(req.body);
+});
+
+app.post('/post_profile', function(req, res) {
   let fullname = req.body.name;
   let location = req.body.location;
   let bio = req.body.bio;
