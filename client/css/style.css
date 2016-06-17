@@ -9,6 +9,10 @@ body {
   color: #ffffff;
 }
 
+body input {
+  color: #000000;
+}
+
 div.mario { 
   text-align: center;
   width:      100%;

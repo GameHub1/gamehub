@@ -17,9 +17,11 @@ export class Profile extends Component {
         let prop = {
           name: response.data.found.fullname,
           location: response.data.found.location,
-          bio: response.data.found.bio
+          bio: response.data.found.bio,
+          email: this.props.authData.email,
+          pic_path: response.data.found.pic_path
         };
-        this.props.postProfile([prop, this.props.authData.email, response.data.found.pic_path]);
+        this.props.postProfile(prop);
       });
   }
 
@@ -45,7 +47,7 @@ export class Profile extends Component {
    }
 
   render () {
-
+    console.log("PROFILE: ", this.props.profile);
     return (
         <div>
           <div>
@@ -59,7 +61,7 @@ export class Profile extends Component {
           </div>
           <div>
             insert profile pic element
-            <img src={this.props.profile[2]}/>
+            <img src={this.props.profile.pic_path}/>
             <h2> Location :
             {this.props.profile.location}
             </h2>

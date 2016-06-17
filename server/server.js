@@ -146,10 +146,10 @@ app.post('/get_user_info', function(req, res){
 
 app.post('/post_profile', function(req, res) {
   console.log(req.body);
-  let fullname = req.body[0].name;
-  let location = req.body[0].location;
-  let bio = req.body[0].bio;
-  let email = req.body[1];
+  let fullname = req.body.name;
+  let location = req.body.location;
+  let bio = req.body.bio;
+  let email = req.body.email;
   
   new User({ email: email }).fetch().then(found => {
     if (found) {

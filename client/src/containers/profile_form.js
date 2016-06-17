@@ -8,7 +8,13 @@ import {Link} from 'react-router';
 class ProfileForm extends Component {
   onSubmit(prop) {
     console.log('This is props', prop);
-    this.props.postProfile([prop,this.props.authData.email]);
+    let prop2 = {
+      name: prop.name,
+      location: prop.location,
+      bio: prop.bio,
+      email: this.props.authData.email
+    };
+    this.props.postProfile(prop2);
   }
 
   render () {
