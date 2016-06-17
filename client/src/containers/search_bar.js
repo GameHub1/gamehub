@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {fetchUsers} from '../actions/index';
 import _ from 'underscore';
+import SearchedUsersList from '../containers/searched_users_list';
 
 class SearchBar extends Component {
   constructor(props) {
@@ -31,15 +32,15 @@ class SearchBar extends Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.onFormSubmit} className="input-group">
-          <input 
-            className="form-control"
-            placeholder="search for a friend"
-            value={this.state.searchTerm}
-            onChange={this.onInputChange}/>
-          <span className="input-group-btn">
-            <button type="submit" className="btn btn-secondary">Submit</button>
-          </span>
+        <form onSubmit={this.onFormSubmit} role="search">
+          <div>
+            <input className="searchBar"
+              type="text"
+              placeholder="search for a friend"
+              value={this.state.searchTerm}
+              onChange={this.onInputChange}/>&nbsp;<button type="submit" className="btn btn-default">Submit</button>
+              <SearchedUsersList />
+          </div>
         </form>
       </div>
     )

@@ -6,12 +6,27 @@ import FavMedia from '../components/favMedia';
 import axios from 'axios';
 import FriendList from './friend_list';
 import {showFriends} from '../actions/index';
+import {postProfile} from '../actions/index.js';
 
 export class Profile extends Component {
+
+  componentWillMount () {
+    axios.post('/get_user_info',{email: this.props.authData.email})
+      .then((response) => {
+        console.log(response);
+        let prop = {
+          name: response.data.found.fullname,
+          location: response.data.found.location,
+          bio: response.data.found.bio
+        };
+        this.props.postProfile([prop, this.props.authData.email, response.data.found.pic_path]);
+      });
+  }
 
    getState () {
       console.log('This is media ', this.props.media);
       console.log('This is games ', this.props.games);
+      console.log('THis is profile', this.props.profile);
    }
 
    findFriends() {
@@ -44,6 +59,7 @@ export class Profile extends Component {
           </div>
           <div>
             insert profile pic element
+            <img src={this.props.profile[2]}/>
             <h2> Location :
             {this.props.profile.location}
             </h2>
@@ -79,6 +95,9 @@ export class Profile extends Component {
 
 }
 
+function mapDispatchToProps (dispatch) {
+  return bindActionCreators({postProfile, showFriends}, dispatch);
+}
 
 function mapStateToProps(state) {
   return {
@@ -88,10 +107,6 @@ function mapStateToProps(state) {
     games: state.games,
     media: state.media
   }
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({showFriends}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);
