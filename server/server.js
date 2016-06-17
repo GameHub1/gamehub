@@ -29,6 +29,12 @@ const FavMedia = bookshelf.Model.extend({
 const FavMedias = new bookshelf.Collection();
 FavMedias.model = FavMedia;
 
+const Friend = bookshelf.Model.extend({
+  tableName: 'friends'
+});
+const Friends = new bookshelf.Collection();
+Friends.model = Friend;
+
 app.post('/signup', function(req,res) {
   let name = req.body.name;
   let email = req.body.email;
@@ -135,7 +141,6 @@ app.get('/get_friends', function(req, res){
 });
 
 app.post('/get_user_info', function(req, res){
-  console.log('get user info', req.body);
   let email = req.body.email;
   new User({ email: email }).fetch().then(found => {
     if (found) {
@@ -144,8 +149,31 @@ app.post('/get_user_info', function(req, res){
   });
 });
 
-app.post('/post_profile', function(req, res) {
+app.post('/add_friend', function(req, res) {
   console.log(req.body);
+  if (req.body.friend1 === req.body.friend2){
+    console.log("Tried to friend self. haha!");
+  }
+  else {
+    new User({ email: req.body.friend1 }).fetch().then(found => {
+      if (found) {
+        new User({ email: req.body.friend2 }).fetch().then(found2 => {
+          if (found2) {
+            let friendship = new friend({
+              friend1_fk: found.attributes.id,
+              friend2_fk: found2.attributes.id
+            });
+            friendship.save().then(newFriendship => {
+              Friends.add(newFriendship);
+            });
+          }  
+        });
+      }
+    }); 
+  }
+});
+
+app.post('/post_profile', function(req, res) {
   let fullname = req.body.name;
   let location = req.body.location;
   let bio = req.body.bio;
