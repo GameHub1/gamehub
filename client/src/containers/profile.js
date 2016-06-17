@@ -46,6 +46,14 @@ export class Profile extends Component {
        });
    }
 
+  addFriend() {
+    let URL_array = window.location.pathname.split('/profile/');
+    axios.post('/add_friend', {friend1: this.props.authData.email, friend2: URL_array[1]})
+      .then((response) => {
+        console.log(response);
+      });
+  }
+
   render () {
     console.log("PROFILE: ", this.props.profile);
 
@@ -58,6 +66,7 @@ export class Profile extends Component {
             <h1>
               <span className="user-name">{this.props.profile.name}</span>
               <small className="location">{this.props.profile.location || "San Francisco, CA"}</small>
+              <button onClick = {this.addFriend.bind(this)}> Add friend </button>
             </h1>
           </div>
         </div>
