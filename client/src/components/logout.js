@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import {authFunc, resetAuth} from "../actions/index";
 import {connect} from 'react-redux';
-import {browserHistory} from 'react-router';
 
 export class Logout extends Component {
   constructor(props){
@@ -14,7 +13,7 @@ export class Logout extends Component {
   logOut() {
     localStorage.removeItem('id_token');
     resetAuth();
-    window.location.href = window.location.href;
+    window.location.href = '/';
   }
 
   render() {

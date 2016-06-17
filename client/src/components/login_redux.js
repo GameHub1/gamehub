@@ -119,9 +119,7 @@ export class ReduxLogin extends Component {
   }
 
   showLock() {
-    this.lock.show({
-      icon: 'http://icons.iconarchive.com/icons/ph03nyx/super-mario/128/Retro-Mushroom-Super-3-icon.png'
-    });
+    this.lock.show();
   }
 
   logState() {

@@ -10,10 +10,17 @@ export default class RootComponent extends Component {
     console.log('root', Array.isArray(this.props.authData));
     if (!Array.isArray(this.props.authData)) {
       return (
-        <div>
-          <span id="navHeader">GameHub</span> <SearchBar /> <Logout />
-          {this.props.children}
-        </div>
+        <nav className="navbar navbar-inverse">
+          <div className="container-fluid">
+            <div className="navbar-header">
+              <span className="navbar-brand">GameHub</span>
+            </div>
+            <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <SearchBar />
+              <Logout />
+            </div>
+          </div>
+        </nav>
       );
     } else {
       return (
