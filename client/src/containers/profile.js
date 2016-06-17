@@ -50,23 +50,25 @@ export class Profile extends Component {
     console.log("PROFILE: ", this.props.profile);
 
     return (
-      <div id="profile">
-        <div class="row" id="profile_heading">
-          <div class="col-lg-12">
-            <h1 class="page-header">{this.props.profile.name}
-              <small>{this.props.profile.location}</small>
+
+      <div className="container">
+        {/* Profile Header */}
+        <div className="row" id="profile_heading">
+          <div className="col-lg-12">
+            <h1 className="page-header">Sam Richards
+              <small>San Jose, CA</small>
             </h1>
           </div>
         </div>
-
-        <div class="col-md-4" id="user_friends">
-          <div class="row" id="user">
+        {/* Profile Grid */}
+        <div className="col-md-4" id="user_friends">
+          <div className="row" id="user">
             <div id="profile_pic">
-              <img src={this.props.profile.pic_path}/>
-              </div>
-              <button>Send Friend Request</button>
-              </div>
-          <div class="row" id="friends-component">
+              <img src="http://philosophy.ucr.edu/wp-content/uploads/2013/08/1-Sam3-225x300.jpg" />
+            </div>
+            <button>Send Friend Request</button>
+          </div>
+          <div className="row" id="friends-component">
             <h3>Friends</h3>
             <p>Kyle</p>
             <p>Michael</p>
@@ -74,12 +76,13 @@ export class Profile extends Component {
             <a>See All Friends</a>
           </div>
         </div>
-
-        <div class="col-md-8" id="bio_games">
-          <div class="row" id="bio">
-            {this.props.profile.bio}
+        <div className="col-md-8" id="bio_games">
+          <div className="row" id="bio">
+            <p>I am a chill dude, always down for a quick game of Twilight Imperium. Hit me up for dice and drinks sometime.</p>
+            <p>I'm a pretty big fan of the first two Equilibrium albums, even though they apparently sound like music from fantasy-themed video games. My dad played traditional Celtic music in the car all the time when I was growing up, so I associate their sound more with that than with video games (...which, based on interviews, seems to be what's up with the band itself).</p>
+            <a>Edit Profile</a>
           </div>
-          <div class="row">
+          <div className="row">
             <h3>Games</h3>
             <p><strong>Really Good At:</strong></p>
             <p>Altered Beast, Twilight Imperium, Boss Monster, We Did Not Playtest This At All, Android: Netrunner</p>
@@ -89,15 +92,15 @@ export class Profile extends Component {
             <p>Fast Food Magnate, Vampire: the Masquerade</p>
             <a>Add Game</a>
           </div>
-          <div class="row">
+          <div className="row">
             <h3>Media</h3>
             <div>
-              <iframe width="560" height="315" src="https://www.youtube.com/embed/mLyOj_QD4a4" frameborder="0" allowfullscreen></iframe>
+              <iframe width={560} height={315} src="https://www.youtube.com/embed/mLyOj_QD4a4" frameBorder={0} allowFullScreen />
             </div>
             <a>Add Media</a>
           </div>
+        </div>
       </div>
-    </div>
     );
 
     //Old profile rendering code:
