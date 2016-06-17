@@ -134,6 +134,16 @@ app.get('/get_friends', function(req, res){
     });
 });
 
+app.post('/get_user_info', function(req, res){
+  console.log('get user info', req.body);
+  let email = req.body.email;
+  new User({ email: email }).fetch().then(found => {
+    if (found) {
+      res.send({found});
+    }
+  });
+});
+
 app.post('/post_profile', function(req, res) {
   console.log(req.body);
   let fullname = req.body[0].name;
