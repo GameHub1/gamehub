@@ -4,7 +4,7 @@ html {
 }
 
 body {
-	background-color: #2C2D28; 
+	background-color: #2C2D28;
 	text-align: center;
   color: #ffffff;
 }
@@ -13,19 +13,38 @@ body input {
   color: #000000;
 }
 
-div.mario { 
+div.mario {
   text-align: center;
   width:      100%;
-  height:     100%; 
+  height:     100%;
   z-index:    -1;
-  top:        0; 
-  left:       0; 
+  top:        0;
+  left:       0;
   position:   absolute;
   display: block;
-  background-position: 50% 0; 
-  background-image: url('../images/mario.jpg'); 
+  background-position: 50% 0;
+  background-image: url('../images/mario.jpg');
   background-repeat: no-repeat;
 }
+
+.user-name {
+	float: left;
+}
+
+.location {
+	float: right;
+}
+
+.profile-pic {
+	width: 300px;
+	height: 300px;
+}
+
+.profile-pic img {
+	display: block;
+	width: 100%;
+}
+
 
 /*#mario:after {
   content : "";
@@ -33,7 +52,7 @@ div.mario {
   position: absolute;
   top: 0;
   left: 0;
-  background-image: url('../images/mario.jpg'); 
+  background-image: url('../images/mario.jpg');
   background-position: 50% 0;
   background-repeat: no-repeat;
   width: 100%;
@@ -157,4 +176,3 @@ div.mario {
 #blogs div.section {
 	margin-right: 300px;
 }
-
