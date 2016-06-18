@@ -102,7 +102,7 @@ export class ReduxLogin extends Component {
         // set routing based on result of routeProp;
         console.log("this is the route prop: ", response)
         if (response.data.routeProp === 'found') {
-            browserHistory.push(`/profile/${this.props.authData.name}`);
+            browserHistory.push(`/profile/${this.props.authData.email}`);
         }
         if (response.data.routeProp === 'not found') {
             browserHistory.push('/profile_setup');
