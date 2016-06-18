@@ -7,21 +7,19 @@ export const AUTHENTICATION = 'AUTHENTICATION';
 export const LOG_OUT = 'LOG_OUT';
 export const CREATE_GAME = 'CREATE_GAME';
 export const CREATE_FAVMEDIA = 'CREATE_FAVMEDIA';
-// gina wrote this...
+export const FETCH_ALL_FAVMEDIA = 'FETCH_ALL_FAVMEDIA';
 export const FETCH_USERS = 'FETCH_USERS';
 export const FIND_FRIENDS = 'FIND_FRIENDS';
 
 
-export function showFriends (data) {
-  console.log("SHow friends is called, and data: ", data);
-    return {
-      type: FIND_FRIENDS,
-      payload: data
-    }
-
+export function showFriends(data) {
+  return {
+    type: FIND_FRIENDS,
+    payload: data
+  };
 }
 
-export function postProfile (profile) {
+export function postProfile(profile) {
   const url = `/post_profile`;
   const postRequest = axios.post(url, profile);
 
@@ -31,14 +29,14 @@ export function postProfile (profile) {
   };
 }
 
-export function authFunc (authData) {
+export function authFunc(authData) {
   return {
     type: AUTHENTICATION,
     payload: authData
   };
 }
 
-export function resetAuth () {
+export function resetAuth() {
   return {
     type: LOG_OUT,
     payload: undefined
@@ -53,9 +51,9 @@ export function createGame(props) {
   };
 }
 
-export function createFavMedia (props) {
+export function createFavMedia(props) {
+  console.log('CREATE FAV MEDIA', props);
   const request = axios.post('/favmedia', props);
-  console.log('in the action', props);
 
   return {
     type: CREATE_FAVMEDIA,
@@ -63,9 +61,7 @@ export function createFavMedia (props) {
   };
 }
 
-//GINA WROTE THIS
 export function fetchUsers(props) {
-  // this request returns a promise cause of axios
   const request = axios.post('/get_users', props);
   return {
     type: FETCH_USERS,
@@ -76,3 +72,4 @@ export function fetchUsers(props) {
     payload: request
   };
 }
+
