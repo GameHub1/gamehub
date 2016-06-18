@@ -51,8 +51,8 @@ export class Profile extends Component {
     axios.post('/add_friend', {friend1: this.props.authData.email, friend2: URL_array[1]})
       .then((response) => {
         console.log(response);
-        $(".followBtn").hide();
       });
+    document.getElementById("followBtn").style.visibility = "hidden";
   }
 
   render () {
@@ -76,7 +76,7 @@ export class Profile extends Component {
             <div className="profile_pic">
               <img className="img-responsive" src={this.props.profile.pic_path}/>
             </div>
-            <button className="followBtn" onClick = {this.addFriend.bind(this)}> Follow </button>
+            <button id="followBtn" onClick = {this.addFriend.bind(this)}> Follow </button>
           </div>
           <div className="row" id="friends-component">
             <h3>Friends</h3>
