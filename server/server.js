@@ -171,7 +171,10 @@ app.post('/get_friend_info', function(req, res){
           })
           .fetch().then(found3 => {
             if (found3) {
-              res.send({found});
+              res.send({status: "Found"});
+            }
+            else {
+              res.send({status: "Not Found"});
             }
           });
         }
