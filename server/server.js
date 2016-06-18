@@ -165,12 +165,14 @@ app.post('/add_friend', function(req, res) {
             });
             friendship.save().then(newFriendship => {
               Friends.add(newFriendship);
+              res.send("SUCCESS! Friendship added");
             });
           }  
         });
       }
     }); 
   }
+  res.send("ERROR: Friendship not added!");
 });
 
 app.post('/post_profile', function(req, res) {
