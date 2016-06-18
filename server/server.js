@@ -38,8 +38,8 @@ Friends.model = Friend;
 app.post('/signup', function(req,res) {
   let name = req.body.name;
   let email = req.body.email;
-
   let pic_path = req.body.pic_path;
+  
   console.log(req.body);
   let routeProp = 'val';
 
