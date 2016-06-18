@@ -149,30 +149,55 @@ app.post('/get_user_info', function(req, res){
   });
 });
 
+app.post('/get_friend_info', function(req, res){
+  console.log(req.body);
+  new User({ email: req.body.friend1 }).fetch().then(found => {
+    if (found) {
+      new User({ email: req.body.friend2 }).fetch().then(found2 => {
+        if (found2) {
+          new Friend({
+            friend1_fk: found.attributes.id,
+            friend2_fk: found2.attributes.id
+          })
+          .fetch().then(found3 => {
+            if (found3) {
+              res.send({found});
+            }
+          });
+        }
+      });
+    }
+  });
+});
+
 app.post('/add_friend', function(req, res) {
   console.log(req.body);
-  if (req.body.friend1 === req.body.friend2){
-    console.log("Tried to friend self. haha!");
-  }
-  else {
-    new User({ email: req.body.friend1 }).fetch().then(found => {
-      if (found) {
-        new User({ email: req.body.friend2 }).fetch().then(found2 => {
-          if (found2) {
-            let friendship = new friend({
-              friend1_fk: found.attributes.id,
-              friend2_fk: found2.attributes.id
-            });
-            friendship.save().then(newFriendship => {
+  new User({ email: req.body.friend1 }).fetch().then(found => {
+    if (found) {
+      new User({ email: req.body.friend2 }).fetch().then(found2 => {
+        if (found2) {
+          let friendship = new Friend({
+            friend1_fk: found.attributes.id,
+            friend2_fk: found2.attributes.id
+          });
+          friendship.fetch().then(found3 => {
+            if (!found3){
+              friendship.save().then(newFriendship => {
               Friends.add(newFriendship);
-              res.send("SUCCESS! Friendship added");
-            });
-          }
-        });
-      }
-    });
-  }
-  res.send("ERROR: Friendship not added!");
+              res.send({action: "added"});
+              });
+            }
+            else {
+              bookshelf.knex.raw("DELETE FROM friends WHERE friend1_fk = " + found.attributes.id + " AND friend2_fk = " + found2.attributes.id + ";")
+              .then(response => {
+              res.send({action: "removed"});
+              });
+            }
+          });
+        }  
+      });
+    }
+  });
 });
 
 app.post('/post_profile', function(req, res) {
