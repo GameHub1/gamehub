@@ -28,6 +28,17 @@ changeProfile(email) {
         };
 
         this.props.postProfile(prop);
+
+        let URL_array = window.location.pathname.split('/profile/');
+        axios.post('/get_friend_info',{friend1: this.props.authData.email, friend2: URL_array[1]})
+          .then((response) => {
+            console.log("FRIEND INFO RESPONSE: ", response);
+            if(response) {
+              document.getElementById("followBtn").style.background='#556B2F';
+              document.getElementById("followBtn").firstChild.data='following';
+            }
+          });
+
       });
 
 
@@ -58,8 +69,15 @@ changeProfile(email) {
   }
 }
 
-function mapStateToProps({searched_users}) {
-  return {searched_users};
+function mapStateToProps(state) {
+  return {
+    profile: state.profile,
+    authData: state.authData,
+    form: state.form,
+    games: state.games,
+    media: state.media,
+    searched_users: state.searched_users
+  }
 }
 
 function mapDispatchToProps (dispatch) {
