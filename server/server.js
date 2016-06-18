@@ -65,8 +65,6 @@ app.post('/signup', function(req,res) {
       res.send({name: name,email: email,routeProp: routeProp});
     }
 	});
-
-
 });
 
 app.post('/games', function(req, res) {
@@ -93,17 +91,16 @@ app.post('/games', function(req, res) {
 
 app.post('/favmedia', function(req, res) {
   let favMediaURL = req.body[0].favMediaURL;
-  let email = req.body[1];
-  console.log(favMediaURL, email);
-  new FavMedia({ url: favMediaURL, email: email }).fetch().then(found => {
+  let userID = req.body[1];
+
+  new FavMedia({ url: favMediaURL, users_id_fk: userID }).fetch().then(found => {
     if (found) {
-      console.log("already in database!");
+      console.log("URL already exists.");
     }
     else {
-      console.log("NOT FOUND! ADDED!");
       let newFavMedia = new FavMedia({
         url: favMediaURL,
-        email: email
+        users_id_fk: userID
       });
 
       newFavMedia.save().then(newFavMedia2 => {
@@ -114,7 +111,6 @@ app.post('/favmedia', function(req, res) {
 });
 
 app.post('/get_users', function(req, res) {
-  console.log(req.body);
   if (req.body.searchTerm === '') {
     res.send([]);
   } else {
@@ -128,11 +124,21 @@ app.post('/get_users', function(req, res) {
 });
 
 app.post('/get_all_favmedia', function(req, res) {
-  bookshelf.knex.raw("SELECT * FROM FAVMEDIA WHERE LOWER(email) LIKE LOWER('%" + req.body.email + "%')")
-  .then(response => {
-    console.log('FAV MEDIA SERVER CALL', response.rows);
-    res.send(response.rows);
-  });
+  new User({email: req.body.email}).fetch()
+    .then(found => {
+      if (found) {
+        // console.log("USER FOUND FROM ALL MEDIA", found.attributes.id);
+        new FavMedia({users_id_fk: found.attributes.id}).fetch()
+          .then(found => {
+            console.log("USER FOUND FROM ALL MEDIA", found)
+            res.send(found);
+          })
+        
+      // res.send({name: name, email: email, routeProp: routeProp});
+      } else {
+        console.log("User not found!");
+      }
+    });
 });
 
 app.get('/get_friends', function(req, res){

@@ -52,6 +52,7 @@ export function createGame(props) {
 }
 
 export function createFavMedia(props) {
+  console.log('CREATE FAV MEDIA', props);
   const request = axios.post('/favmedia', props);
 
   return {

@@ -15,8 +15,8 @@ export class Profile extends Component {
   componentWillMount () {
     axios.post('/get_user_info',{email: this.props.params.id})
       .then((response) => {
-        console.log(response);
         let prop = {
+          id: response.data.found.id,
           name: response.data.found.fullname,
           location: response.data.found.location,
           bio: response.data.found.bio,

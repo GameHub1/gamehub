@@ -10,7 +10,7 @@ class FavMedia extends Component {
   }
 
   onSubmit(prop) {
-    this.props.createFavMedia([prop, this.props.authData.email]);
+    this.props.createFavMedia([prop, this.props.profile.id]);
   }
 
   render() {
@@ -18,7 +18,7 @@ class FavMedia extends Component {
 
     return (
       <form onSubmit={handleSubmit(this.onSubmit)}>
-        {this.props.authData.email}
+        {this.props.profile.id}
         <div id="favMedia" className="input-group">
           <input type="text" 
             placeholder="submit your best gameplays" 
@@ -27,7 +27,6 @@ class FavMedia extends Component {
           <span className="input-group-btn">
             <button type="submit" className="btn btn-default">Submit</button>
           </span>
-          
         </div>
       </form>
     );
@@ -38,7 +37,8 @@ class FavMedia extends Component {
 // reduxForm: first is form config, 2nd is mapStateToProps, 3rd is mapDispatchToProps
 function mapStateToProps(state) {
   return {
-    authData: state.authData
+    authData: state.authData,
+    profile: state.profile
   };
 }
 
