@@ -45,6 +45,10 @@ div.mario {
 	width: 100%;
 }
 
+textarea {
+	color: black; 
+}
+
 
 /*#mario:after {
   content : "";
