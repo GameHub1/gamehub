@@ -7,6 +7,7 @@ import axios from 'axios';
 import FriendList from './friend_list';
 import {showFriends} from '../actions/index';
 import {postProfile} from '../actions/index.js';
+import {browserHistory} from 'react-router';
 
 export class Profile extends Component {
 
@@ -55,6 +56,10 @@ export class Profile extends Component {
     document.getElementById("followBtn").style.visibility = "hidden";
   }
 
+  editProflie() {
+    browserHistory.push('/profile_setup');
+  }
+
   render () {
     console.log("PROFILE: ", this.props.profile);
 
@@ -89,7 +94,7 @@ export class Profile extends Component {
         <div className="col-md-7" id="bio_games">
           <div className="row" id="bio">
             <p>{this.props.profile.bio || "Hi, I haven\'t filled out my bio yet!"}</p>
-            <a>Edit Profile</a>
+            <a onClick={this.editProflie.bind(this)}>Edit Profile</a>
           </div>
           <div className="row">
             <h3>Games</h3>
