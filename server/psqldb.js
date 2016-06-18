@@ -4,17 +4,43 @@ const db = require('knex')({
   useNulAsDefault: true
 });
 
-db.schema.hasTable('users2').then(exists => {
+db.schema.hasTable('users').then(exists => {
   if (!exists){
-    db.schema.createTable('users2', user => {
+    db.schema.createTable('users', user => {
       user.increments('id').primary();
       user.string('fullname', 32);
       user.string('email').unique();
       user.string('pic_path');
+      user.string('profile_path');
       user.string('location');
       user.string('bio');
     }).then(function(table){
-      console.log("Created users2 table");
+      console.log("Created users table");
+    })
+  }
+});
+
+db.schema.hasTable('games').then(exists => {
+  if (!exists){
+    db.schema.createTable('games', games => {
+      games.increments('id').primary();
+      games.string('name');
+      games.string('game_path');
+    }).then(function(table){
+      console.log("Created games table");
+    })
+  }
+});
+
+db.schema.hasTable('favmedia').then(exists => {
+  if (!exists){
+    db.schema.createTable('favmedia', favmedia => {
+      media.increments('id').primary();
+      media.string('url');
+      media.string('users_email_fk');
+      media.foreign('users_id_fk').references('users.id');
+    }).then(function(table){
+      console.log("Created favmedia table");
     })
   }
 });
@@ -25,37 +51,28 @@ db.schema.hasTable('friends').then(exists => {
       friendship.increments('id').primary();
       friendship.integer('friend1_fk');//id user2
       friendship.integer('friend2_fk'); //return array of these
-      friendship.foreign('friend1_fk').references('users2.id');
-      friendship.foreign('friend2_fk').references('users2.id');
+      friendship.foreign('friend1_fk').references('users.id');
+      friendship.foreign('friend2_fk').references('users.id');
     }).then(function(table){
       console.log("Created friends join table");
     })
   }
 });
 
-db.schema.hasTable('favmedia').then(exists => {
-  if (!exists){
-    db.schema.createTable('favmedia', favmedia => {
-      favmedia.increments('id').primary();
-      favmedia.string('url', 128);
-      favmedia.string('email');
+db.schema.hasTable('users_games').then(exists => {
+  if (!exists) {
+    db.schema.createTable('users_games', friendship => {
+      friendship.increments('id').primary();
+      friendship.integer('users_id_fk');//id user2
+      friendship.integer('games_id_fk'); //return array of these
+      friendship.foreign('users_id_fk').references('users.id');
+      friendship.foreign('games_id_fk').references('games.id');
     }).then(function(table){
-      console.log("Created favmedia table");
+      console.log("Created users_games join table");
     })
   }
 });
 
-db.schema.hasTable('favgames').then(exists => {
-  if (!exists){
-    db.schema.createTable('favgames', favgames => {
-      favgames.increments('id').primary();
-      favgames.string('game', 128);
-      favgames.string('email');
-    }).then(function(table){
-      console.log("Created favgames table");
-    })
-  }
-});
 
 const bookshelf = require('bookshelf')(db);
 module.exports = bookshelf;

@@ -12,13 +12,13 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, '../dist/')));
 
 const User = bookshelf.Model.extend({
-  tableName: 'users2'
+  tableName: 'users'
 });
 const Users = new bookshelf.Collection();
 Users.model = User;
 
 const Game = bookshelf.Model.extend({
-  tableName: 'favgames'
+  tableName: 'games'
 });
 const Games = new bookshelf.Collection();
 Games.model = Game;
@@ -66,7 +66,7 @@ app.post('/signup', function(req,res) {
     }
 	});
 
-  
+
 });
 
 app.post('/games', function(req, res) {
@@ -118,18 +118,18 @@ app.post('/get_users', function(req, res) {
   if (req.body.searchTerm === '') {
     res.send([]);
   } else {
-    bookshelf.knex.raw("SELECT * FROM USERS2 WHERE LOWER(fullname) LIKE LOWER('%" + req.body.searchTerm + "%') OR LOWER(email) LIKE LOWER('%" + req.body.searchTerm + "%')")
+    bookshelf.knex.raw("SELECT * FROM users WHERE LOWER(fullname) LIKE LOWER('%" + req.body.searchTerm + "%') OR LOWER(email) LIKE LOWER('%" + req.body.searchTerm + "%')")
     .then(response => {
       console.log(response.rows);
       res.send(response.rows);
     });
   }
-  
+
 });
 
 app.get('/get_friends', function(req, res){
   console.log(req.body);
-  bookshelf.knex.raw("SELECT fullname FROM users2 WHERE users2.id IN (SELECT friends.friend2_fk FROM users2 inner JOIN friends ON users2.id = friends.friend1_fk WHERE users2.email = 'chen.liu.michael@gmail.com');")
+  bookshelf.knex.raw("SELECT fullname FROM users WHERE users.id IN (SELECT friends.friend2_fk FROM users inner JOIN friends ON users.id = friends.friend1_fk WHERE users.email = 'chen.liu.michael@gmail.com');")
     .then(response => {
       let info = response.rows.reduce((acc, cur) => {
         acc.push({name: cur.fullname});
@@ -167,10 +167,10 @@ app.post('/add_friend', function(req, res) {
               Friends.add(newFriendship);
               res.send("SUCCESS! Friendship added");
             });
-          }  
+          }
         });
       }
-    }); 
+    });
   }
   res.send("ERROR: Friendship not added!");
 });
@@ -180,7 +180,7 @@ app.post('/post_profile', function(req, res) {
   let location = req.body.location;
   let bio = req.body.bio;
   let email = req.body.email;
-  
+
   new User({ email: email }).fetch().then(found => {
     if (found) {
       var fullname_change = found.attributes.fullname
