@@ -53,7 +53,9 @@ export default class AllFavMedia extends Component {
 
 function mapStateToProps(state) {
   return {
+    profile: state.profile,
     authData: state.authData
+
   };
 }
 
