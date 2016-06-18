@@ -127,14 +127,10 @@ app.post('/get_all_favmedia', function(req, res) {
   new User({email: req.body.email}).fetch()
     .then(found => {
       if (found) {
-        // console.log("USER FOUND FROM ALL MEDIA", found.attributes.id);
-        new FavMedia({users_id_fk: found.attributes.id}).fetch()
+        new FavMedia({users_id_fk: found.attributes.id}).fetchAll()
           .then(found => {
-            console.log("USER FOUND FROM ALL MEDIA", found)
             res.send(found);
           })
-        
-      // res.send({name: name, email: email, routeProp: routeProp});
       } else {
         console.log("User not found!");
       }
