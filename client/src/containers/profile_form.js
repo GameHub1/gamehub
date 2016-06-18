@@ -18,7 +18,7 @@ class ProfileForm extends Component {
     this.props.postProfile(prop2);
 
     setTimeout(function () {
-    browserHistory.push(`/profile/${this.props.authData.name}`);
+    browserHistory.push(`/profile/${this.props.authData.email}`);
     }.bind(this), 500)
   }
 
@@ -31,27 +31,27 @@ class ProfileForm extends Component {
         <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
           <div>
             <label>First name and last name </label>
-            <input type="text"  {...name}/>
+            <input type="text" value={this.props.authData.name} {...name}/>
           </div>
           <br/>
 
           <div>
             <label> Location </label>
-            <input type="text" {...location}/>
+            <input type="text" value={"San Francisco, CA"} {...location} />
           </div>
           <br/>
 
           <div>
             <label> Small bio </label>
-            <textarea rows = '10' cols = '50' {...bio} />
+            <textarea rows = '10' cols = '50' {...bio}/>
           </div>
           <br/>
 
           <button type="submit">Create profile </button>
 
         </form>
-        
-       
+
+
       </div>
     );
   }
