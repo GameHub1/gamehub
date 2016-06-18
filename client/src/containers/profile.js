@@ -12,14 +12,14 @@ import {browserHistory} from 'react-router';
 export class Profile extends Component {
 
   componentWillMount () {
-    axios.post('/get_user_info',{email: this.props.authData.email})
+    axios.post('/get_user_info',{email: this.props.params.id})
       .then((response) => {
         console.log(response);
         let prop = {
           name: response.data.found.fullname,
           location: response.data.found.location,
           bio: response.data.found.bio,
-          email: this.props.authData.email,
+          email: this.props.params.id,
           pic_path: response.data.found.pic_path
         };
         this.props.postProfile(prop);

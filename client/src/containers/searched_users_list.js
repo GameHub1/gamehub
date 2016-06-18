@@ -1,17 +1,48 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import { Router, Route, Link, browserHistory } from 'react-router';
+import {Router, Route, Link, browserHistory } from 'react-router';
+import {postProfile} from '../actions/index';
+import {bindActionCreators} from 'redux';
+import axios from 'axios';
 
 class SearchedUsers extends Component {
-  renderUsers(userData) {
+   constructor(props){
+    super(props);
+    this.state = {};
+    this.changeProfile = this.changeProfile.bind(this);
+  }
+
+changeProfile(email) {
+
+    axios.post('/get_user_info',{email: email})
+      .then((response) => {
+    
+        browserHistory.push(`/profile/${email}`);
+
+        let prop = {
+          name: response.data.found.fullname,
+          location: response.data.found.location,
+          bio: response.data.found.bio,
+          email: email,
+          pic_path: response.data.found.pic_path
+        };
+
+        this.props.postProfile(prop);
+      });
+
+
+  }
+
+ renderUsers(userData) {
     const fullname = userData.fullname;
     const email = userData.email;
+    let that = this;
 
     return ( 
-      <tr id="searchedUsersRow" key={email}>
+      <tr id="searchedUsersRow" className="searchRows" key={email} onClick={function () {that.changeProfile(email)}}>
         <td><span className="glyphicon glyphicon-user"></span></td>
-        <td><Link to={`/profile/${email}`}>{fullname}</Link></td>
-        <td><Link to={`/profile/${email}`}>{email}</Link></td>
+        <td>{fullname}</td>
+        <td>{email}</td>
       </tr>
     );
   }
@@ -20,7 +51,7 @@ class SearchedUsers extends Component {
     return (
       <table id="userList">
         <tbody>
-          {this.props.searched_users.map(this.renderUsers)}
+          {this.props.searched_users.map(this.renderUsers.bind(this))}
         </tbody>
       </table>
     );
@@ -31,4 +62,8 @@ function mapStateToProps({searched_users}) {
   return {searched_users};
 }
 
-export default connect(mapStateToProps)(SearchedUsers);
+function mapDispatchToProps (dispatch) {
+  return bindActionCreators({postProfile}, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchedUsers);
