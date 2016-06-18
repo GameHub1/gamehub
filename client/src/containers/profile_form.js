@@ -18,7 +18,7 @@ class ProfileForm extends Component {
     this.props.postProfile(prop2);
 
     setTimeout(function () {
-    browserHistory.push(`/profile/${this.props.authData.name}`);
+    browserHistory.push(`/profile/${this.props.authData.email}`);
     }.bind(this), 500)
   }
 
