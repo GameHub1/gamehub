@@ -13,11 +13,13 @@ class SearchBar extends Component {
     this.onInputChange = this.onInputChange.bind(this);
     this.onChangeSubmit = _.debounce(this.onChangeSubmit.bind(this), 200);
     this.onFormSubmit = this.onFormSubmit.bind(this);
+    this.hideSearch = this.hideSearch.bind(this);
   }
 
   onInputChange(event) {
     event.persist();
     this.setState({searchTerm: event.target.value}, this.onChangeSubmit(event));
+    $('.UsersList').show();
   }
 
   onChangeSubmit(event) {
@@ -29,17 +31,26 @@ class SearchBar extends Component {
     this.props.fetchUsers({searchTerm: this.state.searchTerm});
   }
 
+  hideSearch() {
+    console.log('Inside hideSearch!')
+    $('.UsersList').hide();
+  
+    document.getElementById("searchInput").reset();
+  }
+
   render() {
     return (
   
-        <form onSubmit={this.onFormSubmit} className="navbar-form navbar-left" role="search">
+        <form onSubmit={this.onFormSubmit} id="searchInput" className="navbar-form navbar-left" role="search">
           <div className="form-group">
             <input className="searchBar"
               type="text"
               placeholder="search for a friend"
               value={this.state.searchTerm}
               onChange={this.onInputChange}/>&nbsp;
+              <div className ="UsersList" onClick = {this.hideSearch}>
               <SearchedUsersList />
+              </div>
           </div>
           <button type="submit" className="btn btn-default">Submit</button>
         </form>
