@@ -37,7 +37,6 @@ class FavMedia extends Component {
 // reduxForm: first is form config, 2nd is mapStateToProps, 3rd is mapDispatchToProps
 function mapStateToProps(state) {
   return {
-    authData: state.authData,
     profile: state.profile
   };
 }
