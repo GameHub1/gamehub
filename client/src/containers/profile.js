@@ -1,8 +1,9 @@
-import React, {Component, PropTyes} from 'react';
+import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import Games from '../components/games';
 import FavMedia from '../components/favMedia';
+import AllFavMedia from '../components/allFavMedia';
 import axios from 'axios';
 import FriendList from './friend_list';
 import {showFriends} from '../actions/index';
@@ -80,7 +81,6 @@ export class Profile extends Component {
   render () {
 
     return (
-
       <div className="container">
         {/* Profile Header */}
         <div className="row" id="profile_heading">
@@ -124,10 +124,10 @@ export class Profile extends Component {
           </div>
           <div className="row">
             <h3>Media</h3>
-            <div>
-              <iframe width={336} height={189} src="https://www.youtube.com/embed/mLyOj_QD4a4" frameBorder={0} allowFullScreen />
-            </div>
+            
             <a>Add Media</a>
+            <AllFavMedia />
+            <FavMedia />
           </div>
         </div>
       </div>
@@ -181,10 +181,9 @@ export class Profile extends Component {
     // );
 
   }
-
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return bindActionCreators({postProfile, showFriends}, dispatch);
 }
 

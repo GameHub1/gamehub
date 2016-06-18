@@ -3,6 +3,12 @@ import {reduxForm} from 'redux-form';
 import {createFavMedia} from '../actions/index';
 
 class FavMedia extends Component {
+  constructor(props) {
+    super(props);
+
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+
   onSubmit(prop) {
     this.props.createFavMedia([prop, this.props.authData.email]);
   }
@@ -11,11 +17,14 @@ class FavMedia extends Component {
     const {fields: {favMediaURL}, handleSubmit} = this.props;
 
     return (
-      <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-        <div id="favMedia" className="form-group">
-          {this.props.authData.email}
-          <input type="text" placeholder="submit url from Youtube" className="form-control" {...favMediaURL} /><br/>
-          <button type="submit" className="btn btn-primary">Post</button>
+      <form onSubmit={handleSubmit(this.onSubmit)}>
+        {this.props.authData.email}
+        <div id="favMedia" className="input-group">
+          <input type="text" 
+            placeholder="submit url from Youtube" 
+            className="form-control" 
+            aria-describedby="basic-addon2" {...favMediaURL} />
+          <span type="submit" className="input-group-addon" id="basic-addon2">Submit</span>
         </div>
       </form>
     );

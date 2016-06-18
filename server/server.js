@@ -127,6 +127,14 @@ app.post('/get_users', function(req, res) {
 
 });
 
+app.post('/get_all_favmedia', function(req, res) {
+  bookshelf.knex.raw("SELECT * FROM FAVMEDIA WHERE LOWER(email) LIKE LOWER('%" + req.body.email + "%')")
+  .then(response => {
+    console.log('FAV MEDIA SERVER CALL', response.rows);
+    res.send(response.rows);
+  });
+});
+
 app.get('/get_friends', function(req, res){
   console.log(req.body);
   bookshelf.knex.raw("SELECT fullname FROM users WHERE users.id IN (SELECT friends.friend2_fk FROM users inner JOIN friends ON users.id = friends.friend1_fk WHERE users.email = 'chen.liu.michael@gmail.com');")
