@@ -21,10 +21,13 @@ class FavMedia extends Component {
         {this.props.authData.email}
         <div id="favMedia" className="input-group">
           <input type="text" 
-            placeholder="submit url from Youtube" 
+            placeholder="submit your best gameplays" 
             className="form-control" 
             aria-describedby="basic-addon2" {...favMediaURL} />
-          <span type="submit" className="input-group-addon" id="basic-addon2">Submit</span>
+          <span className="input-group-btn">
+            <button type="submit" className="btn btn-default">Submit</button>
+          </span>
+          
         </div>
       </form>
     );

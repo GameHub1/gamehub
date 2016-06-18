@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import axios from 'axios';
-// import {fetchAllFavMedia} from '../actions/index';
 
 export default class AllFavMedia extends Component {
   constructor(props) {
@@ -23,8 +22,12 @@ export default class AllFavMedia extends Component {
   }
 
   renderAllFavMedia(url) {
+    url = url.replace("watch?v=", "v/");
     return (
-      <span key={url}></span>
+      <iframe key={url}
+        src={url}
+        width="560" height="300"
+        frameBorder="0" allowFullScreen></iframe>
     );
   }
 
@@ -32,9 +35,8 @@ export default class AllFavMedia extends Component {
     console.log('in all fav media.', this.state.urls);
     if (this.state.urls.length > 0) {
       return (
-        <div>
+        <div className="allFavMediaBox">
           {this.state.urls.map(this.renderAllFavMedia)}
-          
         </div>
       );
     } else {

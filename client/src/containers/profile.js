@@ -124,10 +124,8 @@ export class Profile extends Component {
           </div>
           <div className="row">
             <h3>Media</h3>
-            
-            <a>Add Media</a>
-            <AllFavMedia />
             <FavMedia />
+            <AllFavMedia />
           </div>
         </div>
       </div>
