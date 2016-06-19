@@ -12,10 +12,6 @@ class FavMedia extends Component {
 
   onSubmit(prop) {
     this.props.createFavMedia([prop, this.props.profile.id]);
-
-    setTimeout(function () {
-    browserHistory.push(`/profile/${this.props.authData.email}`);
-    }.bind(this), 500);
   }
 
   render() {

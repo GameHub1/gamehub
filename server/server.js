@@ -127,18 +127,19 @@ app.post('/get_all_favmedia', function(req, res) {
   new User({email: req.body.email}).fetch()
     .then(found => {
       if (found) {
-        new FavMedia({users_id_fk: found.attributes.id}).fetchAll()
-          .then(found => {
-            res.send(found);
-          })
+        new FavMedia()
+        .query({where: {users_id_fk: found.attributes.id}})
+        .fetchAll()
+        .then(found => {
+          res.send(found);
+        });
       } else {
-        console.log("User not found!");
+        console.log("User not found, no media!");
       }
     });
 });
 
 app.get('/get_friends', function(req, res){
-  console.log(req.body);
   bookshelf.knex.raw("SELECT fullname FROM users WHERE users.id IN (SELECT friends.friend2_fk FROM users inner JOIN friends ON users.id = friends.friend1_fk WHERE users.email = 'chen.liu.michael@gmail.com');")
     .then(response => {
       let info = response.rows.reduce((acc, cur) => {
@@ -160,7 +161,6 @@ app.post('/get_user_info', function(req, res){
 });
 
 app.post('/get_friend_info', function(req, res){
-  console.log(req.body);
   new User({ email: req.body.friend1 }).fetch().then(found => {
     if (found) {
       new User({ email: req.body.friend2 }).fetch().then(found2 => {

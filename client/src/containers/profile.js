@@ -11,7 +11,6 @@ import {postProfile} from '../actions/index.js';
 import {browserHistory} from 'react-router';
 
 export class Profile extends Component {
-
   componentWillMount () {
     axios.post('/get_user_info',{email: this.props.params.id})
       .then((response) => {
@@ -29,7 +28,7 @@ export class Profile extends Component {
     axios.post('/get_friend_info',{friend1: this.props.authData.email, friend2: URL_array[1]})
       .then((response) => {
         console.log("FRIEND INFO RESPONSE: ", response);
-        if(response) {
+        if(response.data.status === "Found") {
           document.getElementById("followBtn").style.background='#556B2F';
           document.getElementById("followBtn").firstChild.data='following';
         }
@@ -47,7 +46,6 @@ export class Profile extends Component {
        .then((response) => {
          let friendArr = response.data.data;
          this.props.showFriends(friendArr);
-         console.log("Inside findFriends SUCCESSS: ", friendArr);
          friendArr.forEach(friend => {
            console.log(friend.name);
          });
