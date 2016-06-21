@@ -93,8 +93,37 @@ app.post('/games', function(req, res) {
         Games.add(newGame2);
       });
     }
-  });
+  }).then(
+    new User({email: email}).fetch().then(model => {
+      let userId = model.get('id');
+      console.log("User ID: ", userId);
+      joinReq.users_id_fk = userId;
+    })).then(
+      new Game({name: gameTitle}).fetch().then(model => {
+        let gameId = model.get('id');
+        console.log("gameID: ", gameId);
+        joinReq.games_id_fk = gameId;
+        console.log("join request:", joinReq);
+      })).then(
+        new GameJoin({
+          users_id_fk: 2, games_id_fk: 2
+        }).fetch().then(found => {
+          if (found) {
+            console.log("join already in database!");
+          }
+          else {
+            console.log("JOIN NOT FOUND! ADDED!");
+            let newGameJoin = new GameJoin({
+              users_id_fk: 2, games_id_fk: 2
+            });
+            newGameJoin.save().then(newGameJoin2 => {
+              Games.add(newGameJoin2);
+            });
+          }
+        }));;
 });
+
+//I hard-coded in what we add to the users_games table for debugging reasons.
 
 //The code below is  close to what the full post request should
 //look like. I'm making sure that it successfully adds something
