@@ -45,6 +45,12 @@ div.mario {
 	width: 100%;
 }
 
+.friend_pic img {
+  display: block;
+  width: 50px;
+  height: 50px;
+}
+
 textarea {
 	color: black; 
 }
