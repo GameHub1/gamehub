@@ -10,14 +10,17 @@ export default class AllFavMedia extends Component {
     this.state = {urls: []};
   }
 
-  componentWillReceiveProps(props) {
-    axios.post('/get_all_favmedia', {email: props.profile.email})
+  componentWillMount() {
+    axios.post('/get_all_favmedia', {email: this.props.profile.email})
       .then((response) => {
         console.log('this is ALL MEDIA', response.data);
         let allFavMedia = response.data.map((item) => {
           return item.url;
         });
-        this.setState({urls: allFavMedia})
+        return allFavMedia;
+      })
+      .then((urls) => {
+        this.setState({urls: urls})
       });
   }
 
@@ -32,6 +35,8 @@ export default class AllFavMedia extends Component {
   }
 
   render() {
+    // this.fetchAllMedia();
+
     if (this.state.urls.length > 0) {
       return (
         <div className="allFavMediaBox">
