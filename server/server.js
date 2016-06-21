@@ -35,11 +35,18 @@ const Friend = bookshelf.Model.extend({
 const Friends = new bookshelf.Collection();
 Friends.model = Friend;
 
+const GameJoin = bookshelf.Model.extend({
+  tableName: 'users_games'
+});
+
+const GameJoins = new bookshelf.Collection();
+GameJoins.model = GameJoin;
+
 app.post('/signup', function(req,res) {
   let name = req.body.name;
   let email = req.body.email;
   let pic_path = req.body.pic_path;
-  
+
   console.log(req.body);
   let routeProp = 'val';
 
@@ -70,18 +77,18 @@ app.post('/signup', function(req,res) {
 app.post('/games', function(req, res) {
   let gameTitle = req.body[0].gameTitle;
   let email = req.body[1];
+  let joinReq = {users_id_fk: 0, games_id_fk: 0};
   console.log(gameTitle, email);
-  new Game({ game: gameTitle, email: email }).fetch().then(found => {
+
+  new Game({name: gameTitle}).fetch().then(found => {
     if (found) {
-      console.log("already in database!");
+      console.log(gameTitle + " already in database!");
     }
     else {
-      console.log("NOT FOUND! ADDED!");
+      console.log(gameTitle + " NOT FOUND! ADDED!");
       let newGame = new Game({
-        game: gameTitle,
-        email: email
+        name: gameTitle
       });
-
       newGame.save().then(newGame2 => {
         Games.add(newGame2);
       });
@@ -89,18 +96,72 @@ app.post('/games', function(req, res) {
   });
 });
 
-app.post('/favmedia', function(req, res) {
-  let favMediaURL = req.body[0].favMediaURL;
-  let userID = req.body[1];
+//The code below is  close to what the full post request should
+//look like. I'm making sure that it successfully adds something
+//to the games table before running the join query, though.
 
-  new FavMedia({ url: favMediaURL, users_id_fk: userID }).fetch().then(found => {
+/*
+app.post('/games', function(req, res) {
+  let gameTitle = req.body[0].gameTitle;
+  let email = req.body[1];
+  let joinReq = {users_id_fk: 0, games_id_fk: 0};
+  console.log(gameTitle, email);
+
+  new Game({name: gameTitle}).fetch().then(found => {
     if (found) {
-      console.log("URL already exists.");
+      console.log("already in database!");
     }
     else {
+      console.log("NOT FOUND! ADDED!");
+      let newGame = new Game({
+        game: gameTitle
+      });
+      newGame.save().then(newGame2 => {
+        Games.add(newGame2);
+      });
+    }
+  }).then(
+    new User({email: email}).fetch().then(model => {
+      let userId = model.get('id');
+      console.log("User ID: ", userId);
+      joinReq.users_id_fk = userId;
+    })).then(
+      new Game({name: gameTitle}).fetch().then(model => {
+        let gameId = model.get('id');
+        console.log("gameID: ", gameId);
+        joinReq.games_id_fk = gameId;
+        console.log("join request:", joinReq);
+      })).then(
+        new GameJoin(joinReq).fetch().then(found => {
+          if (found) {
+            console.log("join already in database!");
+          }
+          else {
+            console.log("NOT FOUND! ADDED!");
+            let newGameJoin = new GameJoin({
+              joinReq
+            });
+            newGameJoin.save().then(newGameJoin2 => {
+              Games.add(newGameJoin2);
+            });
+          }
+        }));
+});
+*/
+
+app.post('/favmedia', function(req, res) {
+  let favMediaURL = req.body[0].favMediaURL;
+  let email = req.body[1];
+  console.log(favMediaURL, email);
+  new FavMedia({ url: favMediaURL, email: email }).fetch().then(found => {
+    if (found) {
+      console.log("already in database!");
+    }
+    else {
+      console.log("NOT FOUND! ADDED!");
       let newFavMedia = new FavMedia({
         url: favMediaURL,
-        users_id_fk: userID
+        email: email
       });
 
       newFavMedia.save().then(newFavMedia2 => {
@@ -111,6 +172,7 @@ app.post('/favmedia', function(req, res) {
 });
 
 app.post('/get_users', function(req, res) {
+  console.log(req.body);
   if (req.body.searchTerm === '') {
     res.send([]);
   } else {
@@ -123,6 +185,7 @@ app.post('/get_users', function(req, res) {
 
 });
 
+<<<<<<< 2be498b08a710f192eacf676b86192afbd74f5f2
 app.post('/get_all_favmedia', function(req, res) {
   new User({email: req.body.email}).fetch()
     .then(found => {
@@ -166,6 +229,7 @@ app.post('/get_user_info', function(req, res){
 });
 
 app.post('/get_friend_info', function(req, res){
+  console.log(req.body);
   new User({ email: req.body.friend1 }).fetch().then(found => {
     if (found) {
       new User({ email: req.body.friend2 }).fetch().then(found2 => {
@@ -176,10 +240,7 @@ app.post('/get_friend_info', function(req, res){
           })
           .fetch().then(found3 => {
             if (found3) {
-              res.send({status: "Found"});
-            }
-            else {
-              res.send({status: "Not Found"});
+              res.send({found});
             }
           });
         }
@@ -212,7 +273,7 @@ app.post('/add_friend', function(req, res) {
               });
             }
           });
-        }  
+        }
       });
     }
   });
