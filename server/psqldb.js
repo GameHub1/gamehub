@@ -37,7 +37,7 @@ db.schema.hasTable('favmedia').then(exists => {
     db.schema.createTable('favmedia', favmedia => {
       favmedia.increments('id').primary();
       favmedia.string('url');
-      favmedia.string('users_id_fk');
+      favmedia.integer('users_id_fk');
       favmedia.foreign('users_id_fk').references('users.id');
     }).then(function(table){
       console.log("Created favmedia table");

@@ -106,7 +106,7 @@ app.post('/games', function(req, res) {
         console.log("join request:", joinReq);
       })).then(
         new GameJoin({
-          users_id_fk: 2, games_id_fk: 2
+          users_id_fk: joinReq.users_id_fk, games_id_fk: joinReq.games_id_fk
         }).fetch().then(found => {
           if (found) {
             console.log("join already in database!");
@@ -114,7 +114,7 @@ app.post('/games', function(req, res) {
           else {
             console.log("JOIN NOT FOUND! ADDED!");
             let newGameJoin = new GameJoin({
-              users_id_fk: 2, games_id_fk: 2
+              users_id_fk:joinReq.users_id_fk, games_id_fk: joinReq.games_id_fk
             });
             newGameJoin.save().then(newGameJoin2 => {
               Games.add(newGameJoin2);
@@ -214,7 +214,6 @@ app.post('/get_users', function(req, res) {
 
 });
 
-<<<<<<< 2be498b08a710f192eacf676b86192afbd74f5f2
 app.post('/get_all_favmedia', function(req, res) {
   new User({email: req.body.email}).fetch()
     .then(found => {
