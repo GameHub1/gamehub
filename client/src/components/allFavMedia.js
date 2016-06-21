@@ -7,11 +7,11 @@ export default class AllFavMedia extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {urls: []}
+    this.state = {urls: []};
   }
 
-  componentWillMount() {
-    axios.post('/get_all_favmedia', {email: this.props.authData.email})
+  componentWillReceiveProps(props) {
+    axios.post('/get_all_favmedia', {email: props.profile.email})
       .then((response) => {
         console.log('this is ALL MEDIA', response.data);
         let allFavMedia = response.data.map((item) => {
@@ -32,7 +32,6 @@ export default class AllFavMedia extends Component {
   }
 
   render() {
-    console.log('in all fav media.', this.state.urls);
     if (this.state.urls.length > 0) {
       return (
         <div className="allFavMediaBox">
@@ -47,20 +46,15 @@ export default class AllFavMedia extends Component {
         </div>
       );
     }
-    
   }
 }
 
 function mapStateToProps(state) {
+  console.log("SATETEATTT", state);
   return {
     profile: state.profile,
     authData: state.authData
-
   };
 }
-
-// function mapDispatchToProps(dispatch) {
-//   return bindActionCreators({fetchAllFavMedia: fetchAllFavMedia}, dispatch);
-// }
 
 export default connect(mapStateToProps)(AllFavMedia);

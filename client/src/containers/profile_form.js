@@ -8,7 +8,6 @@ import {browserHistory} from 'react-router';
 
 class ProfileForm extends Component {
   onSubmit(prop) {
-    console.log('This is props', prop);
     let prop2 = {
       name: prop.name,
       location: prop.location,

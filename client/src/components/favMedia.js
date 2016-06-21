@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {reduxForm} from 'redux-form';
 import {createFavMedia} from '../actions/index';
+import {browserHistory} from 'react-router';
 
 class FavMedia extends Component {
   constructor(props) {
@@ -37,7 +38,8 @@ class FavMedia extends Component {
 // reduxForm: first is form config, 2nd is mapStateToProps, 3rd is mapDispatchToProps
 function mapStateToProps(state) {
   return {
-    profile: state.profile
+    profile: state.profile,
+    authData: state.authData
   };
 }
 
