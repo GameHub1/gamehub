@@ -9,11 +9,9 @@ export class FriendList extends Component {
 
     return (
       <div>
-        <ul>
           {this.props.friendList.map(item => {
-            return <li key={item.name}>{item.name}</li>
+            return <div key={item.name}>{item.name}</div>
           })}
-        </ul>
       </div>
     );
   }
