@@ -139,6 +139,10 @@ app.post('/get_all_favmedia', function(req, res) {
     });
 });
 
+app.post("/show_friends", function(req,res) {
+
+});
+
 app.get('/get_friends', function(req, res){
   bookshelf.knex.raw("SELECT fullname FROM users WHERE users.id IN (SELECT friends.friend2_fk FROM users inner JOIN friends ON users.id = friends.friend1_fk WHERE users.email = 'chen.liu.michael@gmail.com');")
     .then(response => {
