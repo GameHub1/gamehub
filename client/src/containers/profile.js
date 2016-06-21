@@ -35,6 +35,28 @@ export class Profile extends Component {
       })
   }
 
+
+
+
+   sendToProfileAction () {
+
+      axios.post('/get_user_info',{email: this.props.params.id})
+      .then((response) => {
+        let prop = {
+          id: response.data.found.id,
+          name: response.data.found.fullname,
+          location: response.data.found.location,
+          bio: response.data.found.bio,
+          email: this.props.params.id,
+          pic_path: response.data.found.pic_path
+        };
+        this.props.postProfile(prop);
+      });
+
+   }
+
+
+
    getState() {
       console.log('This is media ', this.props.media);
       console.log('This is games ', this.props.games);
@@ -79,6 +101,10 @@ export class Profile extends Component {
   render() {
     // const userEmail = this.props.authData.email;
     // const otherUserEmail = this.props.profile.email;
+
+    $(window).on('popstate', function (e) {
+      this.sendToProfileAction();
+    }.bind(this));
 
     if (this.props.authData.email === this.props.profile.email) {
       return (
