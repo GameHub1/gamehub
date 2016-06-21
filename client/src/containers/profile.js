@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import axios from 'axios';
 import Games from '../components/games';
 import FavMedia from '../components/favMedia';
 import AllFavMedia from '../components/allFavMedia';
-import axios from 'axios';
 import FriendList from './friend_list';
 import {showFriends} from '../actions/index';
-import {postProfile} from '../actions/index.js';
+import {postProfile} from '../actions/index';
 import {browserHistory} from 'react-router';
 
 export class Profile extends Component {
@@ -35,7 +35,7 @@ export class Profile extends Component {
       })
   }
 
-   getState () {
+   getState() {
       console.log('This is media ', this.props.media);
       console.log('This is games ', this.props.games);
       console.log('THis is profile', this.props.profile);
@@ -76,9 +76,63 @@ export class Profile extends Component {
     browserHistory.push('/profile_setup');
   }
 
-  render () {
+  render() {
+    // const userEmail = this.props.authData.email;
+    // const otherUserEmail = this.props.profile.email;
 
-    return (
+    if (this.props.authData.email === this.props.profile.email) {
+      return (
+        <div className="container">
+          {/* Profile Header */}
+          <div className="row" id="profile_heading">
+            <div className="col-lg-12">
+              <h1>
+                <span className="user-name">{this.props.profile.name}</span>
+                <small className="location">{this.props.profile.location || "San Francisco, CA"}</small>
+              </h1>
+            </div>
+          </div>
+          {/* Profile Grid */}
+          <div className="col-md-4" id="user_friends">
+            <div className="row" id="user">
+              <div className="profile_pic">
+                <img className="img-responsive" src={this.props.profile.pic_path}/>
+              </div>
+              <button id="followBtn" onClick={this.addFriend.bind(this)}> Follow </button>
+            </div>
+            <div className="row" id="friends-component">
+              <h3>Friends</h3>
+              <FriendList />
+              <a>See All Friends</a>
+            </div>
+          </div>
+          <div className="col-md-1" id="barrier">
+          </div>
+          <div className="col-md-7" id="bio_games">
+            <div className="row" id="bio">
+              <p>{this.props.profile.bio || "Hi, I haven\'t filled out my bio yet!"}</p>
+              <a onClick={this.editProflie.bind(this)}>Edit Profile</a>
+            </div>
+            <div className="row">
+              <h3>Games</h3>
+              <p><strong>Really Good At:</strong></p>
+              <p>Altered Beast, Twilight Imperium, Boss Monster, We Did Not Playtest This At All, Android: Netrunner</p>
+              <p><strong>Enjoys Playing:</strong></p>
+              <p>Gloom, Magic: the Gathering, WWE Smackdown 2012, Limbo, Settlers of Catan, Shadow Hunters</p>
+              <p><strong>Interested In Trying:</strong></p>
+              <p>Fast Food Magnate, Vampire: the Masquerade</p>
+              <a>Add Game</a>
+            </div>
+            <div className="row">
+              <h3>Media</h3>
+              <FavMedia />
+              <AllFavMedia />
+            </div>
+          </div>
+        </div>
+      );
+    } else {
+      return (
       <div className="container">
         {/* Profile Header */}
         <div className="row" id="profile_heading">
@@ -95,7 +149,7 @@ export class Profile extends Component {
             <div className="profile_pic">
               <img className="img-responsive" src={this.props.profile.pic_path}/>
             </div>
-            <button id="followBtn" onClick = {this.addFriend.bind(this)}> Follow </button>
+            <button id="followBtn" onClick={this.addFriend.bind(this)}> Follow </button>
           </div>
           <div className="row" id="friends-component">
             <h3>Friends</h3>
@@ -108,7 +162,6 @@ export class Profile extends Component {
         <div className="col-md-7" id="bio_games">
           <div className="row" id="bio">
             <p>{this.props.profile.bio || "Hi, I haven\'t filled out my bio yet!"}</p>
-            <a onClick={this.editProflie.bind(this)}>Edit Profile</a>
           </div>
           <div className="row">
             <h3>Games</h3>
@@ -118,16 +171,16 @@ export class Profile extends Component {
             <p>Gloom, Magic: the Gathering, WWE Smackdown 2012, Limbo, Settlers of Catan, Shadow Hunters</p>
             <p><strong>Interested In Trying:</strong></p>
             <p>Fast Food Magnate, Vampire: the Masquerade</p>
-            <a>Add Game</a>
           </div>
           <div className="row">
             <h3>Media</h3>
-            <FavMedia />
             <AllFavMedia />
           </div>
         </div>
       </div>
     );
+    }
+    
 
     //Old profile rendering code:
 
