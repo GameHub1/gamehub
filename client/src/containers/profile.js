@@ -64,7 +64,8 @@ export class Profile extends Component {
    }
 
    findFriends() {
-     axios.get('/get_friends', "test")
+    let URL_array = window.location.pathname.split('/profile/');
+     axios.post('/show_friends', {email: URL_array[1]})
        .then((response) => {
          let friendArr = response.data.data;
          this.props.showFriends(friendArr);
@@ -129,7 +130,7 @@ export class Profile extends Component {
             <div className="row" id="friends-component">
               <h3>Friends</h3>
               <FriendList />
-              <a>See All Friends</a>
+              <a onClick={this.findFriends.bind(this)}>See All Friends</a>
             </div>
           </div>
           <div className="col-md-1" id="barrier">
@@ -180,7 +181,7 @@ export class Profile extends Component {
           <div className="row" id="friends-component">
             <h3>Friends</h3>
             <FriendList />
-            <a>See All Friends</a>
+            <a onClick={this.findFriends.bind(this)}>See All Friends</a>
           </div>
         </div>
         <div className="col-md-1" id="barrier">

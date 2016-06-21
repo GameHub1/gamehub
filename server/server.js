@@ -144,10 +144,10 @@ app.post("/show_friends", function(req,res) {
 });
 
 app.get('/get_friends', function(req, res){
-  bookshelf.knex.raw("SELECT fullname FROM users WHERE users.id IN (SELECT friends.friend2_fk FROM users inner JOIN friends ON users.id = friends.friend1_fk WHERE users.email = 'chen.liu.michael@gmail.com');")
+  bookshelf.knex.raw("SELECT * FROM users WHERE users.id IN (SELECT friends.friend2_fk FROM users inner JOIN friends ON users.id = friends.friend1_fk WHERE users.email = 'chen.liu.michael@gmail.com');")
     .then(response => {
       let info = response.rows.reduce((acc, cur) => {
-        acc.push({name: cur.fullname});
+        acc.push({name: cur.fullname, email: cur.email, pic_path: cur.pic_path});
         return acc;
       }, []);
       console.log(info);
