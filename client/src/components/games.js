@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import { reduxForm } from 'redux-form';
 import { createGame } from '../actions/index';
 
-class Games extends Component {
-  
+class GameList extends Component {
+
 	onSubmitPlus(prop) {
 		this.props.createGame([prop, this.props.authData.email]);
 	}
@@ -38,4 +38,4 @@ function mapStateToProps(state) {
 export default reduxForm({
 	form: 'GamesForm',
 	fields: ['gameTitle']
-},mapStateToProps,{ createGame })(Games);
+},mapStateToProps,{ createGame })(GameList);

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import axios from 'axios';
-import Games from '../components/games';
+import GameList from '../components/games';
 import FavMedia from '../components/favMedia';
 import AllFavMedia from '../components/allFavMedia';
 import FriendList from './friend_list';
@@ -92,7 +92,7 @@ export class Profile extends Component {
           document.getElementById("followBtn").firstChild.data='following';
         }
       });
-    
+
   }
 
   editProflie() {
@@ -141,14 +141,7 @@ export class Profile extends Component {
               <a onClick={this.editProflie.bind(this)}>Edit Profile</a>
             </div>
             <div className="row">
-              <h3>Games</h3>
-              <p><strong>Really Good At:</strong></p>
-              <p>Altered Beast, Twilight Imperium, Boss Monster, We Did Not Playtest This At All, Android: Netrunner</p>
-              <p><strong>Enjoys Playing:</strong></p>
-              <p>Gloom, Magic: the Gathering, WWE Smackdown 2012, Limbo, Settlers of Catan, Shadow Hunters</p>
-              <p><strong>Interested In Trying:</strong></p>
-              <p>Fast Food Magnate, Vampire: the Masquerade</p>
-              <a>Add Game</a>
+              <GameList /> 
             </div>
             <div className="row">
               <h3>Media</h3>
@@ -207,7 +200,7 @@ export class Profile extends Component {
       </div>
     );
     }
-    
+
 
     //Old profile rendering code:
 

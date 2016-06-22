@@ -35,11 +35,37 @@ const Friend = bookshelf.Model.extend({
 const Friends = new bookshelf.Collection();
 Friends.model = Friend;
 
+const GameJoin = bookshelf.Model.extend({
+  tableName: 'users_games'
+});
+
+const GameJoins = new bookshelf.Collection();
+GameJoins.model = GameJoin;
+
+const addGameJoin = function(joinReq){
+  new GameJoin({
+    users_id_fk: joinReq.users_id_fk, games_id_fk: joinReq.games_id_fk
+  }).fetch().then(found => {
+    if (found) {
+      console.log("join already in database!");
+    }
+    else {
+      console.log("JOIN NOT FOUND! ADDED!");
+      let newGameJoin = new GameJoin({
+        users_id_fk:joinReq.users_id_fk, games_id_fk: joinReq.games_id_fk
+      });
+      newGameJoin.save().then(newGameJoin2 => {
+        GameJoins.add(newGameJoin2);
+      });
+    }
+  });
+};
+
 app.post('/signup', function(req,res) {
   let name = req.body.name;
   let email = req.body.email;
   let pic_path = req.body.pic_path;
-  
+
   console.log(req.body);
   let routeProp = 'val';
 
@@ -70,47 +96,67 @@ app.post('/signup', function(req,res) {
 app.post('/games', function(req, res) {
   let gameTitle = req.body[0].gameTitle;
   let email = req.body[1];
+  let joinReq = {users_id_fk: 0, games_id_fk: 0};
   console.log(gameTitle, email);
-  new Game({ game: gameTitle, email: email }).fetch().then(found => {
+
+  new Game({name: gameTitle}).fetch().then(found => {
     if (found) {
-      console.log("already in database!");
+      console.log(gameTitle + " already in database!");
     }
     else {
-      console.log("NOT FOUND! ADDED!");
+      console.log(gameTitle + " NOT FOUND! ADDED!");
       let newGame = new Game({
-        game: gameTitle,
-        email: email
+        name: gameTitle
       });
-
       newGame.save().then(newGame2 => {
         Games.add(newGame2);
       });
     }
-  });
-});
-
-app.post('/favmedia', function(req, res) {
-  let favMediaURL = req.body[0].favMediaURL;
-  let userID = req.body[1];
-
-  new FavMedia({ url: favMediaURL, users_id_fk: userID }).fetch().then(found => {
-    if (found) {
-      console.log("URL already exists.");
-    }
-    else {
-      let newFavMedia = new FavMedia({
-        url: favMediaURL,
-        users_id_fk: userID
+  })
+  .then(() => {
+    console.log("Games promise!");
+    setTimeout(function(){
+      new Game({name: gameTitle}).fetch().then(model => {
+        joinReq.games_id_fk = model.get('id');
+        console.log("gameID: ", joinReq.games_id_fk);
+        console.log("setTimeout join req:", joinReq);
+        addGameJoin(joinReq);
+      }) ;
+    }, 500);
+  })
+    .then(() => {
+      console.log("Users promise!");
+      new User({email: email}).fetch().then(model => {
+        joinReq.users_id_fk  = model.get('id');
+        console.log("User ID: ", joinReq.users_id_fk);
       });
-
-      newFavMedia.save().then(newFavMedia2 => {
-        FavMedias.add(newFavMedia2);
-      });
-    }
+    });
   });
-});
+
+
+  app.post('/favmedia', function(req, res) {
+    let favMediaURL = req.body[0].favMediaURL;
+    let userID = req.body[1];
+
+    new FavMedia({ url: favMediaURL, users_id_fk: userID }).fetch().then(found => {
+      if (found) {
+        console.log("URL already exists.");
+      }
+      else {
+        let newFavMedia = new FavMedia({
+          url: favMediaURL,
+          users_id_fk: userID
+        });
+
+        newFavMedia.save().then(newFavMedia2 => {
+          FavMedias.add(newFavMedia2);
+        });
+      }
+    });
+  });
 
 app.post('/get_users', function(req, res) {
+  console.log(req.body);
   if (req.body.searchTerm === '') {
     res.send([]);
   } else {
@@ -166,6 +212,7 @@ app.post('/get_user_info', function(req, res){
 });
 
 app.post('/get_friend_info', function(req, res){
+  console.log(req.body);
   new User({ email: req.body.friend1 }).fetch().then(found => {
     if (found) {
       new User({ email: req.body.friend2 }).fetch().then(found2 => {
@@ -176,10 +223,7 @@ app.post('/get_friend_info', function(req, res){
           })
           .fetch().then(found3 => {
             if (found3) {
-              res.send({status: "Found"});
-            }
-            else {
-              res.send({status: "Not Found"});
+              res.send({found});
             }
           });
         }
@@ -212,7 +256,7 @@ app.post('/add_friend', function(req, res) {
               });
             }
           });
-        }  
+        }
       });
     }
   });
