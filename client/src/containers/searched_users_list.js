@@ -53,7 +53,7 @@ changeProfile(email) {
     let that = this;
 
     return ( 
-      <tr id="searchedUsersRow" className="searchRows" key={email} onClick={function () {that.changeProfile(email)}}>
+      <tr id="searchedUsersRow" className="searchRows" key={email} onClick={() => {that.changeProfile(email)}}>
         <td><span className="glyphicon glyphicon-user"></span></td>
         <td>{fullname}</td>
         <td>{email}</td>
