@@ -51,6 +51,7 @@ export class Profile extends Component {
           pic_path: response.data.found.pic_path
         };
         this.props.renderProfileState(prop);
+        this.props.showFriends([]);
       });
 
    }

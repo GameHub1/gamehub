@@ -41,16 +41,22 @@ export class FriendList extends Component {
 
     return (
       <div>
+      <table>
           {this.props.friendList.map(item => {
             return (
-            <div onClick={()=> {this.changeProfile(item.email)}} key={item.name}>
-            <span className="friend_pic">
+            <tr>
+            <div key={item.name}>
+            <td onClick={()=> {this.changeProfile(item.email)}} className="friend_pic">
             <img src={item.pic_path}/>
-            </span>
+            </td>
+            <td onClick={()=> {this.changeProfile(item.email)}}>
             {item.name}
+            </td>
             </div>
+            </tr>
             )
           })}
+      </table>
       </div>
     );
   }
