@@ -12,7 +12,6 @@ export const FETCH_USERS = 'FETCH_USERS';
 export const FIND_FRIENDS = 'FIND_FRIENDS';
 export const RENDER_PROFILE = 'RENDER_PROFILE'
 
-
 export function showFriends(data) {
   return {
     type: FIND_FRIENDS,
@@ -61,13 +60,19 @@ export function createGame(props) {
 }
 
 export function createFavMedia(props) {
-  console.log('CREATE FAV MEDIA', props);
   const request = axios.post('/favmedia', props);
 
   return {
     type: CREATE_FAVMEDIA,
-    payload: props
+    payload: request
   };
+}
+
+export function fetchAllMedia(props) {
+  return {
+    type: FETCH_ALL_FAVMEDIA,
+    payload: request
+  }
 }
 
 export function fetchUsers(props) {

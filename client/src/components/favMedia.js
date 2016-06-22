@@ -1,27 +1,33 @@
 import React, {Component} from 'react';
-import {reduxForm} from 'redux-form';
+import {reduxForm, reset} from 'redux-form';
 import {createFavMedia} from '../actions/index';
 import {browserHistory} from 'react-router';
+
 
 class FavMedia extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {url: ''};
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  onSubmit(prop) {
-    this.props.createFavMedia([prop, this.props.profile.id]);
+  onSubmit(prop, dispatch) {
+    this.props.createFavMedia([prop, this.props.profile.email])
+      .then(response => {
+        dispatch(reset('FavMediaForm'));
+      })
   }
 
   render() {
     const {fields: {favMediaURL}, handleSubmit} = this.props;
 
     return (
-      <form onSubmit={handleSubmit(this.onSubmit)}>
-        {this.props.profile.id}
+      <form id="favMediaForm" onSubmit={handleSubmit(this.onSubmit)}>
         <div id="favMedia" className="input-group">
-          <input type="text" 
+          <input
+            id="mediaInput"
+            type="text" 
             placeholder="submit your best gameplays" 
             className="form-control" 
             aria-describedby="basic-addon2" {...favMediaURL} />
@@ -39,7 +45,8 @@ class FavMedia extends Component {
 function mapStateToProps(state) {
   return {
     profile: state.profile,
-    authData: state.authData
+    authData: state.authData,
+    media: state.media
   };
 }
 
