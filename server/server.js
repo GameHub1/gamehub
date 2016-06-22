@@ -12,13 +12,13 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, '../dist/')));
 
 const User = bookshelf.Model.extend({
-  tableName: 'users2'
+  tableName: 'users'
 });
 const Users = new bookshelf.Collection();
 Users.model = User;
 
 const Game = bookshelf.Model.extend({
-  tableName: 'favgames'
+  tableName: 'games'
 });
 const Games = new bookshelf.Collection();
 Games.model = Game;
@@ -38,8 +38,8 @@ Friends.model = Friend;
 app.post('/signup', function(req,res) {
   let name = req.body.name;
   let email = req.body.email;
-
   let pic_path = req.body.pic_path;
+  
   console.log(req.body);
   let routeProp = 'val';
 
@@ -65,8 +65,6 @@ app.post('/signup', function(req,res) {
       res.send({name: name,email: email,routeProp: routeProp});
     }
 	});
-
-  
 });
 
 app.post('/games', function(req, res) {
@@ -93,17 +91,16 @@ app.post('/games', function(req, res) {
 
 app.post('/favmedia', function(req, res) {
   let favMediaURL = req.body[0].favMediaURL;
-  let email = req.body[1];
-  console.log(favMediaURL, email);
-  new FavMedia({ url: favMediaURL, email: email }).fetch().then(found => {
+  let userID = req.body[1];
+
+  new FavMedia({ url: favMediaURL, users_id_fk: userID }).fetch().then(found => {
     if (found) {
-      console.log("already in database!");
+      console.log("URL already exists.");
     }
     else {
-      console.log("NOT FOUND! ADDED!");
       let newFavMedia = new FavMedia({
         url: favMediaURL,
-        email: email
+        users_id_fk: userID
       });
 
       newFavMedia.save().then(newFavMedia2 => {
@@ -114,22 +111,36 @@ app.post('/favmedia', function(req, res) {
 });
 
 app.post('/get_users', function(req, res) {
-  console.log(req.body);
   if (req.body.searchTerm === '') {
     res.send([]);
   } else {
-    bookshelf.knex.raw("SELECT * FROM USERS2 WHERE LOWER(fullname) LIKE LOWER('%" + req.body.searchTerm + "%') OR LOWER(email) LIKE LOWER('%" + req.body.searchTerm + "%')")
+    bookshelf.knex.raw("SELECT * FROM users WHERE LOWER(fullname) LIKE LOWER('%" + req.body.searchTerm + "%') OR LOWER(email) LIKE LOWER('%" + req.body.searchTerm + "%')")
     .then(response => {
       console.log(response.rows);
       res.send(response.rows);
     });
   }
-  
+
+});
+
+app.post('/get_all_favmedia', function(req, res) {
+  new User({email: req.body.email}).fetch()
+    .then(found => {
+      if (found) {
+        new FavMedia()
+        .query({where: {users_id_fk: found.attributes.id}})
+        .fetchAll()
+        .then(found => {
+          res.send(found);
+        });
+      } else {
+        console.log("User not found, no media!");
+      }
+    });
 });
 
 app.get('/get_friends', function(req, res){
-  console.log(req.body);
-  bookshelf.knex.raw("SELECT fullname FROM users2 WHERE users2.id IN (SELECT friends.friend2_fk FROM users2 inner JOIN friends ON users2.id = friends.friend1_fk WHERE users2.email = 'chen.liu.michael@gmail.com');")
+  bookshelf.knex.raw("SELECT fullname FROM users WHERE users.id IN (SELECT friends.friend2_fk FROM users inner JOIN friends ON users.id = friends.friend1_fk WHERE users.email = 'chen.liu.michael@gmail.com');")
     .then(response => {
       let info = response.rows.reduce((acc, cur) => {
         acc.push({name: cur.fullname});
@@ -149,28 +160,57 @@ app.post('/get_user_info', function(req, res){
   });
 });
 
+app.post('/get_friend_info', function(req, res){
+  new User({ email: req.body.friend1 }).fetch().then(found => {
+    if (found) {
+      new User({ email: req.body.friend2 }).fetch().then(found2 => {
+        if (found2) {
+          new Friend({
+            friend1_fk: found.attributes.id,
+            friend2_fk: found2.attributes.id
+          })
+          .fetch().then(found3 => {
+            if (found3) {
+              res.send({status: "Found"});
+            }
+            else {
+              res.send({status: "Not Found"});
+            }
+          });
+        }
+      });
+    }
+  });
+});
+
 app.post('/add_friend', function(req, res) {
   console.log(req.body);
-  if (req.body.friend1 === req.body.friend2){
-    console.log("Tried to friend self. haha!");
-  }
-  else {
-    new User({ email: req.body.friend1 }).fetch().then(found => {
-      if (found) {
-        new User({ email: req.body.friend2 }).fetch().then(found2 => {
-          if (found2) {
-            let friendship = new friend({
-              friend1_fk: found.attributes.id,
-              friend2_fk: found2.attributes.id
-            });
-            friendship.save().then(newFriendship => {
+  new User({ email: req.body.friend1 }).fetch().then(found => {
+    if (found) {
+      new User({ email: req.body.friend2 }).fetch().then(found2 => {
+        if (found2) {
+          let friendship = new Friend({
+            friend1_fk: found.attributes.id,
+            friend2_fk: found2.attributes.id
+          });
+          friendship.fetch().then(found3 => {
+            if (!found3){
+              friendship.save().then(newFriendship => {
               Friends.add(newFriendship);
-            });
-          }  
-        });
-      }
-    }); 
-  }
+              res.send({action: "added"});
+              });
+            }
+            else {
+              bookshelf.knex.raw("DELETE FROM friends WHERE friend1_fk = " + found.attributes.id + " AND friend2_fk = " + found2.attributes.id + ";")
+              .then(response => {
+              res.send({action: "removed"});
+              });
+            }
+          });
+        }  
+      });
+    }
+  });
 });
 
 app.post('/post_profile', function(req, res) {
@@ -178,7 +218,7 @@ app.post('/post_profile', function(req, res) {
   let location = req.body.location;
   let bio = req.body.bio;
   let email = req.body.email;
-  
+
   new User({ email: email }).fetch().then(found => {
     if (found) {
       var fullname_change = found.attributes.fullname
@@ -195,10 +235,12 @@ app.post('/post_profile', function(req, res) {
       });
       updateUser.save({email: email}, {method: "update"}).then(newUser => {
         Users.add(newUser);
+        res.send("POST SUCCESSFULL!");
       });
     }
     else {
       console.log("EMAIL ADDRESS NOT FOUND!");
+      res.send("EMAIL ADDRESS NOT FOUND!");
     }
   });
 });

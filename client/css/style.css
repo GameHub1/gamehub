@@ -45,6 +45,10 @@ div.mario {
 	width: 100%;
 }
 
+textarea {
+	color: black; 
+}
+
 
 /*#mario:after {
   content : "";
@@ -107,10 +111,17 @@ div.mario {
 }
 
 
-/*------------------------------ Fav Media Component ------------------------------*/
+/*------------------------------ Fav Media and All Fav Media Components ------------------------------*/
 #favMedia {
-  text-align: right;
   padding-right: 30px;
+}
+
+.allFavMediaBox {
+  width: 660px;
+  height: 320px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  padding: 20px;
 }
 
 /*------------------------------ Searched Users List Component ------------------------------*/
