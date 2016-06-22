@@ -42,20 +42,20 @@ export class FriendList extends Component {
     return (
       <div>
       <table>
+        <tbody>
           {this.props.friendList.map(item => {
             return (
-            <tr>
-            <div key={item.name}>
+            <tr key={item.name}>
             <td onClick={()=> {this.changeProfile(item.email)}} className="friend_pic">
             <img src={item.pic_path}/>
             </td>
             <td onClick={()=> {this.changeProfile(item.email)}}>
             {item.name}
             </td>
-            </div>
             </tr>
             )
           })}
+        </tbody>
       </table>
       </div>
     );
@@ -65,7 +65,8 @@ export class FriendList extends Component {
 
 function mapStateToProps(state) {
   return {
-    friendList: state.friendList
+    friendList: state.friendList,
+    authData: state.authData
   };
 }
 
