@@ -1,7 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Router, Route, Link, browserHistory } from 'react-router';
+<<<<<<< 1e929a2dcb50ebf7e7545364a6fe769e665933a7
 import {postProfile, showFriends} from '../actions/index';
+=======
+import {postProfile, renderProfileState} from '../actions/index';
+>>>>>>> [feat] separate action for rendering profile added
 import {bindActionCreators} from 'redux';
 import axios from 'axios';
 
@@ -26,8 +30,9 @@ changeProfile(email) {
           email: email,
           pic_path: response.data.found.pic_path
         };
+
         this.props.showFriends([]);
-        this.props.postProfile(prop);
+        this.props.renderProfileState(prop);
         let URL_array = window.location.pathname.split('/profile/');
         axios.post('/get_friend_info',{friend1: this.props.authData.email, friend2: URL_array[1]})
           .then((response) => {
@@ -84,7 +89,11 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps (dispatch) {
+<<<<<<< 1e929a2dcb50ebf7e7545364a6fe769e665933a7
   return bindActionCreators({postProfile, showFriends}, dispatch);
+=======
+  return bindActionCreators({postProfile, renderProfileState}, dispatch);
+>>>>>>> [feat] separate action for rendering profile added
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchedUsers);
