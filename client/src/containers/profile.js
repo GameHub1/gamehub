@@ -32,7 +32,7 @@ export class Profile extends Component {
           document.getElementById("followBtn").style.background='#556B2F';
           document.getElementById("followBtn").firstChild.data='following';
         }
-      })
+      });
   }
 
 
@@ -52,6 +52,19 @@ export class Profile extends Component {
         };
         this.props.renderProfileState(prop);
         this.props.showFriends([]);
+        let URL_array = window.location.pathname.split('/profile/');
+        axios.post('/get_friend_info',{friend1: this.props.authData.email, friend2: URL_array[1]})
+        .then((response) => {
+          console.log("FRIEND INFO RESPONSE: ", response);
+          if(response.data.status === "Found") {
+            document.getElementById("followBtn").style.background='#556B2F';
+            document.getElementById("followBtn").firstChild.data='following';
+          }
+          else {
+            document.getElementById("followBtn").style.background='#d3d3d3';
+            document.getElementById("followBtn").firstChild.data='follow'; 
+          }
+        });
       });
 
    }
@@ -129,9 +142,9 @@ export class Profile extends Component {
               <button id="followBtn" onClick={this.addFriend.bind(this)}> Follow </button>
             </div>
             <div className="row" id="friends-component">
-              <h3>Friends</h3>
+              <h3>Following</h3>
               <FriendList />
-              <a onClick={this.findFriends.bind(this)}>See All Friends</a>
+              <a onClick={this.findFriends.bind(this)}>See All Following</a>
             </div>
           </div>
           <div className="col-md-1" id="barrier">
@@ -173,9 +186,9 @@ export class Profile extends Component {
             <button id="followBtn" onClick={this.addFriend.bind(this)}> Follow </button>
           </div>
           <div className="row" id="friends-component">
-            <h3>Friends</h3>
+            <h3>Following</h3>
             <FriendList />
-            <a onClick={this.findFriends.bind(this)}>See All Friends</a>
+            <a onClick={this.findFriends.bind(this)}>See All Following</a>
           </div>
         </div>
         <div className="col-md-1" id="barrier">
