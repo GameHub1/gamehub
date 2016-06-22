@@ -7,9 +7,9 @@ export default function (state=[], action) {
     console.log("Game reducer consoled")
      let game = [action.payload[0].gameTitle]
       return [state, ...game];
-    case FETCH_GAMES: 
-      console.log("Fetching games: ", action.payload);
-      return action.payload;
+    case FETCH_GAMES:
+      console.log("Fetching games: ", action.payload.data.data);
+      return action.payload.data.data;
     default:
       return state;
   }
