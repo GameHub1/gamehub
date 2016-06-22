@@ -10,6 +10,7 @@ export const CREATE_FAVMEDIA = 'CREATE_FAVMEDIA';
 export const FETCH_ALL_FAVMEDIA = 'FETCH_ALL_FAVMEDIA';
 export const FETCH_USERS = 'FETCH_USERS';
 export const FIND_FRIENDS = 'FIND_FRIENDS';
+export const RENDER_PROFILE = 'RENDER_PROFILE'
 
 
 export function showFriends(data) {
@@ -25,6 +26,14 @@ export function postProfile(profile) {
 
   return {
     type: POST_PROFILE,
+    payload: profile
+  };
+}
+
+export function renderProfileState(profile) {
+  
+  return {
+    type: RENDER_PROFILE,
     payload: profile
   };
 }

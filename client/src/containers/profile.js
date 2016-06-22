@@ -7,7 +7,7 @@ import FavMedia from '../components/favMedia';
 import AllFavMedia from '../components/allFavMedia';
 import FriendList from './friend_list';
 import {showFriends} from '../actions/index';
-import {postProfile} from '../actions/index';
+import {postProfile, renderProfileState} from '../actions/index';
 import {browserHistory} from 'react-router';
 
 export class Profile extends Component {
@@ -50,7 +50,7 @@ export class Profile extends Component {
           email: this.props.params.id,
           pic_path: response.data.found.pic_path
         };
-        this.props.postProfile(prop);
+        this.props.renderProfileState(prop);
       });
 
    }
@@ -260,7 +260,7 @@ export class Profile extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({postProfile, showFriends}, dispatch);
+  return bindActionCreators({postProfile, showFriends, renderProfileState}, dispatch);
 }
 
 function mapStateToProps(state) {
