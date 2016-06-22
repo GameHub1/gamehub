@@ -142,9 +142,9 @@ export class Profile extends Component {
               <button id="followBtn" onClick={this.addFriend.bind(this)}> Follow </button>
             </div>
             <div className="row" id="friends-component">
-              <h3>Friends</h3>
+              <h3>Following</h3>
               <FriendList />
-              <a onClick={this.findFriends.bind(this)}>See All Friends</a>
+              <a onClick={this.findFriends.bind(this)}>See All Following</a>
             </div>
           </div>
           <div className="col-md-1" id="barrier">
@@ -186,9 +186,9 @@ export class Profile extends Component {
             <button id="followBtn" onClick={this.addFriend.bind(this)}> Follow </button>
           </div>
           <div className="row" id="friends-component">
-            <h3>Friends</h3>
+            <h3>Following</h3>
             <FriendList />
-            <a onClick={this.findFriends.bind(this)}>See All Friends</a>
+            <a onClick={this.findFriends.bind(this)}>See All Following</a>
           </div>
         </div>
         <div className="col-md-1" id="barrier">
