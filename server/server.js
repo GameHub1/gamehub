@@ -2,6 +2,7 @@
 
 const path = require('path');
 const express = require('express');
+const axios = require('axios');
 const bookshelf = require('./psqldb.js');
 const bodyParser = require('body-parser');
 const app = express();
@@ -41,6 +42,25 @@ const GameJoin = bookshelf.Model.extend({
 
 const GameJoins = new bookshelf.Collection();
 GameJoins.model = GameJoin;
+
+const addGameJoin = function(joinReq){
+  new GameJoin({
+    users_id_fk: joinReq.users_id_fk, games_id_fk: joinReq.games_id_fk
+  }).fetch().then(found => {
+    if (found) {
+      console.log("join already in database!");
+    }
+    else {
+      console.log("JOIN NOT FOUND! ADDED!");
+      let newGameJoin = new GameJoin({
+        users_id_fk:joinReq.users_id_fk, games_id_fk: joinReq.games_id_fk
+      });
+      newGameJoin.save().then(newGameJoin2 => {
+        GameJoins.add(newGameJoin2);
+      });
+    }
+  });
+};
 
 app.post('/signup', function(req,res) {
   let name = req.body.name;
@@ -93,90 +113,56 @@ app.post('/games', function(req, res) {
         Games.add(newGame2);
       });
     }
-  }).then(
-    new User({email: email}).fetch().then(model => {
-      let userId = model.get('id');
-      console.log("User ID: ", userId);
-      joinReq.users_id_fk = userId;
-    })).then(
+  })
+  .then(() => {
+    //console.log("game res: ", res);
+    console.log("Games promise!");
+    setTimeout(function(){
       new Game({name: gameTitle}).fetch().then(model => {
-        let gameId = model.get('id');
-        console.log("gameID: ", gameId);
-        joinReq.games_id_fk = gameId;
-        console.log("join request:", joinReq);
-      })).then(
-        new GameJoin({
-          users_id_fk: joinReq.users_id_fk, games_id_fk: joinReq.games_id_fk
-        }).fetch().then(found => {
-          if (found) {
-            console.log("join already in database!");
-          }
-          else {
-            console.log("JOIN NOT FOUND! ADDED!");
-            let newGameJoin = new GameJoin({
-              users_id_fk:joinReq.users_id_fk, games_id_fk: joinReq.games_id_fk
-            });
-            newGameJoin.save().then(newGameJoin2 => {
-              Games.add(newGameJoin2);
-            });
-          }
-        }));;
-});
-
-//I hard-coded in what we add to the users_games table for debugging reasons.
-
-//The code below is  close to what the full post request should
-//look like. I'm making sure that it successfully adds something
-//to the games table before running the join query, though.
-
-/*
-app.post('/games', function(req, res) {
-  let gameTitle = req.body[0].gameTitle;
-  let email = req.body[1];
-  let joinReq = {users_id_fk: 0, games_id_fk: 0};
-  console.log(gameTitle, email);
-
-  new Game({name: gameTitle}).fetch().then(found => {
-    if (found) {
-      console.log("already in database!");
-    }
-    else {
-      console.log("NOT FOUND! ADDED!");
-      let newGame = new Game({
-        game: gameTitle
+        joinReq.games_id_fk = model.get('id');
+        console.log("gameID: ", joinReq.games_id_fk);
+        console.log("setTimeout join req:", joinReq);
+        addGameJoin(joinReq); 
+        //axios.post('/game_join', joinReq);
+      }) ;
+    }, 500);
+  })
+    .then(() => {
+      //console.log("user res: ", res);
+      console.log("Users promise!");
+      new User({email: email}).fetch().then(model => {
+        joinReq.users_id_fk  = model.get('id');
+        console.log("User ID: ", joinReq.users_id_fk);
       });
-      newGame.save().then(newGame2 => {
-        Games.add(newGame2);
-      });
-    }
-  }).then(
-    new User({email: email}).fetch().then(model => {
-      let userId = model.get('id');
-      console.log("User ID: ", userId);
-      joinReq.users_id_fk = userId;
-    })).then(
-      new Game({name: gameTitle}).fetch().then(model => {
-        let gameId = model.get('id');
-        console.log("gameID: ", gameId);
-        joinReq.games_id_fk = gameId;
-        console.log("join request:", joinReq);
-      })).then(
-        new GameJoin(joinReq).fetch().then(found => {
-          if (found) {
-            console.log("join already in database!");
-          }
-          else {
-            console.log("NOT FOUND! ADDED!");
-            let newGameJoin = new GameJoin({
-              joinReq
-            });
-            newGameJoin.save().then(newGameJoin2 => {
-              Games.add(newGameJoin2);
-            });
-          }
-        }));
-});
-*/
+    });
+  });
+
+app.post('/game_join', function(req, res){
+  console.log("Game join: ", req);
+})
+  // .then(() => {
+  //   console.log("Final join req:", joinReq)
+  // })
+
+  // .then(() => {
+  //   new GameJoin({
+  //     users_id_fk: joinReq.users_id_fk, games_id_fk: joinReq.games_id_fk
+  //   }).fetch().then(found => {
+  //     if (found) {
+  //       console.log("join already in database!");
+  //     }
+  //     else {
+  //       console.log("JOIN NOT FOUND! ADDED!");
+  //       let newGameJoin = new GameJoin({
+  //         users_id_fk:joinReq.users_id_fk, games_id_fk: joinReq.games_id_fk
+  //       });
+  //       newGameJoin.save().then(newGameJoin2 => {
+  //         GameJoins.add(newGameJoin2);
+  //       });
+  //     }
+  //   });
+  // });
+
 
 app.post('/favmedia', function(req, res) {
   let favMediaURL = req.body[0].favMediaURL;
