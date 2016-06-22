@@ -133,27 +133,27 @@ app.post('/games', function(req, res) {
     });
   });
 
-app.post('/favmedia', function(req, res) {
-  let favMediaURL = req.body[0].favMediaURL;
-  let email = req.body[1];
-  console.log(favMediaURL, email);
-  new FavMedia({ url: favMediaURL, email: email }).fetch().then(found => {
-    if (found) {
-      console.log("already in database!");
-    }
-    else {
-      console.log("NOT FOUND! ADDED!");
-      let newFavMedia = new FavMedia({
-        url: favMediaURL,
-        email: email
-      });
 
-      newFavMedia.save().then(newFavMedia2 => {
-        FavMedias.add(newFavMedia2);
-      });
-    }
+  app.post('/favmedia', function(req, res) {
+    let favMediaURL = req.body[0].favMediaURL;
+    let userID = req.body[1];
+
+    new FavMedia({ url: favMediaURL, users_id_fk: userID }).fetch().then(found => {
+      if (found) {
+        console.log("URL already exists.");
+      }
+      else {
+        let newFavMedia = new FavMedia({
+          url: favMediaURL,
+          users_id_fk: userID
+        });
+
+        newFavMedia.save().then(newFavMedia2 => {
+          FavMedias.add(newFavMedia2);
+        });
+      }
+    });
   });
-});
 
 app.post('/get_users', function(req, res) {
   console.log(req.body);
