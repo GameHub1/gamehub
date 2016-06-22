@@ -164,11 +164,13 @@ app.post('/favmedia', function(req, res) {
               }
             });
         }
-      
-        bookshelf.knex.raw(`SELECT * FROM favmedias WHERE users_id_fk = ${userID}`)
-          .then(response => {
-            res.send(response.rows);
-        });
+
+        setTimeout(function() {
+          bookshelf.knex.raw(`SELECT * FROM favmedias WHERE users_id_fk = ${userID}`)
+            .then(response => {
+              res.send(response.rows);
+          });
+        }, 400);
       }
     });
 });
