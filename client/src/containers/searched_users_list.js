@@ -1,11 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Router, Route, Link, browserHistory } from 'react-router';
-<<<<<<< 1e929a2dcb50ebf7e7545364a6fe769e665933a7
-import {postProfile, showFriends} from '../actions/index';
-=======
-import {postProfile, renderProfileState} from '../actions/index';
->>>>>>> [feat] separate action for rendering profile added
+import {postProfile, showFriends, renderProfileState} from '../actions/index';
 import {bindActionCreators} from 'redux';
 import axios from 'axios';
 
@@ -89,11 +85,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps (dispatch) {
-<<<<<<< 1e929a2dcb50ebf7e7545364a6fe769e665933a7
-  return bindActionCreators({postProfile, showFriends}, dispatch);
-=======
-  return bindActionCreators({postProfile, renderProfileState}, dispatch);
->>>>>>> [feat] separate action for rendering profile added
+  return bindActionCreators({postProfile, showFriends, renderProfileState}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchedUsers);
