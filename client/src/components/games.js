@@ -14,12 +14,12 @@ class GameList extends Component {
 			<div>
 		  	<form  onSubmit={handleSubmit(this.onSubmitPlus.bind(this))}>
 		  		<div>
-		  			<label> Game: </label>
+		  			<label> Add Game: </label>
 		  			<input type="text" {...gameTitle}></input>
 		  			<button type="submit"> Add Game </button>
 		  		</div>
 		  	</form>
-	  	Games:
+	  	<h3>Favorite Games</h3> 
 	  	</div>
 	  	)
 	  }

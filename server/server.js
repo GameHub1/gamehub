@@ -185,7 +185,27 @@ app.post('/get_users', function(req, res) {
       res.send(response.rows);
     });
   }
+});
 
+app.get('/get_games', function(req, res){
+  let reqEmail = req.body.email;
+  bookshelf.knext.select('name')
+    .from('games')
+    .whereIn('id', function(){
+      this.select('games_id_fk')
+        .from('users').join('users_games', function(){
+          this.on('users.id', '=', 'users_games.users_id_fk')
+          .where({email: reqEmail});
+        });
+    })
+    .then(response => {
+      let gameInfo = response.rows.reduce((acc, cur) => {
+        acc.push(cur.name);
+        return acc;
+      }, []);
+      console.log(gameInfo);
+      res.send({data: gameInfo});
+    });
 });
 
 app.post("/show_friends", function(req,res) {
