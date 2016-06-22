@@ -122,7 +122,7 @@ app.post('/games', function(req, res) {
         joinReq.games_id_fk = model.get('id');
         console.log("gameID: ", joinReq.games_id_fk);
         console.log("setTimeout join req:", joinReq);
-        addGameJoin(joinReq); 
+        addGameJoin(joinReq);
         //axios.post('/game_join', joinReq);
       }) ;
     }, 500);
@@ -136,33 +136,6 @@ app.post('/games', function(req, res) {
       });
     });
   });
-
-app.post('/game_join', function(req, res){
-  console.log("Game join: ", req);
-})
-  // .then(() => {
-  //   console.log("Final join req:", joinReq)
-  // })
-
-  // .then(() => {
-  //   new GameJoin({
-  //     users_id_fk: joinReq.users_id_fk, games_id_fk: joinReq.games_id_fk
-  //   }).fetch().then(found => {
-  //     if (found) {
-  //       console.log("join already in database!");
-  //     }
-  //     else {
-  //       console.log("JOIN NOT FOUND! ADDED!");
-  //       let newGameJoin = new GameJoin({
-  //         users_id_fk:joinReq.users_id_fk, games_id_fk: joinReq.games_id_fk
-  //       });
-  //       newGameJoin.save().then(newGameJoin2 => {
-  //         GameJoins.add(newGameJoin2);
-  //       });
-  //     }
-  //   });
-  // });
-
 
 app.post('/favmedia', function(req, res) {
   let favMediaURL = req.body[0].favMediaURL;
