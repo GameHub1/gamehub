@@ -60,18 +60,15 @@ export function createGame(props) {
 }
 
 export function createFavMedia(props) {
-  console.log('CREATE FAV MEDIA', props);
   const request = axios.post('/favmedia', props);
 
   return {
     type: CREATE_FAVMEDIA,
-    payload: props
+    payload: request
   };
 }
 
 export function fetchAllMedia(props) {
-  const request = axios.post('/get_all_favmedia', props);
-
   return {
     type: FETCH_ALL_FAVMEDIA,
     payload: request

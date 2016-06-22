@@ -3,6 +3,7 @@ import {reduxForm} from 'redux-form';
 import {createFavMedia} from '../actions/index';
 import {browserHistory} from 'react-router';
 
+
 class FavMedia extends Component {
   constructor(props) {
     super(props);
@@ -11,7 +12,7 @@ class FavMedia extends Component {
   }
 
   onSubmit(prop) {
-    this.props.createFavMedia([prop, this.props.profile.id]);
+    this.props.createFavMedia([prop, this.props.profile.email]);
   }
 
   render() {
@@ -19,7 +20,6 @@ class FavMedia extends Component {
 
     return (
       <form onSubmit={handleSubmit(this.onSubmit)}>
-        {this.props.profile.id}
         <div id="favMedia" className="input-group">
           <input type="text" 
             placeholder="submit your best gameplays" 

@@ -4,8 +4,9 @@ export default function (state=[], action) {
   switch(action.type) {
     case CREATE_FAVMEDIA:
 
-      let mediaURL = [action.payload[0].favMediaURL];
-      return [state, ...mediaURL];
+      let mediaURL = [action.payload.data];
+      console.log('lalalla', action.payload);
+      return [...mediaURL];
     default: 
       return state;
   }

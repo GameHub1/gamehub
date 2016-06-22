@@ -2,30 +2,30 @@ import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import axios from 'axios';
+import {createFavMedia} from '../actions/index';
 
 export default class AllFavMedia extends Component {
-  constructor(props) {
-    super(props);
+  // componentWillMount() {
+  //   axios.post('/get_all_favmedia', {email: this.props.profile.email})
+  //     .then((response) => {
+  //       console.log('this is ALL MEDIA', response.data);
+  //       let allFavMedia = response.data.map((item) => {
+  //         return item.url;
+  //       });
+  //       return allFavMedia;
+  //     })
+  //     .then((urls) => {
+  //       this.setState({urls: urls})
+  //     });
+  // }
+  // componentDidMount() {
+  //   this.props.createFavMedia(['https://www.youtube.com/watch?v=BWeFB00IuFE', this.props.profile.email]);
+  //   console.log('MOUNTED');
+  // }
 
-    this.state = {urls: []};
-  }
-
-  componentWillMount() {
-    axios.post('/get_all_favmedia', {email: this.props.profile.email})
-      .then((response) => {
-        console.log('this is ALL MEDIA', response.data);
-        let allFavMedia = response.data.map((item) => {
-          return item.url;
-        });
-        return allFavMedia;
-      })
-      .then((urls) => {
-        this.setState({urls: urls})
-      });
-  }
 
   renderAllFavMedia(url) {
-    url = url.replace("watch?v=", "v/");
+    // url = url.replace("watch?v=", "v/");
     return (
       <iframe key={url}
         src={url}
@@ -36,30 +36,37 @@ export default class AllFavMedia extends Component {
 
   render() {
     // this.fetchAllMedia();
-
-    if (this.state.urls.length > 0) {
-      return (
-        <div className="allFavMediaBox">
-          {this.state.urls.map(this.renderAllFavMedia)}
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          NO MEDIA
-          
-        </div>
-      );
-    }
+    console.log('ahhhhh', this.props.media);
+    return (
+      <div>hi</div>
+    );
+  //   if (this.props.media.length > 0) {
+  //     return (
+  //       <div className="allFavMediaBox">
+  //         {this.props.media.map(this.renderAllFavMedia)}
+  //       </div>
+  //     );
+  //   } else {
+  //     return (
+  //       <div>
+  //         NO MEDIA
+  //       </div>
+  //     );
+  //   }
   }
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({createFavMedia}, dispatch);
 }
 
 function mapStateToProps(state) {
   console.log("SATETEATTT", state);
   return {
     profile: state.profile,
-    authData: state.authData
+    authData: state.authData,
+    media: state.media
   };
 }
 
-export default connect(mapStateToProps)(AllFavMedia);
+export default connect(mapStateToProps, mapDispatchToProps)(AllFavMedia);

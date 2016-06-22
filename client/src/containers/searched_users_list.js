@@ -6,14 +6,13 @@ import {bindActionCreators} from 'redux';
 import axios from 'axios';
 
 class SearchedUsers extends Component {
-   constructor(props){
+  constructor(props) {
     super(props);
     this.state = {};
     this.changeProfile = this.changeProfile.bind(this);
   }
-
-changeProfile(email) {
-
+  
+  changeProfile(email) {
     axios.post('/get_user_info',{email: email})
       .then((response) => {
     
@@ -42,13 +41,10 @@ changeProfile(email) {
               document.getElementById("followBtn").firstChild.data='follow';
             }
           });
-
-      });
-
-
+    });
   }
 
- renderUsers(userData) {
+  renderUsers(userData) {
     const fullname = userData.fullname;
     const email = userData.email;
     let that = this;
@@ -81,7 +77,7 @@ function mapStateToProps(state) {
     games: state.games,
     media: state.media,
     searched_users: state.searched_users
-  }
+  };
 }
 
 function mapDispatchToProps (dispatch) {

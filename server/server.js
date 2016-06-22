@@ -24,7 +24,7 @@ const Games = new bookshelf.Collection();
 Games.model = Game;
 
 const FavMedia = bookshelf.Model.extend({
-  tableName: 'favmedia'
+  tableName: 'favmedias'
 });
 const FavMedias = new bookshelf.Collection();
 FavMedias.model = FavMedia;
@@ -133,27 +133,39 @@ app.post('/games', function(req, res) {
     });
   });
 
+app.post('/favmedia', function(req, res) {
+  let favMediaURL = req.body[0].favMediaURL;
+  let userEmail = req.body[1];
+  let userID;
 
-  app.post('/favmedia', function(req, res) {
-    let favMediaURL = req.body[0].favMediaURL;
-    let userID = req.body[1];
-
-    new FavMedia({ url: favMediaURL, users_id_fk: userID }).fetch().then(found => {
+  new User({email: userEmail}).fetch()
+    .then(found => {
       if (found) {
-        console.log("URL already exists.");
-      }
-      else {
-        let newFavMedia = new FavMedia({
-          url: favMediaURL,
-          users_id_fk: userID
-        });
+        userID = found.attributes.id;
+        new FavMedia({url: favMediaURL, users_id_fk: userID}).fetch()
+          .then(found => {
+            if (found) {
+              console.log('URL already exists.');
+            } else {
+              let newFavMedia = new FavMedia({
+                url: favMediaURL,
+                users_id_fk: userID
+              });
 
-        newFavMedia.save().then(newFavMedia2 => {
-          FavMedias.add(newFavMedia2);
-        });
+              newFavMedia.save().then(newFavMedia2 => {
+                FavMedias.add(newFavMedia2);
+              });
+
+              bookshelf.knex.raw(`SELECT * FROM favmedias WHERE users_id_fk = ${userID}`)
+                .then(response => {
+                  console.log('HELLO',response.rows)
+                  res.send(response.rows);
+              });
+            }
+          });
       }
     });
-  });
+});
 
 app.post('/get_users', function(req, res) {
   console.log(req.body);
@@ -169,21 +181,21 @@ app.post('/get_users', function(req, res) {
 
 });
 
-app.post('/get_all_favmedia', function(req, res) {
-  new User({email: req.body.email}).fetch()
-    .then(found => {
-      if (found) {
-        new FavMedia()
-        .query({where: {users_id_fk: found.attributes.id}})
-        .fetchAll()
-        .then(found => {
-          res.send(found);
-        });
-      } else {
-        console.log("User not found, no media!");
-      }
-    });
-});
+// app.post('/get_all_favmedia', function(req, res) {
+//   new User({email: req.body.email}).fetch()
+//     .then(found => {
+//       if (found) {
+//         new FavMedia()
+//         .query({where: {users_id_fk: found.attributes.id}})
+//         .fetchAll()
+//         .then(found => {
+//           res.send(found);
+//         });
+//       } else {
+//         console.log("User not found, no media!");
+//       }
+//     });
+// });
 
 app.post("/show_friends", function(req,res) {
   let email = req.body.email;
