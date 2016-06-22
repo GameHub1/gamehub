@@ -2,7 +2,6 @@
 
 const path = require('path');
 const express = require('express');
-const axios = require('axios');
 const bookshelf = require('./psqldb.js');
 const bodyParser = require('body-parser');
 const app = express();
@@ -115,7 +114,6 @@ app.post('/games', function(req, res) {
     }
   })
   .then(() => {
-    //console.log("game res: ", res);
     console.log("Games promise!");
     setTimeout(function(){
       new Game({name: gameTitle}).fetch().then(model => {
@@ -123,12 +121,10 @@ app.post('/games', function(req, res) {
         console.log("gameID: ", joinReq.games_id_fk);
         console.log("setTimeout join req:", joinReq);
         addGameJoin(joinReq);
-        //axios.post('/game_join', joinReq);
       }) ;
     }, 500);
   })
     .then(() => {
-      //console.log("user res: ", res);
       console.log("Users promise!");
       new User({email: email}).fetch().then(model => {
         joinReq.users_id_fk  = model.get('id');
