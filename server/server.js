@@ -134,7 +134,12 @@ app.post('/games', function(req, res) {
   });
 
 app.post('/favmedia', function(req, res) {
-  let favMediaURL = req.body[0].favMediaURL;
+  if (req.body[0] === null) {
+    var favMediaURL = null;
+  } else {
+    var favMediaURL = req.body[0].favMediaURL;
+  }
+
   let userEmail = req.body[1];
   let userID;
 
@@ -142,27 +147,28 @@ app.post('/favmedia', function(req, res) {
     .then(found => {
       if (found) {
         userID = found.attributes.id;
-        new FavMedia({url: favMediaURL, users_id_fk: userID}).fetch()
-          .then(found => {
-            if (found) {
-              console.log('URL already exists.');
-            } else {
-              let newFavMedia = new FavMedia({
-                url: favMediaURL,
-                users_id_fk: userID
-              });
+        if (favMediaURL !== null) {
+          new FavMedia({url: favMediaURL, users_id_fk: userID}).fetch()
+            .then(found => {
+              if (found) {
+                console.log('URL already exists.');
+              } else {
+                let newFavMedia = new FavMedia({
+                  url: favMediaURL,
+                  users_id_fk: userID
+                });
 
-              newFavMedia.save().then(newFavMedia2 => {
-                FavMedias.add(newFavMedia2);
-              });
-
-              bookshelf.knex.raw(`SELECT * FROM favmedias WHERE users_id_fk = ${userID}`)
-                .then(response => {
-                  console.log('HELLO',response.rows)
-                  res.send(response.rows);
-              });
-            }
-          });
+                newFavMedia.save().then(newFavMedia2 => {
+                  FavMedias.add(newFavMedia2);
+                });
+              }
+            });
+        }
+      
+        bookshelf.knex.raw(`SELECT * FROM favmedias WHERE users_id_fk = ${userID}`)
+          .then(response => {
+            res.send(response.rows);
+        });
       }
     });
 });
@@ -174,28 +180,11 @@ app.post('/get_users', function(req, res) {
   } else {
     bookshelf.knex.raw("SELECT * FROM users WHERE LOWER(fullname) LIKE LOWER('%" + req.body.searchTerm + "%') OR LOWER(email) LIKE LOWER('%" + req.body.searchTerm + "%')")
     .then(response => {
-      console.log(response.rows);
       res.send(response.rows);
     });
   }
 
 });
-
-// app.post('/get_all_favmedia', function(req, res) {
-//   new User({email: req.body.email}).fetch()
-//     .then(found => {
-//       if (found) {
-//         new FavMedia()
-//         .query({where: {users_id_fk: found.attributes.id}})
-//         .fetchAll()
-//         .then(found => {
-//           res.send(found);
-//         });
-//       } else {
-//         console.log("User not found, no media!");
-//       }
-//     });
-// });
 
 app.post("/show_friends", function(req,res) {
   let email = req.body.email;
