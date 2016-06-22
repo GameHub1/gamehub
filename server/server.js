@@ -187,17 +187,9 @@ app.post('/get_users', function(req, res) {
   }
 });
 
-app.get('/get_games', function(req, res){
+app.post('/fetch_games', function(req, res){
   let reqEmail = req.body.email;
-  bookshelf.knext.select('name')
-    .from('games')
-    .whereIn('id', function(){
-      this.select('games_id_fk')
-        .from('users').join('users_games', function(){
-          this.on('users.id', '=', 'users_games.users_id_fk')
-          .where({email: reqEmail});
-        });
-    })
+  bookshelf.knex.raw("SELECT name FROM games WHERE games.id IN (SELECT users_games.games_id_fk FROM users INNER JOIN users_games ON users.id = users_games.users_id_fk WHERE users.email='"+ reqEmail +"'); ")
     .then(response => {
       let gameInfo = response.rows.reduce((acc, cur) => {
         acc.push(cur.name);

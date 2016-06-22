@@ -6,8 +6,7 @@ import GameList from '../components/games';
 import FavMedia from '../components/favMedia';
 import AllFavMedia from '../components/allFavMedia';
 import FriendList from './friend_list';
-import {showFriends} from '../actions/index';
-import {postProfile, renderProfileState} from '../actions/index';
+import {showFriends, showGames, postProfile, renderProfileState} from '../actions/index';
 import {browserHistory} from 'react-router';
 
 export class Profile extends Component {
@@ -69,7 +68,12 @@ export class Profile extends Component {
 
    }
 
-
+   testGamesFetch(){
+     axios.post('/fetch_games', {email: this.props.params.id})
+     .then((response) => {
+       console.log(response); 
+     });
+   }
 
    getState() {
       console.log('This is media ', this.props.media);
@@ -155,7 +159,8 @@ export class Profile extends Component {
               <a onClick={this.editProflie.bind(this)}>Edit Profile</a>
             </div>
             <div className="row">
-              <GameList /> 
+              <GameList />
+              <a onClick={this.testGamesFetch.bind(this)}>Show Games</a>
             </div>
             <div className="row">
               <h3>Media</h3>
@@ -267,7 +272,7 @@ export class Profile extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({postProfile, showFriends, renderProfileState}, dispatch);
+  return bindActionCreators({postProfile, showFriends, showGames, renderProfileState}, dispatch);
 }
 
 function mapStateToProps(state) {
