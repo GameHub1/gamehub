@@ -39,7 +39,8 @@ class FavMedia extends Component {
 function mapStateToProps(state) {
   return {
     profile: state.profile,
-    authData: state.authData
+    authData: state.authData,
+    media: state.media
   };
 }
 
