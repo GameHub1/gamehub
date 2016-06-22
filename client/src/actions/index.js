@@ -31,7 +31,6 @@ export function showGames(props) {
   };
 }
 
->>>>>>> [feat] successfully running db query
 export function showFriends(data) {
   return {
     type: FIND_FRIENDS,
