@@ -116,7 +116,7 @@ app.post('/signup', function(req,res) {
       res.send({name: name, email: email, routeProp: routeProp});
     } else {
       console.log('User not found, added user.');
-      routeProp = 'not found'
+      routeProp = 'not found';
 		  let testUser = new User({
 			  fullname: name,
 			  email: email,
@@ -368,8 +368,8 @@ app.use(function(req, res) {
   res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
-app.listen(process.env.PORT || 8000);
-
-console.log("Listening on port 8000");
+app.listen(process.env.PORT || 8000, () => {
+  console.log("Listening on port 8000");
+});
 
 module.exports = app;
