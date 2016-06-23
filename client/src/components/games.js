@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-
+import { deleteGame } from '../actions/index';
 
 export class GameList extends Component {
     onItemClick(item, e) {
       console.log(item);
+      //this.props.deleteGame([{gameTitle: item}, this.props.authData.email]);
     }
 
   	render() {
@@ -40,9 +41,15 @@ export class GameList extends Component {
 // 	}
 // })
 
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({deleteGame}, dispatch);
+}
+
+
 function mapStateToProps(state) {
 	return {
-		games: state.games
+		games: state.games,
+    authData: state.authData
 	};
 }
 
