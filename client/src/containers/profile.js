@@ -6,6 +6,7 @@ import GameList from '../components/games';
 import FavMedia from '../components/favMedia';
 import AllFavMedia from '../components/allFavMedia';
 import FriendList from './friend_list';
+import AddGames from '../components/add_games';
 import {showFriends, showGames, postProfile, renderProfileState} from '../actions/index';
 import {browserHistory} from 'react-router';
 
@@ -35,9 +36,6 @@ export class Profile extends Component {
         }
       });
   }
-
-
-
 
    sendToProfileAction () {
 
@@ -69,18 +67,6 @@ export class Profile extends Component {
         });
       });
 
-   }
-
-   testGamesFetch(){
-    //  let that = this;
-    //  axios.post('/fetch_games', {email: this.props.params.id})
-    //  .then((response) => {
-    //    console.log(response);
-    //    that.setState({games: response});
-    //  }).then(() => {
-    //    console.log("games prop: ", that.props.games);
-    //  });
-    console.log("games prop: ", this.props.games);
    }
 
    findFriends() {
@@ -161,6 +147,7 @@ export class Profile extends Component {
               <a onClick={this.editProflie.bind(this)}>Edit Profile</a>
             </div>
             <div className="row">
+              <AddGames />
               <GameList />
             </div>
             <div className="row">
