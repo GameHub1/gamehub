@@ -85,9 +85,28 @@ const addGameJoin = function(joinReq){
   });
 };
 
+const deleteGameJoin = function(joinReq) {
+  new GameJoin({
+    users_id_fk: joinReq.users_id_fk, games_id_fk: joinReq.games_id_fk
+  }).fetch().then(found => {
+    if (found) {
+      console.log("join in database");
+      let newGameJoin = new GameJoin({
+        users_id_fk:joinReq.users_id_fk, games_id_fk: joinReq.games_id_fk
+      });
+      GameJoins.remove(newGameJoin).then(newGameJoin2 => {
+        newGameJoin2.delete();
+      });
+    }
+    else {
+      console.log("JOIN NOT FOUND!");
+    }
+  });
+};
+
 app.post('/get_messages', function(req, res) {
   console.log('This is the req', req.body);
-  
+
   let kylemike = io.of('/kyle');
 
 kylemike.on('connection', function (socket) {
@@ -130,6 +149,27 @@ app.post('/signup', function(req,res) {
 	});
 });
 
+app.post('/delete_game', function(req, res){
+  let gameTitle = req.body[0].gameTitle;
+  let email = req.body[1];
+  let joinReq = {users_id_fk: 0, games_id_fk: 0};
+  console.log(gameTitle, email);
+
+  setTimeout(function(){
+    new Game({name: gameTitle}).fetch().then(model => {
+      joinReq.games_id_fk = model.get('id');
+      console.log("gameID: ", joinReq.games_id_fk);
+      console.log("setTimeout join req:", joinReq);
+      deleteGameJoin(joinReq);
+    }) ;
+  }, 500);
+
+  new User({email: email}).fetch().then(model => {
+    joinReq.users_id_fk  = model.get('id');
+    console.log("User ID: ", joinReq.users_id_fk);
+  });
+});
+
 app.post('/games', function(req, res) {
   console.log("games post req: ", req);
   let gameTitle = req.body[0].gameTitle;
@@ -152,7 +192,6 @@ app.post('/games', function(req, res) {
     }
   })
   .then(() => {
-    console.log("Games promise!");
     setTimeout(function(){
       new Game({name: gameTitle}).fetch().then(model => {
         joinReq.games_id_fk = model.get('id');
@@ -163,7 +202,6 @@ app.post('/games', function(req, res) {
     }, 500);
   })
     .then(() => {
-      console.log("Users promise!");
       new User({email: email}).fetch().then(model => {
         joinReq.users_id_fk  = model.get('id');
         console.log("User ID: ", joinReq.users_id_fk);
