@@ -65,19 +65,16 @@ app.post('/signup', function(req,res) {
   let name = req.body.name;
   let email = req.body.email;
   let pic_path = req.body.pic_path;
-
-  console.log(req.body);
   let routeProp = 'val';
 
-	new User({ email: email }).fetch().then(found => {
+	new User({email: email}).fetch().then(found => {
     if (found) {
-   		console.log("already in database!");
+   		console.log('User is already in database.');
       routeProp = 'found';
       res.send({name: name, email: email, routeProp: routeProp});
-    }
-    else {
+    } else {
+      console.log('User not found, added user.');
       routeProp = 'not found'
-    	console.log("NOT FOUND! ADDED!");
 		  let testUser = new User({
 			  fullname: name,
 			  email: email,
@@ -88,7 +85,7 @@ app.post('/signup', function(req,res) {
 				Users.add(newUser);
 			});
 
-      res.send({name: name,email: email,routeProp: routeProp});
+      res.send({name: name, email: email, routeProp: routeProp});
     }
 	});
 });
@@ -176,7 +173,6 @@ app.post('/favmedia', function(req, res) {
 });
 
 app.post('/get_users', function(req, res) {
-  console.log(req.body);
   if (req.body.searchTerm === '') {
     res.send([]);
   } else {
@@ -195,7 +191,6 @@ app.post('/fetch_games', function(req, res){
         acc.push(cur.name);
         return acc;
       }, []);
-      console.log(gameInfo);
       res.send({data: gameInfo});
     });
 });
@@ -208,7 +203,6 @@ app.post("/show_friends", function(req,res) {
         acc.push({name: cur.fullname, email: cur.email, pic_path: cur.pic_path});
         return acc;
       }, []);
-      console.log(info);
       res.send({data: info});
     });
 });
@@ -226,7 +220,6 @@ app.post('/get_user_info', function(req, res){
 });
 
 app.post('/get_friend_info', function(req, res){
-  console.log(req.body);
   new User({ email: req.body.friend1 }).fetch().then(found => {
     if (found) {
       new User({ email: req.body.friend2 }).fetch().then(found2 => {
@@ -250,7 +243,6 @@ app.post('/get_friend_info', function(req, res){
 });
 
 app.post('/add_friend', function(req, res) {
-  console.log(req.body);
   new User({ email: req.body.friend1 }).fetch().then(found => {
     if (found) {
       new User({ email: req.body.friend2 }).fetch().then(found2 => {
@@ -291,7 +283,7 @@ app.post('/post_profile', function(req, res) {
       if(found.attributes.fullname === found.attributes.email) {
         fullname_change = fullname;
       }
-      console.log(found.attributes);
+    
       let updateUser = new User({
         id: found.attributes.id,
         fullname: fullname_change,
@@ -318,3 +310,5 @@ app.use(function(req, res) {
 app.listen(process.env.PORT || 8000);
 
 console.log("Listening on port 8000");
+
+module.exports = app; 
