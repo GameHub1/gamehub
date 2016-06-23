@@ -18,9 +18,9 @@ describe ('Server Loading', function() {
 describe ('Sign Up', function() {
   beforeEach(function() {
     this.mockUser = {
-      name: 'Tester1', 
-      email: 'hello@mks.com', 
-      pic_path: 'testimage.jpg', 
+      name: 'Tester1',
+      email: 'hello@mks.com',
+      pic_path: 'testimage.jpg',
       routeProp: 'val'
     };
   });
@@ -37,3 +37,19 @@ describe ('Sign Up', function() {
     });
   });
 });
+
+describe('Add Game', function()){
+
+  describe('POST /games', function() {
+    it("adds game information", function(done){
+      request(app)
+        .post('/games')
+        .send([{gameTitle: "Super Smash Bros"}, "supermario@mks.com"])
+        .expect(200)
+        .then(function(res){
+          done();
+        });
+    });
+  });
+
+}

@@ -114,6 +114,7 @@ app.post('/signup', function(req,res) {
 });
 
 app.post('/games', function(req, res) {
+  console.log("games post req: ", req);
   let gameTitle = req.body[0].gameTitle;
   let email = req.body[1];
   let joinReq = {users_id_fk: 0, games_id_fk: 0};
@@ -306,7 +307,7 @@ app.post('/post_profile', function(req, res) {
       if(found.attributes.fullname === found.attributes.email) {
         fullname_change = fullname;
       }
-    
+
       let updateUser = new User({
         id: found.attributes.id,
         fullname: fullname_change,
@@ -334,4 +335,4 @@ app.listen(process.env.PORT || 8000);
 
 console.log("Listening on port 8000");
 
-module.exports = app; 
+module.exports = app;
