@@ -1,14 +1,20 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
+
 export class GameList extends Component {
+    onItemClick(item, e) {
+      console.log(item);
+    }
+
   	render() {
 			return (
 			<div>
 	  	<h3>Favorite Games</h3>
 				<ul>
 				{this.props.games.map((game, index) => {
-					return (<li>{game}</li>); 
+          let boundItemClick = this.onItemClick.bind(this, game);
+					return (<li key={game} onClick={boundItemClick}>{game}</li>);
 				})}
 			 </ul>
 		 </div>
