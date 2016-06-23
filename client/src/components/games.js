@@ -22,12 +22,15 @@ export class GameList extends Component {
 	  	<h3>Favorite Games</h3>
 				<div>
 				{this.props.games.map((game, index) => {
-					if (index === this.props.games.length - 1) {
+					if (index === this.props.games.length - 1 && this.props.games.length > 2) {
 						return (<span>{"and  " + game}</span>);
 
 					}
 					else if (index === 0 && this.props.games.length === 2) {
 						return(<span>{game + "  "}</span>)
+					}
+					else if (index === 0 && this.props.games.length === 1) {
+						return (<span>{game}</span>);
 					}
 					else {
 						return (<span>{game + ",  "}</span>);

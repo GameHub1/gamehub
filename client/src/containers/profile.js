@@ -53,6 +53,7 @@ export class Profile extends Component {
         };
         this.props.renderProfileState(prop);
         this.props.showFriends([]);
+        this.props.showGames({email: this.props.params.id});
         let URL_array = window.location.pathname.split('/profile/');
         axios.post('/get_friend_info',{friend1: this.props.authData.email, friend2: URL_array[1]})
         .then((response) => {
@@ -63,7 +64,7 @@ export class Profile extends Component {
           }
           else {
             document.getElementById("followBtn").style.background='#d3d3d3';
-            document.getElementById("followBtn").firstChild.data='follow'; 
+            document.getElementById("followBtn").firstChild.data='follow';
           }
         });
       });
