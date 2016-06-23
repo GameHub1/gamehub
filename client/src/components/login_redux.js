@@ -87,9 +87,6 @@ export class ReduxLogin extends Component {
   }
 
   addNewUser(response) {
-    console.log(response);
-    console.log("Large picture", response.data.picture_large);
-    console.log("Small picture", response.data.picture);
     let newUser = {
       name: this.props.authData.name,
       email: this.props.authData.email,

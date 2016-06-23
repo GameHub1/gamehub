@@ -8,7 +8,7 @@
     "dev": "nodemon server/server.js",
     "devBuild": "webpack -d --watch",
     "build": "webpack -d",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/jasmine-node spec"
   },
   "repository": {
     "type": "git",
@@ -33,6 +33,7 @@
     "file-loader": "^0.8.5",
     "generic-pool": "2.4.2",
     "html-webpack-plugin": "^2.15.0",
+    "jasmine-node": "^1.14.5",
     "jwt-simple": "^0.5.0",
     "knex": "^0.11.5",
     "node-sass": "^3.4.2",
@@ -51,12 +52,17 @@
     "redux-logger": "^2.6.1",
     "redux-promise": "^0.5.3",
     "redux-thunk": "^2.1.0",
+    "request": "^2.72.0",
     "resolve-url-loader": "^1.4.3",
     "semver": "4.3.2",
     "style-loader": "^0.13.1",
+    "supertest": "^1.2.0",
     "underscore": "^1.8.3",
     "url-loader": "^0.5.7",
     "webpack": "^1.12.14"
   },
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "jasmine": "^2.4.1"
+  }
 }
