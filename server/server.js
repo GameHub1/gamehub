@@ -185,7 +185,19 @@ app.post('/get_users', function(req, res) {
       res.send(response.rows);
     });
   }
+});
 
+app.post('/fetch_games', function(req, res){
+  let reqEmail = req.body.email;
+  bookshelf.knex.raw("SELECT name FROM games WHERE games.id IN (SELECT users_games.games_id_fk FROM users INNER JOIN users_games ON users.id = users_games.users_id_fk WHERE users.email='"+ reqEmail +"'); ")
+    .then(response => {
+      let gameInfo = response.rows.reduce((acc, cur) => {
+        acc.push(cur.name);
+        return acc;
+      }, []);
+      console.log(gameInfo);
+      res.send({data: gameInfo});
+    });
 });
 
 app.post("/show_friends", function(req,res) {

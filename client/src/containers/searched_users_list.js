@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Router, Route, Link, browserHistory } from 'react-router';
-import {postProfile, showFriends, renderProfileState} from '../actions/index';
+import {postProfile, showFriends, renderProfileState, showGames} from '../actions/index';
 import {bindActionCreators} from 'redux';
 import axios from 'axios';
 
@@ -11,11 +11,11 @@ class SearchedUsers extends Component {
     this.state = {};
     this.changeProfile = this.changeProfile.bind(this);
   }
-  
+
   changeProfile(email) {
     axios.post('/get_user_info',{email: email})
       .then((response) => {
-    
+
         browserHistory.push(`/profile/${email}`);
 
         let prop = {
@@ -28,6 +28,10 @@ class SearchedUsers extends Component {
 
         this.props.showFriends([]);
         this.props.renderProfileState(prop);
+        console.log("params", this.props.params);
+        this.props.showGames({email: email});
+
+
         let URL_array = window.location.pathname.split('/profile/');
         axios.post('/get_friend_info',{friend1: this.props.authData.email, friend2: URL_array[1]})
           .then((response) => {
@@ -42,6 +46,7 @@ class SearchedUsers extends Component {
             }
           });
     });
+
   }
 
   renderUsers(userData) {
@@ -49,7 +54,7 @@ class SearchedUsers extends Component {
     const email = userData.email;
     let that = this;
 
-    return ( 
+    return (
       <tr id="searchedUsersRow" className="searchRows" key={email} onClick={() => {that.changeProfile(email)}}>
         <td><span className="glyphicon glyphicon-user"></span></td>
         <td>{fullname}</td>
@@ -81,7 +86,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps (dispatch) {
-  return bindActionCreators({postProfile, showFriends, renderProfileState}, dispatch);
+  return bindActionCreators({postProfile, showFriends, renderProfileState, showGames}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchedUsers);

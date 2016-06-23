@@ -9,8 +9,27 @@ export const CREATE_GAME = 'CREATE_GAME';
 export const CREATE_FAVMEDIA = 'CREATE_FAVMEDIA';
 export const FETCH_ALL_FAVMEDIA = 'FETCH_ALL_FAVMEDIA';
 export const FETCH_USERS = 'FETCH_USERS';
+export const FETCH_GAMES = 'FETCH_GAMES';
 export const FIND_FRIENDS = 'FIND_FRIENDS';
 export const RENDER_PROFILE = 'RENDER_PROFILE'
+
+//this.props.params.id
+//^ user's email
+
+//call in componentWillMount
+//call in changeUsers in friendsList
+//call in changeUsers in serach bar
+
+//link up in mapDispatchToProps
+
+export function showGames(props) {
+  const request = axios.post('/fetch_games', props);
+  console.log(request);
+  return {
+    type: FETCH_GAMES,
+    payload: request
+  };
+}
 
 export function showFriends(data) {
   return {
@@ -30,7 +49,7 @@ export function postProfile(profile) {
 }
 
 export function renderProfileState(profile) {
-  
+
   return {
     type: RENDER_PROFILE,
     payload: profile
@@ -59,6 +78,7 @@ export function createGame(props) {
   };
 }
 
+
 export function createFavMedia(props) {
   const request = axios.post('/favmedia', props);
 
@@ -86,4 +106,3 @@ export function fetchUsers(props) {
     payload: request
   };
 }
-

@@ -6,8 +6,7 @@ import GameList from '../components/games';
 import FavMedia from '../components/favMedia';
 import AllFavMedia from '../components/allFavMedia';
 import FriendList from './friend_list';
-import {showFriends} from '../actions/index';
-import {postProfile, renderProfileState} from '../actions/index';
+import {showFriends, showGames, postProfile, renderProfileState} from '../actions/index';
 import {browserHistory} from 'react-router';
 
 export class Profile extends Component {
@@ -23,8 +22,10 @@ export class Profile extends Component {
           pic_path: response.data.found.pic_path
         };
         this.props.postProfile(prop);
+        this.props.showGames({email: this.props.params.id});
       });
     let URL_array = window.location.pathname.split('/profile/');
+
     axios.post('/get_friend_info',{friend1: this.props.authData.email, friend2: URL_array[1]})
       .then((response) => {
         console.log("FRIEND INFO RESPONSE: ", response);
@@ -52,6 +53,7 @@ export class Profile extends Component {
         };
         this.props.renderProfileState(prop);
         this.props.showFriends([]);
+        this.props.showGames({email: this.props.params.id});
         let URL_array = window.location.pathname.split('/profile/');
         axios.post('/get_friend_info',{friend1: this.props.authData.email, friend2: URL_array[1]})
         .then((response) => {
@@ -62,19 +64,23 @@ export class Profile extends Component {
           }
           else {
             document.getElementById("followBtn").style.background='#d3d3d3';
-            document.getElementById("followBtn").firstChild.data='follow'; 
+            document.getElementById("followBtn").firstChild.data='follow';
           }
         });
       });
 
    }
 
-
-
-   getState() {
-      console.log('This is media ', this.props.media);
-      console.log('This is games ', this.props.games);
-      console.log('THis is profile', this.props.profile);
+   testGamesFetch(){
+    //  let that = this;
+    //  axios.post('/fetch_games', {email: this.props.params.id})
+    //  .then((response) => {
+    //    console.log(response);
+    //    that.setState({games: response});
+    //  }).then(() => {
+    //    console.log("games prop: ", that.props.games);
+    //  });
+    console.log("games prop: ", this.props.games);
    }
 
    findFriends() {
@@ -155,7 +161,7 @@ export class Profile extends Component {
               <a onClick={this.editProflie.bind(this)}>Edit Profile</a>
             </div>
             <div className="row">
-              <GameList /> 
+              <GameList />
             </div>
             <div className="row">
               <h3>Media</h3>
@@ -198,13 +204,7 @@ export class Profile extends Component {
             <p>{this.props.profile.bio || "Hi, I haven\'t filled out my bio yet!"}</p>
           </div>
           <div className="row">
-            <h3>Games</h3>
-            <p><strong>Really Good At:</strong></p>
-            <p>Altered Beast, Twilight Imperium, Boss Monster, We Did Not Playtest This At All, Android: Netrunner</p>
-            <p><strong>Enjoys Playing:</strong></p>
-            <p>Gloom, Magic: the Gathering, WWE Smackdown 2012, Limbo, Settlers of Catan, Shadow Hunters</p>
-            <p><strong>Interested In Trying:</strong></p>
-            <p>Fast Food Magnate, Vampire: the Masquerade</p>
+            <GameList />
           </div>
           <div className="row">
             <h3>Media</h3>
@@ -215,59 +215,11 @@ export class Profile extends Component {
     );
     }
 
-
-    //Old profile rendering code:
-
-    // return (
-    //     <div>
-    //       <div>
-    //         <h1>
-    //         {this.props.profile.name}
-    //         </h1>
-    //         <h2>
-    //         Contact:
-    //         {this.props.authData.name}
-    //         </h2>
-    //       </div>
-    //       <div>
-    //         insert profile pic element
-    //         <img src={this.props.profile.pic_path}/>
-    //         <h2> Location :
-    //         {this.props.profile.location}
-    //         </h2>
-    //         <div>
-    //           <h2>
-    //           Bio:
-    //         {this.props.profile.bio}
-    //           </h2>
-    //         </div>
-    //         <div>
-    //           Here are all your friends:
-    //           <FriendList />
-    //         </div>
-    //         <div>
-    //           Here is the media element:
-    //           {this.props.media[1]}
-    //         </div>
-    //       </div>
-    //       <div>
-    //       Here is a the games:
-    //        {this.props.games[1]}
-    //       </div>
-    //       <div>
-    //         <button onClick = {this.getState.bind(this)}> Get state </button>
-    //         <button onClick = {this.findFriends.bind(this)}> Find friends </button>
-    //         <Games />
-    //         <FavMedia />
-    //       </div>
-    //     </div>
-    // );
-
   }
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({postProfile, showFriends, renderProfileState}, dispatch);
+  return bindActionCreators({postProfile, showFriends, showGames, renderProfileState}, dispatch);
 }
 
 function mapStateToProps(state) {
