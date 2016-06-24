@@ -14,6 +14,7 @@ export const DELETE_GAME = 'DELETE_GAME';
 export const FIND_FRIENDS = 'FIND_FRIENDS';
 export const RENDER_PROFILE = 'RENDER_PROFILE';
 export const FIND_GAME_FANS = 'FIND_GAME_FANS';
+export const SELECT_FRIEND = 'SELECT_FRIEND';
 
 //this.props.params.id
 //^ user's email
@@ -35,6 +36,13 @@ export function showGames(props) {
   return {
     type: FETCH_GAMES,
     payload: request
+  };
+}
+
+export function selectFriend(data) {
+  return {
+    type: SELECT_FRIEND,
+    payload: data
   };
 }
 

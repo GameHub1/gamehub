@@ -9,6 +9,7 @@ import promise from 'redux-promise'
 import searchedUsers from './searched_users_reducer';
 import friendList from './friend_reducer.js';
 import gameFans from './game_fans_reducer';
+import selectedFriend from './selected_friend';
 
 const logger = createLogger();
 
@@ -21,6 +22,7 @@ const reducers = {
   searched_users: searchedUsers,
   friendList: friendList,
   gameFans: gameFans
+  selectedFriend: selectedFriend
 
 };
 
