@@ -4,6 +4,7 @@ import {bindActionCreators} from 'redux';
 import {showFriends, selectFriend} from '../actions/index';
 import axios from 'axios';
 import FriendList from './friend_list';
+import Conversation from './conversation'
 
 
 
@@ -36,8 +37,12 @@ export class MessagePage extends Component {
         <div>  
           <div>
               <h1> Messages </h1>
+              <br/>
+              <br/>
           </div>
-          <div className='col-md-4'>
+          <div className='col-md-1'>
+          </div>
+          <div className='col-md-3'>
             <div className="row">
               <table>
                 <tbody>
@@ -59,13 +64,19 @@ export class MessagePage extends Component {
           </div>
           <div className='col-md-1'>
           </div>
-          <div className='col-md-7'>
+          <div className='col-md-6'>
+            <div className='row'>
+              <Conversation/>
+            </div>
             <div className='row'>
               <form>
                   <label> Write Message </label>
-                  <textarea rows = '10' cols= '50'/>
+                  <textarea rows = '2' cols= '50'/>
+                  <input type="submit" value="Send"/>
               </form>
             </div>
+          </div>
+          <div className='col-md-1'>
           </div>
         </div>
 
