@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {showFriends} from '../actions/index';
+import {showFriends, selectFriend} from '../actions/index';
 import axios from 'axios';
 import FriendList from './friend_list';
 
@@ -18,6 +18,12 @@ export class MessagePage extends Component {
         });
   }
 
+  chooseFriend (friend) {
+    console.log("friend: ", friend);
+    this.props.selectFriend(friend);
+    setTimeout(() => {console.log(this.props.selectedFriend);},500);
+  }
+
   render () {
 
       return (
@@ -31,7 +37,7 @@ export class MessagePage extends Component {
                 <tbody>
                   {this.props.friendList.map(item => {
                     return (
-                    <tr key={item.name}>
+                    <tr onClick={() => {this.chooseFriend(item.email)}} key={item.name}>
                     <td className="friend_pic">
                     <img src={item.pic_path}/>
                     </td>
@@ -66,12 +72,13 @@ export class MessagePage extends Component {
 
 function mapStateToProps (state) {
   return {
-    friendList: state.friendList
+    friendList: state.friendList,
+    selectedFriend: state.selectedFriend
   }
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({showFriends}, dispatch);
+    return bindActionCreators({showFriends, selectFriend}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps) (MessagePage);

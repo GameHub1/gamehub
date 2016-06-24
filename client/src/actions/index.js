@@ -11,7 +11,8 @@ export const FETCH_ALL_FAVMEDIA = 'FETCH_ALL_FAVMEDIA';
 export const FETCH_USERS = 'FETCH_USERS';
 export const FETCH_GAMES = 'FETCH_GAMES';
 export const FIND_FRIENDS = 'FIND_FRIENDS';
-export const RENDER_PROFILE = 'RENDER_PROFILE'
+export const RENDER_PROFILE = 'RENDER_PROFILE';
+export const SELECT_FRIEND = 'SELECT_FRIEND';
 
 //this.props.params.id
 //^ user's email
@@ -28,6 +29,13 @@ export function showGames(props) {
   return {
     type: FETCH_GAMES,
     payload: request
+  };
+}
+
+export function selectFriend(data) {
+  return {
+    type: SELECT_FRIEND,
+    payload: data
   };
 }
 
