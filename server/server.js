@@ -154,7 +154,6 @@ app.post('/delete_game', function(req, res){
 });
 
 app.post('/games', function(req, res) {
-  console.log("games post req: ", req);
   let gameTitle = req.body[0].gameTitle;
   let email = req.body[1];
   let joinReq = {users_id_fk: 0, games_id_fk: 0};
