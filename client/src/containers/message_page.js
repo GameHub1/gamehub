@@ -33,17 +33,17 @@ export class MessagePage extends Component {
     this.props.selectFriend(friend);
     let arrayOfEmails = [this.props.params.id, friend];
     let sortedEmails = arrayOfEmails.sort();
-    
+
 
     let identifier = arrayOfEmails[0] + arrayOfEmails[1];
     identifier = identifier.replace(/[^a-zA-Z0-9 ]/g, "");
-    
+
     this.props.getMessages({data:identifier});
 
-    
-    
+
+
     this.setState({channel: identifier}, function () {
-    
+
     console.log('This is the state', this.state.channel);
 
   });
@@ -71,7 +71,7 @@ export class MessagePage extends Component {
          // update state
          console.log('inside updateState!');
       });
-      
+
 /// example code below
 
       let socket = io.connect('http://localhost/kyle');
@@ -79,7 +79,7 @@ export class MessagePage extends Component {
       socket.emit('message', "We sent it full circle");
       socket.on('message', function (msg) {
          console.log(msg);
-         
+
       });
 
   }
@@ -87,7 +87,7 @@ export class MessagePage extends Component {
   render () {
 
      return (
-        <div>  
+        <div>
           <div>
               <h1> Messages </h1>
               <br/>
