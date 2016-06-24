@@ -61,6 +61,25 @@ const addGameJoin = function(joinReq){
   });
 };
 
+const deleteGameJoin = function(joinReq) {
+  new GameJoin({
+    users_id_fk: joinReq.users_id_fk, games_id_fk: joinReq.games_id_fk
+  }).fetch().then(found => {
+    if (found) {
+      console.log("join in database");
+      let newGameJoin = new GameJoin({
+        users_id_fk:joinReq.users_id_fk, games_id_fk: joinReq.games_id_fk
+      });
+      GameJoins.remove(newGameJoin).then(newGameJoin2 => {
+        newGameJoin2.delete();
+      });
+    }
+    else {
+      console.log("JOIN NOT FOUND!");
+    }
+  });
+};
+
 app.post('/signup', function(req,res) {
   let name = req.body.name;
   let email = req.body.email;
@@ -90,6 +109,27 @@ app.post('/signup', function(req,res) {
 	});
 });
 
+app.post('/delete_game', function(req, res){
+  let gameTitle = req.body[0].gameTitle;
+  let email = req.body[1];
+  let joinReq = {users_id_fk: 0, games_id_fk: 0};
+  console.log(gameTitle, email);
+
+  setTimeout(function(){
+    new Game({name: gameTitle}).fetch().then(model => {
+      joinReq.games_id_fk = model.get('id');
+      console.log("gameID: ", joinReq.games_id_fk);
+      console.log("setTimeout join req:", joinReq);
+      deleteGameJoin(joinReq);
+    }) ;
+  }, 500);
+
+  new User({email: email}).fetch().then(model => {
+    joinReq.users_id_fk  = model.get('id');
+    console.log("User ID: ", joinReq.users_id_fk);
+  });
+});
+
 app.post('/games', function(req, res) {
   let gameTitle = req.body[0].gameTitle;
   let email = req.body[1];
@@ -111,7 +151,6 @@ app.post('/games', function(req, res) {
     }
   })
   .then(() => {
-    console.log("Games promise!");
     setTimeout(function(){
       new Game({name: gameTitle}).fetch().then(model => {
         joinReq.games_id_fk = model.get('id');
@@ -122,7 +161,6 @@ app.post('/games', function(req, res) {
     }, 500);
   })
     .then(() => {
-      console.log("Users promise!");
       new User({email: email}).fetch().then(model => {
         joinReq.users_id_fk  = model.get('id');
         console.log("User ID: ", joinReq.users_id_fk);
@@ -283,7 +321,7 @@ app.post('/post_profile', function(req, res) {
       if(found.attributes.fullname === found.attributes.email) {
         fullname_change = fullname;
       }
-    
+
       let updateUser = new User({
         id: found.attributes.id,
         fullname: fullname_change,
@@ -311,4 +349,4 @@ app.listen(process.env.PORT || 8000);
 
 console.log("Listening on port 8000");
 
-module.exports = app; 
+module.exports = app;

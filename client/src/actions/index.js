@@ -10,6 +10,7 @@ export const CREATE_FAVMEDIA = 'CREATE_FAVMEDIA';
 export const FETCH_ALL_FAVMEDIA = 'FETCH_ALL_FAVMEDIA';
 export const FETCH_USERS = 'FETCH_USERS';
 export const FETCH_GAMES = 'FETCH_GAMES';
+export const DELETE_GAME = 'DELETE_GAME';
 export const FIND_FRIENDS = 'FIND_FRIENDS';
 export const RENDER_PROFILE = 'RENDER_PROFILE'
 
@@ -24,7 +25,6 @@ export const RENDER_PROFILE = 'RENDER_PROFILE'
 
 export function showGames(props) {
   const request = axios.post('/fetch_games', props);
-  console.log(request);
   return {
     type: FETCH_GAMES,
     payload: request
@@ -78,6 +78,13 @@ export function createGame(props) {
   };
 }
 
+export function deleteGame(props) {
+  const request = axios.post('/delete_game', props);
+  return {
+    type: DELETE_GAME,
+    payload: props
+  };
+}
 
 export function createFavMedia(props) {
   const request = axios.post('/favmedia', props);
