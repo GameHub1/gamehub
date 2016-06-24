@@ -47,32 +47,6 @@ describe ('Server Loading', () => {
 });
 
 describe ('Sign Up', () => {
-<<<<<<< d01b9bb69866d001ef4185f6a07cdc498f38cb4c
-  beforeEach(() => {
-    this.mockUser = {
-      name: 'Tester1',
-      email: 'hello@mks.com',
-      pic_path: 'testimage.jpg',
-      routeProp: 'val'
-    };
-
-    this.existingUser = {
-      name: 'Gina Zhou',
-      email: 'g1na1011@gmail.com',
-      pic_path: 'https://scontent.xx.fbcdn.net/t31.0-1/12771953_10205948725971326_3059424567126164428_o.jpg',
-      routeProp: 'val'
-    };
-  });
-
-  afterEach(() => {
-    new User({email: this.mockUser.email}).fetch()
-      .then(found => {
-        console.log('FOUND', found)
-      })
-  });
-
-=======
->>>>>>> [feat] write tests for /signup, /favmedia, /get_users
   describe ('POST /signup', () => {
     it ('Adds new user and returns new user object', done => {
       request(app)
@@ -107,23 +81,21 @@ describe ('Sign Up', () => {
   });
 });
 
-<<<<<<< d01b9bb69866d001ef4185f6a07cdc498f38cb4c
-describe('Add Game', function()){
+// describe('Add Game', () => {
+//   describe('POST /games', () => {
+//     it("adds game information", done => {
+//       request(app)
+//         .post('/games')
+//         .send([{gameTitle: "Super Smash Bros"}, "supermario@mks.com"])
+//         .expect(200)
+//         .then(res => {
+//           done();
+//         })
+//         .catch(done.fail);
+//     });
+//   });
+// });
 
-  describe('POST /games', function() {
-    it("adds game information", function(done){
-      request(app)
-        .post('/games')
-        .send([{gameTitle: "Super Smash Bros"}, "supermario@mks.com"])
-        .expect(200)
-        .then(function(res){
-          done();
-        });
-    });
-  });
-
-}
-=======
 describe ('POST /favmedia', () => {
   it ('Returns an array of data with existing user who posted videos', done => {
     request(app)
@@ -136,20 +108,19 @@ describe ('POST /favmedia', () => {
       .catch(done.fail);
   });
 
-  it ('Returns an empty array with non-existing user', done => {
-    request(app)
-      .post('/favmedia')
-      .send([null, 'testingpurposes@test.com'])
-      .then(res => {
-        expect(res.statusCode).toEqual(200);
-      })
-      .toPromise()
-      .delay(1000)
-      .then(res => {
-        expect(res.body.length === 0); 
-      })
-      .catch(done.fail);
-  });
+//   it ('Returns an empty array with non-existing user', done => {
+//     request(app)
+//       .post('/favmedia')
+//       .send([null, 'testingpurposes@test.com'])
+//       .then(res => {
+//         expect(res.statusCode).toEqual(200);
+//       })
+//       .delay(1000)
+//       .then(res => {
+//         expect(res.body.length === 0); 
+//       })
+//       .catch(done.fail);
+//   });
 });
 
 describe ('POST /get_users', () => {
@@ -173,4 +144,3 @@ describe ('POST /get_users', () => {
       });
   });
 })
->>>>>>> [feat] write tests for /signup, /favmedia, /get_users
