@@ -8,7 +8,7 @@ import AllFavMedia from '../components/allFavMedia';
 import FriendList from './friend_list';
 import {showFriends} from '../actions/index';
 import {postProfile, renderProfileState} from '../actions/index';
-import {browserHistory} from 'react-router';
+import {browserHistory, Link} from 'react-router';
 
 export class Profile extends Component {
   componentWillMount () {
@@ -151,6 +151,10 @@ export class Profile extends Component {
               <h3>Following</h3>
               <FriendList />
               <a onClick={this.findFriends.bind(this)}>See All Following</a>
+              <br/>
+              <ul>
+                  <li><h3><Link to={`/message/${this.props.params.id}`}> Message </Link></h3></li>
+              </ul>
             </div>
           </div>
           <div className="col-md-1" id="barrier">
