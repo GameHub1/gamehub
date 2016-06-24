@@ -2,11 +2,11 @@ import React, {Component, PropTyes} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {Router, Route, Link, browserHistory } from 'react-router';
-import {postProfile, showFriends} from '../actions/index';
+import {postProfile, showFriends, showGames, createFavMedia} from '../actions/index';
 import axios from 'axios';
 
 export class FriendList extends Component {
-  
+
   changeProfile(email) {
     axios.post('/get_user_info',{email: email})
       .then((response) => {
@@ -20,6 +20,9 @@ export class FriendList extends Component {
         };
         this.props.showFriends([]);
         this.props.postProfile(prop);
+        this.props.showGames({email: email});
+        this.props.createFavMedia([null, email]);
+
         let URL_array = window.location.pathname.split('/profile/');
         axios.post('/get_friend_info',{friend1: this.props.authData.email, friend2: URL_array[1]})
           .then((response) => {
@@ -71,7 +74,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps (dispatch) {
-  return bindActionCreators({postProfile, showFriends}, dispatch);
+  return bindActionCreators({postProfile, showFriends, showGames, createFavMedia}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(FriendList);
