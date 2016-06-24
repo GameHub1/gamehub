@@ -45,6 +45,36 @@ db.schema.hasTable('favmedias').then(exists => {
   }
 });
 
+db.schema.hasTable('messages').then(exists => {
+  if (!exists){
+    db.schema.createTable('messages', message => {
+      message.increments('id').primary();
+      message.string('text');
+      message.timestamp('sent_at').defaultTo(knex.fn.now());
+      message.integer('sender_id_fk');
+      message.integer('rooms_id_fk');
+      favmedia.foreign('sender_id_fk').references('users.id');
+    }).then(function(table){
+      console.log("Created messages table");
+    })
+  }
+});
+
+db.schema.hasTable('rooms').then(exists => {
+  if (!exists) {
+    db.schema.createTable('friends', room => {
+      room.increments('id').primary();
+      room.string('name').unique();
+      room.integer('user1_fk');//id user2
+      room.integer('user2_fk'); //return array of these
+      room.foreign('user1_fk').references('users.id');
+      room.foreign('user2_fk').references('users.id');
+    }).then(function(table){
+      console.log("Created rooms table");
+    })
+  }
+});
+
 db.schema.hasTable('friends').then(exists => {
   if (!exists) {
     db.schema.createTable('friends', friendship => {
