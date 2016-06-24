@@ -244,8 +244,11 @@ app.post('/favmedia', function(req, res) {
           bookshelf.knex.raw(`SELECT * FROM favmedias WHERE users_id_fk = ${userID}`)
             .then(response => {
               res.send(response.rows);
-          });
-        }, 400);
+            })
+            .catch(error => {
+              console.log("User doesn't exist.");
+            })
+        }, 1000);
       }
     });
 });
@@ -332,15 +335,15 @@ app.post('/add_friend', function(req, res) {
           friendship.fetch().then(found3 => {
             if (!found3){
               friendship.save().then(newFriendship => {
-              Friends.add(newFriendship);
-              res.send({action: "added"});
+                Friends.add(newFriendship);
+                res.send({action: "added"});
               });
             }
             else {
               bookshelf.knex.raw("DELETE FROM friends WHERE friend1_fk = " + found.attributes.id + " AND friend2_fk = " + found2.attributes.id + ";")
-              .then(response => {
-              res.send({action: "removed"});
-              });
+                .then(response => {
+                  res.send({action: "removed"});
+                });
             }
           });
         }
@@ -357,8 +360,9 @@ app.post('/post_profile', function(req, res) {
 
   new User({ email: email }).fetch().then(found => {
     if (found) {
-      var fullname_change = found.attributes.fullname
-      if(found.attributes.fullname === found.attributes.email) {
+      var fullname_change = found.attributes.fullname;
+
+      if (found.attributes.fullname === found.attributes.email) {
         fullname_change = fullname;
       }
 
@@ -369,12 +373,12 @@ app.post('/post_profile', function(req, res) {
         location: location,
         bio: bio
       });
+
       updateUser.save({email: email}, {method: "update"}).then(newUser => {
         Users.add(newUser);
         res.send("POST SUCCESSFULL!");
       });
-    }
-    else {
+    } else {
       console.log("EMAIL ADDRESS NOT FOUND!");
       res.send("EMAIL ADDRESS NOT FOUND!");
     }
