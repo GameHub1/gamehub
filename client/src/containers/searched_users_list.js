@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Router, Route, Link, browserHistory } from 'react-router';
-import {postProfile, showFriends, renderProfileState, showGames} from '../actions/index';
+import {postProfile, showFriends, renderProfileState, showGames, createFavMedia} from '../actions/index';
 import {bindActionCreators} from 'redux';
 import axios from 'axios';
 
@@ -30,7 +30,7 @@ class SearchedUsers extends Component {
         this.props.renderProfileState(prop);
         console.log("params", this.props.params);
         this.props.showGames({email: email});
-
+        this.props.createFavMedia([null, email]); 
 
         let URL_array = window.location.pathname.split('/profile/');
         axios.post('/get_friend_info',{friend1: this.props.authData.email, friend2: URL_array[1]})
@@ -86,7 +86,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps (dispatch) {
-  return bindActionCreators({postProfile, showFriends, renderProfileState, showGames}, dispatch);
+  return bindActionCreators({postProfile, showFriends, renderProfileState, showGames, createFavMedia}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchedUsers);
