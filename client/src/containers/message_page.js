@@ -20,6 +20,12 @@ export class MessagePage extends Component {
 
   render () {
 
+    var socket = io.connect('http://localhost/kyle');
+    socket.emit('message', "We sent it full circle");
+    socket.on('message', function (msg) {
+       console.log(msg);
+    });
+
       return (
         <div>  
           <div>
