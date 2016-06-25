@@ -143,46 +143,6 @@ app.post('/delete_game', function(req, res){
   });
 });
 
-// app.post('/games', function(req, res) {
-//   let gameTitle = req.body[0].gameTitle;
-//   let email = req.body[1];
-//   let joinReq = {users_id_fk: 0, games_id_fk: 0};
-
-//   new Game({name: gameTitle}).fetch().then(found => {
-//     if (found) {
-//       console.log(gameTitle + " already in database!");
-//     }
-//     else {
-//       console.log(gameTitle + " NOT FOUND! ADDED!");
-//       let newGame = new Game({
-//         name: gameTitle
-//       });
-//       newGame.save().then(newGame2 => {
-//         Games.add(newGame2);
-//       });
-//     }
-//   })
-//   .then(() => {
-//     setTimeout(function(){
-//       new Game({name: gameTitle}).fetch().then(model => {
-//         joinReq.games_id_fk = model.get('id');
-//         console.log("gameID: ", joinReq.games_id_fk);
-//         console.log("setTimeout join req:", joinReq);
-//         addGameJoin(joinReq);
-//       }) ;
-//     }, 500);
-//   })
-//   .then(() => {
-//     new User({email: email}).fetch().then(model => {
-//       joinReq.users_id_fk  = model.get('id');
-//       console.log("User ID: ", joinReq.users_id_fk);
-//     });
-//   })
-//   .catch(err => {
-//     console.error(err);
-//   });
-// });
-
 app.post('/games', function(req, res) {
   let gameTitle = req.body[0].gameTitle;
   let email = req.body[1];
