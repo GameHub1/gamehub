@@ -31,6 +31,15 @@ div.mario {
   background-repeat: no-repeat;
 }
 
+conversation {
+	height: 320px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	padding: 20px;
+	border: 20px solid gray;
+	color: white; 
+}
+
 .user-name {
 	float: left;
 }
