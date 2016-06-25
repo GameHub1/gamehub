@@ -6,7 +6,6 @@ import promise from 'redux-promise';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import Profile from './src/containers/profile'
 import Root from './src/components/root_component'
-import Message from './src/containers/message_page'
 
 function tempReducer(initialAction, action) {
   return {lol: "hi"};
@@ -22,6 +21,5 @@ export default (
     <IndexRoute component={App}/>
     <Route path="profile_setup" component={ProfileForm}/>
     <Route path='/profile/:id' component = {Profile}/>
-    <Route path ='/message/:id' component = {Message}/>
   </Route>
 );
