@@ -24,7 +24,10 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, '../dist/')));
 
 const User = bookshelf.Model.extend({
-  tableName: 'users'
+  tableName: 'users',
+  messages: function(){
+    return this.hasMany(Message);
+  }
 });
 const Users = new bookshelf.Collection();
 Users.model = User;
@@ -40,6 +43,27 @@ const FavMedia = bookshelf.Model.extend({
 });
 const FavMedias = new bookshelf.Collection();
 FavMedias.model = FavMedia;
+
+const Message = bookshelf.Model.extend({
+  tablename: 'messages',
+  sender: function(){
+    return this.belongsTo(User);
+  },
+  namespace: function(){
+    return this.belongsTo(Namespace);
+  }
+});
+const Messages = new bookshelf.Collection();
+Messages.model = Message;
+
+const Namespace = bookshelf.Model.extend({
+  tablename: 'namespaces',
+  messages: function(){
+    return this.hasMany(Message);
+  }
+});
+const Namespaces = new bookshelf.Collection();
+Namespaces.model = Namespace;
 
 const Friend = bookshelf.Model.extend({
   tableName: 'friends'
