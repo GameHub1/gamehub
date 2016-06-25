@@ -9,6 +9,7 @@ import promise from 'redux-promise'
 import searchedUsers from './searched_users_reducer';
 import friendList from './friend_reducer.js';
 import selectedFriend from './selected_friend';
+import messages from './message_reducer'
 
 const logger = createLogger();
 
@@ -20,7 +21,8 @@ const reducers = {
   media: media,
   searched_users: searchedUsers,
   friendList: friendList,
-  selectedFriend: selectedFriend
+  selectedFriend: selectedFriend,
+  messages: messages
 
 };
 

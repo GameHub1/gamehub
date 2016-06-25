@@ -17,16 +17,17 @@ io.on('connection', function (socket) {
   });
 });
 
-let kylemike = io.of('/kyle');
+// let kylemike = io.of('/kyle');
 
-kylemike.on('connection', function (socket) {
-  console.log("Houston, we have connected");
+// kylemike.on('connection', function (socket) {
+//   console.log("Houston, we have connected");
 
-  socket.on('message', function (msg) {
+//   socket.on('message', function (msg) {
 
-   socket.emit('message', "Original msg:" + msg + "This is from the server");
-})
-})
+//    socket.emit('message', "Original msg:" + msg + "This is from the server");
+// })
+// });
+
 
 
 app.use(bodyParser.json({type: '*/*'}));
@@ -83,6 +84,22 @@ const addGameJoin = function(joinReq){
     }
   });
 };
+
+app.post('/get_messages', function(req, res) {
+  console.log('This is the req', req.body);
+  
+  let kylemike = io.of('/kyle');
+
+kylemike.on('connection', function (socket) {
+  console.log("Houston, we have connected");
+
+  socket.on('message', function (msg) {
+
+   socket.emit('message', "Original msg:" + msg + "This is from the server");
+})
+});
+
+});
 
 app.post('/signup', function(req,res) {
   let name = req.body.name;
