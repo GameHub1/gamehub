@@ -6,11 +6,23 @@ import Logout from '../components/logout';
 
 export default class RootComponent extends Component {
   render() {
-    console.log('root', Array.isArray(this.props.authData));
     if (!Array.isArray(this.props.authData)) {
       return (
+        
         <div>
-          <span id="navHeader">GameHub</span> <SearchBar /> <Logout />
+          <nav className="navbar navbar-inverse navbar-fixed-top">
+            <div className="container-fluid navbar">
+              <div className="navbar-header">
+                <span id="navHeader">GameHub</span>
+              </div>
+              <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <SearchBar />
+                <div className="logoutButton">
+                  <Logout />
+                </div>
+              </div>
+            </div>
+          </nav>
           {this.props.children}
         </div>
       );

@@ -7,6 +7,7 @@ body {
 	background-color: #2C2D28;
 	text-align: center;
   color: #ffffff;
+  padding-top: 65px; 
 }
 
 body input {
@@ -74,12 +75,20 @@ textarea {
   z-index: -1;
 }*/
 
-/*------------------------------ HEADER ------------------------------*/
+/*------------------------------ NAVBAR ------------------------------*/
 #navHeader {
   font-family: 'Syncopate', sans-serif;
   font-size: 26px;
   color: #ffffff;
-  text-align: left;
+  /*text-align: left;*/
+}
+
+.navbar {
+  margin-bottom: 0px;
+}
+
+.navbar-header {
+  padding-top: 6px;
 }
 
 #header {
@@ -112,13 +121,24 @@ textarea {
 	color: #ffffff;
 }
 
+/*------------------------------ Logout Component ------------------------------*/
+.logoutButton {
+  padding-top: 8px;
+}
 
-/*------------------------------ Search Bar Component ------------------------------*/
-.searchBar {
-  width: 600px;
+/*------------------------------ Search Bar and Searched List Components ------------------------------*/
+.navbar-form {
+  padding-left: 420px;
+}
+
+.navbar-form input.form-control {
+  width: 500px;
   color: #000000;
 }
 
+.allFavMediaBox {
+  padding-left: 400px;
+}
 
 /*------------------------------ Fav Media and All Fav Media Components ------------------------------*/
 #favMedia {

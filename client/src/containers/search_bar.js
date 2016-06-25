@@ -32,30 +32,25 @@ class SearchBar extends Component {
   }
 
   hideSearch() {
-    console.log('Inside hideSearch!')
     $('.UsersList').hide();
-  
     document.getElementById("searchInput").reset();
   }
 
   render() {
     return (
-  
-        <form onSubmit={this.onFormSubmit} id="searchInput" className="navbar-form navbar-left" role="search">
-          <div className="form-group">
-            <input className="searchBar"
-              type="text"
-              placeholder="search for a friend"
-              value={this.state.searchTerm}
-              onChange={this.onInputChange}/>&nbsp;
-              <div className ="UsersList" onClick = {this.hideSearch}>
-              <SearchedUsersList />
-              </div>
+      <form onSubmit={this.onFormSubmit} id="searchInput" className="navbar-form navbar-left" role="search">
+        <div className="form-group">
+          <input className="form-control"
+            type="text"
+            placeholder="search for a friend"
+            value={this.state.searchTerm}
+            onChange={this.onInputChange}/>
+          <div className ="UsersList" onClick = {this.hideSearch}>
+            <SearchedUsersList />
           </div>
-          <button type="submit" className="btn btn-default">Submit</button>
-        </form>
-  
-    )
+        </div>
+      </form>
+    );
   }
 }
 
