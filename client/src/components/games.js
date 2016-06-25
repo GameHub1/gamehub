@@ -1,8 +1,14 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import { deleteGame } from '../actions/index';
+import {browserHistory} from 'react-router';
 
 export class GameList extends Component {
+    
+    goToGamesPage(game) {
+    browserHistory.push(`/game/${game}`);
+  }
+
     onItemClick(item, e) {
       console.log(item);
       //this.props.deleteGame([{gameTitle: item}, this.props.authData.email]);
@@ -14,8 +20,8 @@ export class GameList extends Component {
 	  	<h3>Favorite Games</h3>
 				<ul>
 				{this.props.games.map((game, index) => {
-          let boundItemClick = this.onItemClick.bind(this, game);
-					return (<li key={game} onClick={boundItemClick}>{game}</li>);
+          //let boundItemClick = this.onItemClick.bind(this, game);
+					return (<li key={game} onClick={() => {this.goToGamesPage(game);}}>{game}</li>);
 				})}
 			 </ul>
 		 </div>

@@ -98,7 +98,6 @@ export class Profile extends Component {
           document.getElementById("followBtn").firstChild.data='following';
         }
       });
-
   }
 
   editProflie() {
