@@ -190,37 +190,63 @@ app.post('/games', function(req, res) {
 
   new Game({name: gameTitle}).fetch()
     .then(found => {
-      if (found) {
-        console.log(`${gameTitle} already in database!`);
-      } else {
-        console.log(`${gameTitle} NOT FOUND! ADDED!`);
-        let newGame = new Game({
-          name: gameTitle
-        });
-        newGame.save().then(newGame2 => {
-          Games.add(newGame2);
-        });
-      }
+      return new Promise((resolve, reject) => {
+        if (found) {
+          console.log(`${gameTitle} already in database!`);
+        } else {
+          console.log(`${gameTitle} NOT FOUND! ADDED!`);
+          let newGame = new Game({
+            name: gameTitle
+          });
+
+          newGame.save().then(newGame2 => {
+            Games.add(newGame2);
+          })
+          .catch(err => {
+            console.error(err);
+          });
+        }
+      })
     })
     .then(() => {
-      new User({email: email}).fetch().then(model => {
-        joinReq.users_id_fk  = model.get('id');
-        console.log("User ID: ", joinReq.users_id_fk);
-      });
-    })
-    .then(() => {
-      setTimeout(function(){
         new Game({name: gameTitle}).fetch().then(model => {
           joinReq.games_id_fk = model.get('id');
-          console.log("gameID: ", joinReq.games_id_fk);
-          console.log("setTimeout join req:", joinReq);
           addGameJoin(joinReq);
-        }) ;
-      }, 500);
-    })
-    .catch(err => {
-      console.error(err);
-    });
+        });
+      })
+
+
+    //   if (found) {
+    //     console.log(`${gameTitle} already in database!`);
+    //   } else {
+    //     console.log(`${gameTitle} NOT FOUND! ADDED!`);
+    //     let newGame = new Game({
+    //       name: gameTitle
+    //     });
+    //     newGame.save().then(newGame2 => {
+    //       Games.add(newGame2);
+    //     });
+    //   }
+    // })
+    // .then(() => {
+    //   new User({email: email}).fetch().then(model => {
+    //     joinReq.users_id_fk  = model.get('id');
+    //     console.log("User ID: ", joinReq.users_id_fk);
+    //   });
+    // })
+    // .then(() => {
+    //   setTimeout(function(){
+    //     new Game({name: gameTitle}).fetch().then(model => {
+    //       joinReq.games_id_fk = model.get('id');
+    //       console.log("gameID: ", joinReq.games_id_fk);
+    //       console.log("setTimeout join req:", joinReq);
+    //       addGameJoin(joinReq);
+    //     }) ;
+    //   }, 500);
+    // })
+    // .catch(err => {
+    //   console.error(err);
+    // });
 });
 
 app.post('/favmedia', function(req, res) {
