@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {showFriends, selectFriend} from '../actions/index';
+import {showFriends, selectFriend, getMessages} from '../actions/index';
 import axios from 'axios';
 import FriendList from './friend_list';
 
@@ -19,9 +19,11 @@ export class MessagePage extends Component {
   }
 
   chooseFriend (friend) {
-    console.log("friend: ", friend);
     this.props.selectFriend(friend);
-    setTimeout(() => {console.log(this.props.selectedFriend);},500);
+    let arrayOfEmails = [this.props.params.id, friend];
+    let sortedEmails = arrayOfEmails.sort();
+    this.props.getMessages({data:sortedEmails});
+    
   }
 
   render () {
@@ -78,7 +80,7 @@ function mapStateToProps (state) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({showFriends, selectFriend}, dispatch);
+    return bindActionCreators({showFriends, selectFriend, getMessages}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps) (MessagePage);

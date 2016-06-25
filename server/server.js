@@ -6,6 +6,29 @@ const bookshelf = require('./psqldb.js');
 const bodyParser = require('body-parser');
 const app = express();
 
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
+server.listen(80);
+
+io.on('connection', function (socket) {
+  socket.emit('news', { hello: 'world' });
+  socket.on('my other event', function (data) {
+    console.log(data);
+  });
+});
+
+// let kylemike = io.of('/kyle');
+
+// kylemike.on('connection', function (socket) {
+//   console.log("Houston, we have connected");
+
+//   socket.on('message', function (msg) {
+
+//    socket.emit('message', "Original msg:" + msg + "This is from the server");
+// })
+// });
+
+
 app.use(bodyParser.json({type: '*/*'}));
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -61,6 +84,7 @@ const addGameJoin = function(joinReq){
   });
 };
 
+<<<<<<< 5427dc725ecef338608d6581e2f994ae05c3f0a7
 const deleteGameJoin = function(joinReq) {
   new GameJoin({
     users_id_fk: joinReq.users_id_fk, games_id_fk: joinReq.games_id_fk
@@ -79,6 +103,23 @@ const deleteGameJoin = function(joinReq) {
     }
   });
 };
+=======
+app.post('/get_messages', function(req, res) {
+  console.log('This is the req', req.body);
+  
+  let kylemike = io.of('/kyle');
+
+kylemike.on('connection', function (socket) {
+  console.log("Houston, we have connected");
+
+  socket.on('message', function (msg) {
+
+   socket.emit('message', "Original msg:" + msg + "This is from the server");
+})
+});
+
+});
+>>>>>>> [feat] message action and reducer with working call to server
 
 app.post('/signup', function(req,res) {
   let name = req.body.name;

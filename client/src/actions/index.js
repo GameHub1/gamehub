@@ -15,6 +15,7 @@ export const FIND_FRIENDS = 'FIND_FRIENDS';
 export const RENDER_PROFILE = 'RENDER_PROFILE';
 export const FIND_GAME_FANS = 'FIND_GAME_FANS';
 export const SELECT_FRIEND = 'SELECT_FRIEND';
+export const GET_MESSAGES = 'GET_MESSAGES';
 
 //this.props.params.id
 //^ user's email
@@ -25,12 +26,23 @@ export const SELECT_FRIEND = 'SELECT_FRIEND';
 
 //link up in mapDispatchToProps
 
+
 export function showGameFans(props) {
   return {
     type: FIND_GAME_FANS,
     payload: props
   };
 }
+
+export function getMessages(emails) {
+  const request = axios.post('/get_messages', emails);
+  return {
+    type: GET_MESSAGES,
+    payload: request
+  }
+
+}
+
 export function showGames(props) {
   const request = axios.post('/fetch_games', props);
   return {
