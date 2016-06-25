@@ -8,7 +8,7 @@ const app = express();
 
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
-server.listen(80);
+// server.listen(80);
 
 io.on('connection', function (socket) {
   socket.emit('news', { hello: 'world' });
@@ -237,6 +237,39 @@ app.post('/games', function(req, res) {
       console.error(err);
     });
 });
+
+
+    //   if (found) {
+    //     console.log(`${gameTitle} already in database!`);
+    //   } else {
+    //     console.log(`${gameTitle} NOT FOUND! ADDED!`);
+    //     let newGame = new Game({
+    //       name: gameTitle
+    //     });
+    //     newGame.save().then(newGame2 => {
+    //       Games.add(newGame2);
+    //     });
+    //   }
+    // })
+    // .then(() => {
+    //   new User({email: email}).fetch().then(model => {
+    //     joinReq.users_id_fk  = model.get('id');
+    //     console.log("User ID: ", joinReq.users_id_fk);
+    //   });
+    // })
+    // .then(() => {
+    //   setTimeout(function(){
+    //     new Game({name: gameTitle}).fetch().then(model => {
+    //       joinReq.games_id_fk = model.get('id');
+    //       console.log("gameID: ", joinReq.games_id_fk);
+    //       console.log("setTimeout join req:", joinReq);
+    //       addGameJoin(joinReq);
+    //     }) ;
+    //   }, 500);
+    // })
+    // .catch(err => {
+    //   console.error(err);
+    // });
 
 app.post('/favmedia', function(req, res) {
   if (req.body[0] === null) {
