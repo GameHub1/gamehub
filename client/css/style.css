@@ -1,13 +1,9 @@
-/* Website template by freewebsitetemplates.com */
-html {
-	font-family: Arial, Helvetica, sans-serif;
-}
-
 body {
 	background-color: #2C2D28;
 	text-align: center;
   color: #ffffff;
   padding-top: 65px; 
+  font-family: 'Maven Pro', sans-serif;
 }
 
 body input {
@@ -170,54 +166,8 @@ textarea {
   color: #ffffff;
 }
 
-/*------------------------------ Blog Page ------------------------------*/
-#blogs {
-	display: inline-block;
-}
-#blogs div.section h3, #blogs div.sidebar h3 {
-	margin: 0 0 20px;
-	text-transform: none;
-}
-#blogs div.section h3 a {
-	color: #0e2934;
-	text-decoration: none;
-}
-
-#blogs div.sidebar {
-	float: right;
-	width: 270px;
-}
-#contents #blogs div.sidebar ul li a {
-	color: #646C6F;
-	text-decoration: none;
-}
-#contents #blogs div.sidebar ul li a:hover {
-	color: #0e2934;
-}
-
-#blogs div.posts {
-	margin: 0 0 40px;
-}
-#blogs div.posts ul {
-	margin: 0;
-	padding: 0 0 0 20px;
-}
-#blogs div.posts ul li {
-	padding-bottom: 10px;
-}
-
-#contents #blogs div.archives ul {
-	display: inline-block;
-	list-style: none;
-	margin: 0;
-	padding: 0;
-}
-#contents #blogs div.archives ul li {
-	float: left;
-	width: 135px;
-	line-height: 30px;
-}
-
-#blogs div.section {
-	margin-right: 300px;
+/*------------------------------ Creating Profile Component ------------------------------*/
+.createProfileSection form {
+  padding-left: 350px;
+  padding-right: 350px;
 }

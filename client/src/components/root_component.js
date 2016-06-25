@@ -7,8 +7,7 @@ import Logout from '../components/logout';
 export default class RootComponent extends Component {
   render() {
     if (!Array.isArray(this.props.authData)) {
-      return (
-        
+      return (  
         <div>
           <nav className="navbar navbar-inverse navbar-fixed-top">
             <div className="container-fluid navbar">
