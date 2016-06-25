@@ -13,6 +13,7 @@ export const FETCH_GAMES = 'FETCH_GAMES';
 export const FIND_FRIENDS = 'FIND_FRIENDS';
 export const RENDER_PROFILE = 'RENDER_PROFILE';
 export const SELECT_FRIEND = 'SELECT_FRIEND';
+export const GET_MESSAGES = 'GET_MESSAGES';
 
 //this.props.params.id
 //^ user's email
@@ -22,6 +23,15 @@ export const SELECT_FRIEND = 'SELECT_FRIEND';
 //call in changeUsers in serach bar
 
 //link up in mapDispatchToProps
+
+export function getMessages(emails) {
+  const request = axios.post('/get_messages', emails);
+  return {
+    type: GET_MESSAGES,
+    payload: request
+  }
+
+}
 
 export function showGames(props) {
   const request = axios.post('/fetch_games', props);
