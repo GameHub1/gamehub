@@ -52,23 +52,24 @@ db.schema.hasTable('messages').then(exists => {
       message.string('text');
       message.timestamp('sent_at').defaultTo(knex.fn.now());
       message.integer('sender_id_fk');
-      message.integer('rooms_id_fk');
-      favmedia.foreign('sender_id_fk').references('users.id');
+      message.integer('namespace_id_fk');
+      message.foreign('sender_id_fk').references('users.id');
+      message.foreign('namespace_id_fk').references('namespaces.id'); 
     }).then(function(table){
       console.log("Created messages table");
     })
   }
 });
 
-db.schema.hasTable('rooms').then(exists => {
+db.schema.hasTable('namespaces').then(exists => {
   if (!exists) {
-    db.schema.createTable('friends', room => {
-      room.increments('id').primary();
-      room.string('name').unique();
-      room.integer('user1_fk');//id user2
-      room.integer('user2_fk'); //return array of these
-      room.foreign('user1_fk').references('users.id');
-      room.foreign('user2_fk').references('users.id');
+    db.schema.createTable('namespaces', room => {
+      namespace.increments('id').primary();
+      namespace.string('name').unique();
+      namespace.integer('user1_fk');//id user2
+      namespace.integer('user2_fk'); //return array of these
+      namespace.foreign('user1_fk').references('users.id');
+      namespace.foreign('user2_fk').references('users.id');
     }).then(function(table){
       console.log("Created rooms table");
     })
