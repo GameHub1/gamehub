@@ -8,7 +8,7 @@ const app = express();
 
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
-server.listen(80);
+//server.listen(80);
 
 io.on('connection', function (socket) {
   socket.emit('news', { hello: 'world' });
@@ -87,7 +87,7 @@ const addGameJoin = function(joinReq){
 
 app.post('/get_messages', function(req, res) {
   console.log('This is the req', req.body);
-  
+
   let kylemike = io.of('/kyle');
 
 kylemike.on('connection', function (socket) {
@@ -323,7 +323,7 @@ app.post('/post_profile', function(req, res) {
       if(found.attributes.fullname === found.attributes.email) {
         fullname_change = fullname;
       }
-    
+
       let updateUser = new User({
         id: found.attributes.id,
         fullname: fullname_change,
@@ -351,4 +351,4 @@ app.listen(process.env.PORT || 8000);
 
 console.log("Listening on port 8000");
 
-module.exports = app; 
+module.exports = app;
