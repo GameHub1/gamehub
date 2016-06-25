@@ -8,7 +8,7 @@ import AllFavMedia from '../components/allFavMedia';
 import FriendList from './friend_list';
 import AddGames from '../components/add_games';
 import {showFriends, showGames, postProfile, renderProfileState} from '../actions/index';
-import {browserHistory} from 'react-router';
+import {browserHistory, Link} from 'react-router';
 
 export class Profile extends Component {
   componentWillMount () {
