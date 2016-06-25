@@ -17,7 +17,6 @@ const server = require('http').Server(app);
 const io = require('socket.io')(server);
 //server.listen(80);
 
-
 app.use(bodyParser.json({type: '*/*'}));
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -65,7 +64,7 @@ app.post('/get_messages', function(req, res) {
       socket.emit('message', "Original msg:" + msg + "This is from the server");
     });
   });
-}); 
+});
 
 app.use(function(req, res) {
   res.sendFile(path.join(__dirname, '../dist/index.html'));
