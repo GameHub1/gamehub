@@ -2,15 +2,32 @@
 
 const path = require('path');
 const express = require('express');
-const bookshelf = require('./psqldb.js');
 const bodyParser = require('body-parser');
 const app = express();
 
-const messageUtils = require('./message_utils.js');
+const auth = require('./utils/auth_utils.js')
+const messaging = require('./utils/message_utils.js');
 
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 //server.listen(80);
+
+const bookshelf = require('./db/psqldb.js');
+
+const User = require('./db/models/user.js');
+const Users = require('./db/collections/users.js');
+const Game = require('./db/models/game.js');
+const Games = require('./db/collections/games.js');
+const FavMedia = require('./db/models/favmedia.js');
+const FavMedias = require('./db/collections/favmedias.js');
+const Message = require('./db/models/message.js');
+const Messages = require('./db/collections/messages.js');
+const Namespace = require('./db/models/namespace.js');
+const Namespaces = require('./db/collections/namespaces.js');
+const Friend = require('./db/models/friend.js');
+const Friends = require('./db/collections/friends.js');
+const GameJoin = require('./db/models/gamejoin.js');
+const GameJoins = require('./db/collections/gamejoins.js');
 
 io.on('connection', function (socket) {
   socket.emit('news', { hello: 'world' });
@@ -24,61 +41,6 @@ app.use(bodyParser.json({type: '*/*'}));
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(express.static(path.join(__dirname, '../dist/')));
-
-const User = bookshelf.Model.extend({
-  tableName: 'users',
-  messages: function(){
-    return this.hasMany(Message);
-  }
-});
-const Users = new bookshelf.Collection();
-Users.model = User;
-
-const Game = bookshelf.Model.extend({
-  tableName: 'games'
-});
-const Games = new bookshelf.Collection();
-Games.model = Game;
-
-const FavMedia = bookshelf.Model.extend({
-  tableName: 'favmedias'
-});
-const FavMedias = new bookshelf.Collection();
-FavMedias.model = FavMedia;
-
-const Message = bookshelf.Model.extend({
-  tablename: 'messages',
-  sender: function(){
-    return this.belongsTo(User);
-  },
-  namespace: function(){
-    return this.belongsTo(Namespace);
-  }
-});
-const Messages = new bookshelf.Collection();
-Messages.model = Message;
-
-const Namespace = bookshelf.Model.extend({
-  tablename: 'namespaces',
-  messages: function(){
-    return this.hasMany(Message);
-  }
-});
-const Namespaces = new bookshelf.Collection();
-Namespaces.model = Namespace;
-
-const Friend = bookshelf.Model.extend({
-  tableName: 'friends'
-});
-const Friends = new bookshelf.Collection();
-Friends.model = Friend;
-
-const GameJoin = bookshelf.Model.extend({
-  tableName: 'users_games'
-});
-
-const GameJoins = new bookshelf.Collection();
-GameJoins.model = GameJoin;
 
 const addGameJoin = function(joinReq){
   new GameJoin({
@@ -95,26 +57,6 @@ const addGameJoin = function(joinReq){
       newGameJoin.save().then(newGameJoin2 => {
         GameJoins.add(newGameJoin2);
       });
-    }
-  });
-};
-
-
-const deleteGameJoin = function(joinReq) {
-  new GameJoin({
-    users_id_fk: joinReq.users_id_fk, games_id_fk: joinReq.games_id_fk
-  }).fetch().then(found => {
-    if (found) {
-      console.log("join in database");
-      let newGameJoin = new GameJoin({
-        users_id_fk:joinReq.users_id_fk, games_id_fk: joinReq.games_id_fk
-      });
-      GameJoins.remove(newGameJoin).then(newGameJoin2 => {
-        newGameJoin2.delete();
-      });
-    }
-    else {
-      console.log("JOIN NOT FOUND!");
     }
   });
 };
@@ -149,67 +91,13 @@ app.post('/get_messages', function(req, res) {
   });
 });
 
-=======
-=======
 app.post('/send_message', messageUtils.sendMessage);
 
-app.post('/load_namespace', messageUtils.load_namespace);
+app.post('/load_namespace', messaging.loadNamespace);
 
-app.post('/create_namespace', messageUtils.createNamespace);
+app.post('/create_namespace', messaging.createNamespace);
 
->>>>>>> [feat] created message-related routes
-app.post('/get_messages', function(req, res) {
-  console.log('This is the req', req.body);
-
-  let kylemike = io.of('/kyle');
-
-kylemike.on('connection', function (socket) {
-  console.log("Houston, we have connected");
-
-  socket.on('message', function (msg) {
-
-   socket.emit('message', "Original msg:" + msg + "This is from the server");
-})
-});
-
-});
->>>>>>> [feat] message action and reducer with working call to server
-
-app.post('/signup', function(req,res) {
-  let name = req.body.name;
-  let email = req.body.email;
-  let pic_path = req.body.pic_path;
-  let routeProp = 'val';
-
-	new User({email: email}).fetch().then(found => {
-    if (found) {
-   		console.log('User is already in database.');
-      routeProp = 'found';
-      res.send({name: name, email: email, routeProp: routeProp});
-    } else {
-      console.log('User not found, added user.');
-      routeProp = 'not found';
-		  let testUser = new User({
-			  fullname: name,
-			  email: email,
-        pic_path: pic_path
-		  });
-
-			testUser.save()
-        .then(newUser => {
-				  Users.add(newUser);
-			   })
-        .catch(err => {
-          console.error(err);
-        });
-
-      res.send({name: name, email: email, routeProp: routeProp});
-    }
-	})
-  .catch(err => {
-    console.error(err);
-  });
-});
+app.post('/signup', auth.authFunc);
 
 app.post('/delete_game', function(req, res){
   let gameTitle = req.body[0].gameTitle;
