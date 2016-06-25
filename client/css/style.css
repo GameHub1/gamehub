@@ -31,6 +31,15 @@ div.mario {
   background-repeat: no-repeat;
 }
 
+conversation {
+	height: 320px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	padding: 20px;
+	border: 20px solid gray;
+	color: white; 
+}
+
 .user-name {
 	float: left;
 }
@@ -200,17 +209,4 @@ textarea {
 
 #blogs div.section {
 	margin-right: 300px;
-}
-
-/*--------------------------------- Conversation Container ----------------------------- */
-
-.conversation {
-
-  height: 320px;
-  overflow-x: hidden;
-  overflow-y: scroll;
-  padding: 20px;
-  border: 10px solid gray;
-  color: white;
-
 }

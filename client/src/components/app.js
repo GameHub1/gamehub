@@ -18,3 +18,5 @@ export default class App extends Component {
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({authentication: authentication}, dispatch)
 }
+
+module.exports = App;
