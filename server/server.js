@@ -7,6 +7,7 @@ const app = express();
 
 const auth = require('./utils/auth_utils.js')
 const messaging = require('./utils/message_utils.js');
+const favmedia = require('./utils/favmedia_utils.js');
 
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
@@ -61,37 +62,12 @@ const addGameJoin = function(joinReq){
   });
 };
 
-app.post('/get_messages', function(req, res) {
 
-  let namespace = req.body.data
-  console.log(namespace);
-  let channel = io.of(`/${namespace}`);
+app.post('/signup', auth.authFunc);
 
+app.post('/favmedia', favmedia.getFavmedia);
 
-  channel.on('connection', function (socket) {
-
-     console.log('We are connected!');
-
-      socket.on('message', function (msg) {
-
-        //store msg to database
-
-        socket.emit('updateState', 'update')
-      });
-  });
-
-
-  let kylemike = io.of('/kyle');
-
-  kylemike.on('connection', function (socket) {
-    console.log("Houston, we have connected");
-    socket.on('message', function (msg) {
-      socket.emit('message', "Original msg:" + msg + "This is from the server");
-    })
-  });
-});
-
-app.post('/send_message', messageUtils.sendMessage);
+app.post('/send_message', messaging.sendMessage);
 
 app.post('/load_namespace', messaging.loadNamespace);
 
@@ -160,55 +136,6 @@ app.post('/games', function(req, res) {
         joinReq.games_id_fk = model.get('id');
         addGameJoin(joinReq);
       });
-    })
-    .catch(err => {
-      console.error(err);
-    });
-});
-
-app.post('/favmedia', function(req, res) {
-  if (req.body[0] === null) {
-    var favMediaURL = null;
-  } else {
-    var favMediaURL = req.body[0].favMediaURL;
-  }
-
-  let userEmail = req.body[1];
-  let userID;
-
-  new User({email: userEmail}).fetch()
-    .then(found => {
-      return new Promise((resolve, reject) => {
-        if (found) {
-          userID = found.attributes.id;
-          if (favMediaURL !== null) {
-            new FavMedia({url: favMediaURL, users_id_fk: userID}).fetch()
-              .then(found => {
-                  if (found) {
-                    resolve(userID);
-                  } else {
-                    let newFavMedia = new FavMedia({
-                      url: favMediaURL,
-                      users_id_fk: userID
-                    });
-
-                    newFavMedia.save().then(newFavMedia2 => {
-                      FavMedias.add(newFavMedia2);
-                      resolve(userID)
-                    });
-                  }
-              })
-          } else {
-            resolve(userID);
-          }
-        }
-      });
-    })
-    .then(userID => {
-      bookshelf.knex.raw(`SELECT * FROM favmedias WHERE users_id_fk = ${userID}`)
-        .then(data => {
-          res.send(data.rows);
-        });
     })
     .catch(err => {
       console.error(err);
