@@ -15,7 +15,7 @@ const socketUtils = require('./utils/socket_utils.js');
 
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
-server.listen(80);
+//server.listen(80);
 
 
 app.use(bodyParser.json({type: '*/*'}));
