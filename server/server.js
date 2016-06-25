@@ -8,7 +8,7 @@ const app = express();
 
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
-server.listen(80);
+//server.listen(80);
 
 io.on('connection', function (socket) {
   socket.emit('news', { hello: 'world' });
