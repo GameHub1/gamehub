@@ -6,6 +6,8 @@ const bookshelf = require('./psqldb.js');
 const bodyParser = require('body-parser');
 const app = express();
 
+const messageUtils = require('./message_utils.js');
+
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 //server.listen(80);
@@ -97,7 +99,6 @@ const addGameJoin = function(joinReq){
   });
 };
 
-<<<<<<< 3227efdeff18661d75ed53a9de061832787be8fa
 
 const deleteGameJoin = function(joinReq) {
   new GameJoin({
@@ -149,6 +150,14 @@ app.post('/get_messages', function(req, res) {
 });
 
 =======
+=======
+app.post('/send_message', messageUtils.sendMessage);
+
+app.post('/load_namespace', messageUtils.load_namespace);
+
+app.post('/create_namespace', messageUtils.createNamespace);
+
+>>>>>>> [feat] created message-related routes
 app.post('/get_messages', function(req, res) {
   console.log('This is the req', req.body);
 
