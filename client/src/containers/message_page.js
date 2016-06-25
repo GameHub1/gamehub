@@ -110,9 +110,8 @@ let socket = io.connect('http://localhost/kyle');
             <div className='row'>
               <form>
                   <label> Write Message </label>
-                  <textarea rows = '2' cols= '50'/>
-                  <button className='messageToSend' onClick={()=> {this.sendMessage()}}>Send</button>
-
+                  <textarea className='messageToSend' rows = '2' cols= '50'/>
+                  <button onClick={()=> {this.sendMessage()}}>Send</button>
               </form>
             </div>
           </div>
