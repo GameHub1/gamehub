@@ -1,14 +1,21 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import { deleteGame } from '../actions/index';
 
 export class GameList extends Component {
+    onItemClick(item, e) {
+      console.log(item);
+      //this.props.deleteGame([{gameTitle: item}, this.props.authData.email]);
+    }
+
   	render() {
 			return (
 			<div>
 	  	<h3>Favorite Games</h3>
 				<ul>
 				{this.props.games.map((game, index) => {
-					return (<li>{game}</li>); 
+          let boundItemClick = this.onItemClick.bind(this, game);
+					return (<li key={game} onClick={boundItemClick}>{game}</li>);
 				})}
 			 </ul>
 		 </div>
@@ -34,9 +41,15 @@ export class GameList extends Component {
 // 	}
 // })
 
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({deleteGame}, dispatch);
+}
+
+
 function mapStateToProps(state) {
 	return {
-		games: state.games
+		games: state.games,
+    authData: state.authData
 	};
 }
 

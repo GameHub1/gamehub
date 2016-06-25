@@ -6,29 +6,6 @@ const bookshelf = require('./psqldb.js');
 const bodyParser = require('body-parser');
 const app = express();
 
-const server = require('http').Server(app);
-const io = require('socket.io')(server);
-server.listen(80);
-
-io.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
-    console.log(data);
-  });
-});
-
-let kylemike = io.of('/kyle');
-
-kylemike.on('connection', function (socket) {
-  console.log("Houston, we have connected");
-
-  socket.on('message', function (msg) {
-
-   socket.emit('message', "Original msg:" + msg + "This is from the server");
-})
-})
-
-
 app.use(bodyParser.json({type: '*/*'}));
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -84,6 +61,25 @@ const addGameJoin = function(joinReq){
   });
 };
 
+const deleteGameJoin = function(joinReq) {
+  new GameJoin({
+    users_id_fk: joinReq.users_id_fk, games_id_fk: joinReq.games_id_fk
+  }).fetch().then(found => {
+    if (found) {
+      console.log("join in database");
+      let newGameJoin = new GameJoin({
+        users_id_fk:joinReq.users_id_fk, games_id_fk: joinReq.games_id_fk
+      });
+      GameJoins.remove(newGameJoin).then(newGameJoin2 => {
+        newGameJoin2.delete();
+      });
+    }
+    else {
+      console.log("JOIN NOT FOUND!");
+    }
+  });
+};
+
 app.post('/signup', function(req,res) {
   let name = req.body.name;
   let email = req.body.email;
@@ -97,61 +93,135 @@ app.post('/signup', function(req,res) {
       res.send({name: name, email: email, routeProp: routeProp});
     } else {
       console.log('User not found, added user.');
-      routeProp = 'not found'
+      routeProp = 'not found';
 		  let testUser = new User({
 			  fullname: name,
 			  email: email,
         pic_path: pic_path
 		  });
 
-			testUser.save().then(newUser => {
-				Users.add(newUser);
-			});
+			testUser.save()
+        .then(newUser => {
+				  Users.add(newUser);
+			   })
+        .catch(err => {
+          console.error(err);
+        });
 
       res.send({name: name, email: email, routeProp: routeProp});
     }
-	});
+	})
+  .catch(err => {
+    console.error(err);
+  });
 });
 
-app.post('/games', function(req, res) {
+app.post('/delete_game', function(req, res){
   let gameTitle = req.body[0].gameTitle;
   let email = req.body[1];
   let joinReq = {users_id_fk: 0, games_id_fk: 0};
   console.log(gameTitle, email);
 
-  new Game({name: gameTitle}).fetch().then(found => {
-    if (found) {
-      console.log(gameTitle + " already in database!");
-    }
-    else {
-      console.log(gameTitle + " NOT FOUND! ADDED!");
-      let newGame = new Game({
-        name: gameTitle
-      });
-      newGame.save().then(newGame2 => {
-        Games.add(newGame2);
-      });
-    }
+  setTimeout(function(){
+    new Game({name: gameTitle}).fetch().then(model => {
+      joinReq.games_id_fk = model.get('id');
+      console.log("gameID: ", joinReq.games_id_fk);
+      console.log("setTimeout join req:", joinReq);
+      deleteGameJoin(joinReq);
+    })
+    .catch(err => {
+      console.error(err);
+    });
+  }, 500);
+
+  new User({email: email}).fetch().then(model => {
+    joinReq.users_id_fk  = model.get('id');
+    console.log("User ID: ", joinReq.users_id_fk);
   })
-  .then(() => {
-    console.log("Games promise!");
-    setTimeout(function(){
-      new Game({name: gameTitle}).fetch().then(model => {
-        joinReq.games_id_fk = model.get('id');
-        console.log("gameID: ", joinReq.games_id_fk);
-        console.log("setTimeout join req:", joinReq);
-        addGameJoin(joinReq);
-      }) ;
-    }, 500);
-  })
+  .catch(err => {
+    console.error(err);
+  });
+});
+
+// app.post('/games', function(req, res) {
+//   let gameTitle = req.body[0].gameTitle;
+//   let email = req.body[1];
+//   let joinReq = {users_id_fk: 0, games_id_fk: 0};
+
+//   new Game({name: gameTitle}).fetch().then(found => {
+//     if (found) {
+//       console.log(gameTitle + " already in database!");
+//     }
+//     else {
+//       console.log(gameTitle + " NOT FOUND! ADDED!");
+//       let newGame = new Game({
+//         name: gameTitle
+//       });
+//       newGame.save().then(newGame2 => {
+//         Games.add(newGame2);
+//       });
+//     }
+//   })
+//   .then(() => {
+//     setTimeout(function(){
+//       new Game({name: gameTitle}).fetch().then(model => {
+//         joinReq.games_id_fk = model.get('id');
+//         console.log("gameID: ", joinReq.games_id_fk);
+//         console.log("setTimeout join req:", joinReq);
+//         addGameJoin(joinReq);
+//       }) ;
+//     }, 500);
+//   })
+//   .then(() => {
+//     new User({email: email}).fetch().then(model => {
+//       joinReq.users_id_fk  = model.get('id');
+//       console.log("User ID: ", joinReq.users_id_fk);
+//     });
+//   })
+//   .catch(err => {
+//     console.error(err);
+//   });
+// });
+
+app.post('/games', function(req, res) {
+  let gameTitle = req.body[0].gameTitle;
+  let email = req.body[1];
+  let joinReq = {users_id_fk: 0, games_id_fk: 0};
+
+  new Game({name: gameTitle}).fetch()
+    .then(found => {
+      if (found) {
+        console.log(`${gameTitle} already in database!`);
+      } else {
+        console.log(`${gameTitle} NOT FOUND! ADDED!`);
+        let newGame = new Game({
+          name: gameTitle
+        });
+        newGame.save().then(newGame2 => {
+          Games.add(newGame2);
+        });
+      }
+    })
     .then(() => {
-      console.log("Users promise!");
       new User({email: email}).fetch().then(model => {
         joinReq.users_id_fk  = model.get('id');
         console.log("User ID: ", joinReq.users_id_fk);
       });
+    })
+    .then(() => {
+      setTimeout(function(){
+        new Game({name: gameTitle}).fetch().then(model => {
+          joinReq.games_id_fk = model.get('id');
+          console.log("gameID: ", joinReq.games_id_fk);
+          console.log("setTimeout join req:", joinReq);
+          addGameJoin(joinReq);
+        }) ;
+      }, 500);
+    })
+    .catch(err => {
+      console.error(err);
     });
-  });
+});
 
 app.post('/favmedia', function(req, res) {
   if (req.body[0] === null) {
@@ -165,33 +235,43 @@ app.post('/favmedia', function(req, res) {
 
   new User({email: userEmail}).fetch()
     .then(found => {
-      if (found) {
-        userID = found.attributes.id;
-        if (favMediaURL !== null) {
-          new FavMedia({url: favMediaURL, users_id_fk: userID}).fetch()
-            .then(found => {
-              if (found) {
-                console.log('URL already exists.');
-              } else {
-                let newFavMedia = new FavMedia({
-                  url: favMediaURL,
-                  users_id_fk: userID
-                });
+      return new Promise((resolve, reject) => {
+        if (found) {
+          userID = found.attributes.id;
+          if (favMediaURL !== null) {
+            new FavMedia({url: favMediaURL, users_id_fk: userID}).fetch()
+              .then(found => {
+                  if (found) {
+                    resolve(userID);
+                  } else {
+                    let newFavMedia = new FavMedia({
+                      url: favMediaURL,
+                      users_id_fk: userID
+                    });
 
-                newFavMedia.save().then(newFavMedia2 => {
-                  FavMedias.add(newFavMedia2);
-                });
-              }
-            });
+                    newFavMedia.save().then(newFavMedia2 => {
+                      FavMedias.add(newFavMedia2);
+                      resolve(userID)
+                    })
+                    .catch(err => {
+                      console.error(err);
+                    });
+                  }
+              })
+          } else {
+            resolve(userID);
+          }
         }
-
-        setTimeout(function() {
-          bookshelf.knex.raw(`SELECT * FROM favmedias WHERE users_id_fk = ${userID}`)
-            .then(response => {
-              res.send(response.rows);
-          });
-        }, 400);
-      }
+      });
+    })
+    .then(userID => {
+      bookshelf.knex.raw(`SELECT * FROM favmedias WHERE users_id_fk = ${userID}`)
+        .then(data => {
+          res.send(data.rows);
+        });
+    })
+    .catch(err => {
+      console.error(err);
     });
 });
 
@@ -202,6 +282,9 @@ app.post('/get_users', function(req, res) {
     bookshelf.knex.raw("SELECT * FROM users WHERE LOWER(fullname) LIKE LOWER('%" + req.body.searchTerm + "%') OR LOWER(email) LIKE LOWER('%" + req.body.searchTerm + "%')")
     .then(response => {
       res.send(response.rows);
+    })
+    .catch(err => {
+      console.error(err);
     });
   }
 });
@@ -215,6 +298,9 @@ app.post('/fetch_games', function(req, res){
         return acc;
       }, []);
       res.send({data: gameInfo});
+    })
+    .catch(err => {
+      console.error(err);
     });
 });
 
@@ -227,6 +313,9 @@ app.post("/show_friends", function(req,res) {
         return acc;
       }, []);
       res.send({data: info});
+    })
+    .catch(err => {
+      console.error(err);
     });
 });
 
@@ -239,7 +328,10 @@ app.post('/get_user_info', function(req, res){
     else {
       res.send({status: "Not Found"});
     }
-  });
+  })
+  .catch(err => {
+      console.error(err);
+    });
 });
 
 app.post('/get_friend_info', function(req, res){
@@ -262,6 +354,9 @@ app.post('/get_friend_info', function(req, res){
         }
       });
     }
+  })
+  .catch(err => {
+    console.error(err);
   });
 });
 
@@ -277,20 +372,23 @@ app.post('/add_friend', function(req, res) {
           friendship.fetch().then(found3 => {
             if (!found3){
               friendship.save().then(newFriendship => {
-              Friends.add(newFriendship);
-              res.send({action: "added"});
+                Friends.add(newFriendship);
+                res.send({action: "added"});
               });
             }
             else {
               bookshelf.knex.raw("DELETE FROM friends WHERE friend1_fk = " + found.attributes.id + " AND friend2_fk = " + found2.attributes.id + ";")
-              .then(response => {
-              res.send({action: "removed"});
-              });
+                .then(response => {
+                  res.send({action: "removed"});
+                });
             }
           });
         }
       });
     }
+  })
+  .catch(err => {
+    console.error(err);
   });
 });
 
@@ -302,11 +400,12 @@ app.post('/post_profile', function(req, res) {
 
   new User({ email: email }).fetch().then(found => {
     if (found) {
-      var fullname_change = found.attributes.fullname
-      if(found.attributes.fullname === found.attributes.email) {
+      var fullname_change = found.attributes.fullname;
+
+      if (found.attributes.fullname === found.attributes.email) {
         fullname_change = fullname;
       }
-    
+
       let updateUser = new User({
         id: found.attributes.id,
         fullname: fullname_change,
@@ -314,15 +413,18 @@ app.post('/post_profile', function(req, res) {
         location: location,
         bio: bio
       });
+
       updateUser.save({email: email}, {method: "update"}).then(newUser => {
         Users.add(newUser);
         res.send("POST SUCCESSFULL!");
       });
-    }
-    else {
+    } else {
       console.log("EMAIL ADDRESS NOT FOUND!");
       res.send("EMAIL ADDRESS NOT FOUND!");
     }
+  })
+  .catch(err => {
+    console.error(err);
   });
 });
 
@@ -330,8 +432,8 @@ app.use(function(req, res) {
   res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
-app.listen(process.env.PORT || 8000);
+app.listen(process.env.PORT || 8000, () => {
+  console.log("Listening on port 8000");
+});
 
-console.log("Listening on port 8000");
-
-module.exports = app; 
+module.exports = app;
