@@ -10,6 +10,16 @@ import FriendList from './friend_list';
 
 export class MessagePage extends Component {
 
+  constructor(props) {
+    super(props);
+
+    this.state = {channel: true};
+
+
+
+  }
+
+
   componentWillMount () {
     axios.post('/show_friends', {email: this.props.params.id})
        .then((response) => {
@@ -22,8 +32,49 @@ export class MessagePage extends Component {
     this.props.selectFriend(friend);
     let arrayOfEmails = [this.props.params.id, friend];
     let sortedEmails = arrayOfEmails.sort();
-    this.props.getMessages({data:sortedEmails});
     
+
+    let identifier = arrayOfEmails[0] + arrayOfEmails[1];
+    identifier = identifier.replace(/[^a-zA-Z0-9 ]/g, "");
+    
+    this.props.getMessages({data:identifier});
+
+    
+    
+    this.setState({channel: identifier}, function () {
+    
+    console.log('This is the state', this.state.channel);
+
+  });
+  }
+
+  sendMessage() {
+
+      console.log('inside sendMessage');
+
+      let msg = $('.messageToSend').val();
+
+      console.log("This is the msg", msg);
+
+      let channel = io.connect('http://localhost/' + this.state.channel);
+
+      channel.emit('message', 'test');
+
+      channel.on('updateState', function () {
+         // update state
+         console.log('inside updateState!');
+      });
+      
+/// example code below
+
+let socket = io.connect('http://localhost/kyle');
+
+    socket.emit('message', "We sent it full circle");
+    socket.on('message', function (msg) {
+       console.log(msg);
+       
+    });
+
   }
 
   render () {
@@ -59,7 +110,9 @@ export class MessagePage extends Component {
             <div className='row'>
               <form>
                   <label> Write Message </label>
-                  <textarea rows = '10' cols= '50'/>
+                  <textarea rows = '2' cols= '50'/>
+                  <button className='messageToSend' onClick={()=> {this.sendMessage()}}>Send</button>
+
               </form>
             </div>
           </div>
