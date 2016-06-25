@@ -8,6 +8,7 @@ import media from './favmedia_reducer.js';
 import promise from 'redux-promise'
 import searchedUsers from './searched_users_reducer';
 import friendList from './friend_reducer.js';
+import gameFans from './game_fans_reducer';
 
 const logger = createLogger();
 
@@ -18,7 +19,8 @@ const reducers = {
   games: games,
   media: media,
   searched_users: searchedUsers,
-  friendList: friendList
+  friendList: friendList,
+  gameFans: gameFans
 
 };
 

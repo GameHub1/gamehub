@@ -276,6 +276,22 @@ app.post("/show_friends", function(req,res) {
     });
 });
 
+app.post("/show_game_fans", function(req,res) {
+  let game = req.body.game;
+  bookshelf.knex.raw("SELECT * FROM users WHERE users.id IN (SELECT users_games.users_id_fk FROM games inner JOIN users_games ON users_games.games_id_fk = games.id WHERE games.name = '" + game + "');")
+    .then(response => {
+      let info = response.rows.reduce((acc, cur) => {
+        acc.push({name: cur.fullname, email: cur.email, pic_path: cur.pic_path});
+        return acc;
+      }, []);
+      console.log(info);
+      res.send({data: info});
+    })
+    .catch(err => {
+      console.error(err);
+    });
+});
+
 app.post('/get_user_info', function(req, res){
   let email = req.body.email;
   new User({ email: email }).fetch().then(found => {
