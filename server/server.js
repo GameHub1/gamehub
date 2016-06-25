@@ -193,6 +193,7 @@ app.post('/games', function(req, res) {
       return new Promise((resolve, reject) => {
         if (found) {
           console.log(`${gameTitle} already in database!`);
+          resolve();
         } else {
           console.log(`${gameTitle} NOT FOUND! ADDED!`);
           let newGame = new Game({
@@ -201,52 +202,25 @@ app.post('/games', function(req, res) {
 
           newGame.save().then(newGame2 => {
             Games.add(newGame2);
+            resolve();
           })
-          .catch(err => {
-            console.error(err);
-          });
         }
       })
     })
     .then(() => {
-        new Game({name: gameTitle}).fetch().then(model => {
-          joinReq.games_id_fk = model.get('id');
-          addGameJoin(joinReq);
-        });
-      })
-
-
-    //   if (found) {
-    //     console.log(`${gameTitle} already in database!`);
-    //   } else {
-    //     console.log(`${gameTitle} NOT FOUND! ADDED!`);
-    //     let newGame = new Game({
-    //       name: gameTitle
-    //     });
-    //     newGame.save().then(newGame2 => {
-    //       Games.add(newGame2);
-    //     });
-    //   }
-    // })
-    // .then(() => {
-    //   new User({email: email}).fetch().then(model => {
-    //     joinReq.users_id_fk  = model.get('id');
-    //     console.log("User ID: ", joinReq.users_id_fk);
-    //   });
-    // })
-    // .then(() => {
-    //   setTimeout(function(){
-    //     new Game({name: gameTitle}).fetch().then(model => {
-    //       joinReq.games_id_fk = model.get('id');
-    //       console.log("gameID: ", joinReq.games_id_fk);
-    //       console.log("setTimeout join req:", joinReq);
-    //       addGameJoin(joinReq);
-    //     }) ;
-    //   }, 500);
-    // })
-    // .catch(err => {
-    //   console.error(err);
-    // });
+      new User({email: email}).fetch().then(model => {
+        joinReq.users_id_fk  = model.get('id');
+      });
+    })
+    .then(() => {
+      new Game({name: gameTitle}).fetch().then(model => {
+        joinReq.games_id_fk = model.get('id');
+        addGameJoin(joinReq);
+      });
+    })
+    .catch(err => {
+      console.error(err);
+    });
 });
 
 app.post('/favmedia', function(req, res) {
@@ -278,9 +252,6 @@ app.post('/favmedia', function(req, res) {
                     newFavMedia.save().then(newFavMedia2 => {
                       FavMedias.add(newFavMedia2);
                       resolve(userID)
-                    })
-                    .catch(err => {
-                      console.error(err);
                     });
                   }
               })
