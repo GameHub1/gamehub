@@ -128,6 +128,7 @@ const deleteGameJoin = function(joinReq) {
   });
 };
 
+
 app.post('/get_messages', function(req, res) {
   console.log('This is the req', req.body);
 
@@ -140,6 +141,20 @@ kylemike.on('connection', function (socket) {
 
    socket.emit('message', "Original msg:" + msg + "This is from the server");
 })
+
+app.post('/load_namespace', function(req, res){
+  const namespaceName = [req.sender, req.recipient].sort().join('');
+  new Namespace({
+    name: namespaceName
+  }).fetch().then(namespace => {
+    if (namespace) {
+      let newNamespace = new Namespace({
+        name: namespaceName
+      });
+      res.send(namespaceName.messages());
+    }
+  });
+
 });
 
 app.post('/create_namespace', function(req, res){
