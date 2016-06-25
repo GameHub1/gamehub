@@ -51,10 +51,10 @@ db.schema.hasTable('messages').then(exists => {
       message.increments('id').primary();
       message.string('text');
       message.timestamp('sent_at').defaultTo(knex.fn.now());
-      message.integer('sender_id_fk');
-      message.integer('namespace_id_fk');
-      message.foreign('sender_id_fk').references('users.id');
-      message.foreign('namespace_id_fk').references('namespaces.id'); 
+      message.integer('user_id');
+      message.integer('namespace_id');
+      message.foreign('user_id').references('users.id');
+      message.foreign('namespace_id').references('namespaces.id');
     }).then(function(table){
       console.log("Created messages table");
     })

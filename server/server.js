@@ -28,7 +28,6 @@ io.on('connection', function (socket) {
 // })
 // });
 
-
 app.use(bodyParser.json({type: '*/*'}));
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -36,6 +35,9 @@ app.use(express.static(path.join(__dirname, '../dist/')));
 
 const User = bookshelf.Model.extend({
   tableName: 'users'
+  messages: function(){
+    return this.hasMany(Message);
+  }
 });
 const Users = new bookshelf.Collection();
 Users.model = User;
@@ -64,6 +66,29 @@ const GameJoin = bookshelf.Model.extend({
 
 const GameJoins = new bookshelf.Collection();
 GameJoins.model = GameJoin;
+
+const Message = bookshelf.Model.extend({
+  tableName: 'messages',
+  sender: function() {
+    return this.belongsTo(User);
+  },
+  namespace: function(){
+    return this.belongsTo(Namespace);
+  }
+});
+
+const Messages = new bookshelf.Collection();
+Messages.model = Message;
+
+const Namespace = bookshelf.Model.extend({
+  tableName: 'namespaces'
+  messages: function(){
+    return this.hasMany(Message);
+  }
+});
+
+const Namespaces = new bookshelf.Collection();
+Namespaces.model = Namespace;
 
 const addGameJoin = function(joinReq){
   new GameJoin({
@@ -117,6 +142,8 @@ kylemike.on('connection', function (socket) {
 })
 });
 
+app.post('/create_namespace', function(req, res){
+  const namespaceName = [req.sender, req.recipient].sort().join('');
 });
 
 app.post('/signup', function(req,res) {
