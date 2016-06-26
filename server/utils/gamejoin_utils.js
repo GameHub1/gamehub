@@ -1,4 +1,5 @@
 "use strict";
+
 const GameJoin = require('../db/models/gamejoin.js');
 const GameJoins = require('../db/collections/gamejoins.js');
 
