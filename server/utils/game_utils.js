@@ -59,7 +59,6 @@ exports.newGame = function(req, res) {
       });
     });
   };
-<<<<<<< 94adbedfc3e0543e66a48c017a3b361020f58783
 
 exports.deleteGame = function(req, res){
   let gameTitle = req.body[0].gameTitle;
@@ -103,5 +102,3 @@ exports.showGameFans = function(req,res) {
       console.error(err);
     });
 };
-=======
->>>>>>> [refactor] modularized all server routs
