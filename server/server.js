@@ -11,11 +11,12 @@ const favmediaUtils = require('./utils/favmedia_utils.js');
 const gamesUtils = require('./utils/game_utils.js');
 const socialUtils = require('./utils/social_utils.js');
 const userUtils = require('./utils/user_utils.js');
-const socketUtils = require('./utils/socket_utils.js')
+const socketUtils = require('./utils/socket_utils.js');
 
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 //server.listen(80);
+
 
 io.on('connection', function (socket) {
   socket.emit('news', { hello: 'world' });
