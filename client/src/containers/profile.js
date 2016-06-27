@@ -30,9 +30,11 @@ export class Profile extends Component {
     axios.post('/get_friend_info',{friend1: this.props.authData.email, friend2: URL_array[1]})
       .then(response => {
         console.log("FRIEND INFO RESPONSE: ", response);
-        if(response.data.status === "Found") {
-          document.getElementById("followBtn").style.background='#556B2F';
-          document.getElementById("followBtn").firstChild.data='following';
+        if (this.props.authData.email !== this.props.profile.email) {
+          if(response.data.status === "Found") {
+            document.getElementById("followBtn").style.background='#556B2F';
+            document.getElementById("followBtn").firstChild.data='following';
+          }
         }
       });
   }
@@ -55,13 +57,15 @@ export class Profile extends Component {
         axios.post('/get_friend_info',{friend1: this.props.authData.email, friend2: URL_array[1]})
         .then(response => {
           console.log("FRIEND INFO RESPONSE: ", response);
-          if(response.data.status === "Found") {
-            document.getElementById("followBtn").style.background='#556B2F';
-            document.getElementById("followBtn").firstChild.data='following';
-          }
-          else {
-            document.getElementById("followBtn").style.background='#d3d3d3';
-            document.getElementById("followBtn").firstChild.data='follow';
+          if (this.props.authData.email !== this.props.profile.email) {
+            if(response.data.status === "Found") {
+              document.getElementById("followBtn").style.background='#556B2F';
+              document.getElementById("followBtn").firstChild.data='following';
+            }
+            else {
+              document.getElementById("followBtn").style.background='#d3d3d3';
+              document.getElementById("followBtn").firstChild.data='follow';
+            }
           }
         });
       });
@@ -87,17 +91,19 @@ export class Profile extends Component {
     let URL_array = window.location.pathname.split('/profile/');
     axios.post('/add_friend', {friend1: this.props.authData.email, friend2: URL_array[1]})
       .then(response => {
-        if (response.data.action === "removed") {
-          document.getElementById("followBtn").style.background='#d3d3d3';
-          document.getElementById("followBtn").firstChild.data='follow';
-        } else {
-          document.getElementById("followBtn").style.background='#556B2F';
-          document.getElementById("followBtn").firstChild.data='following';
+        if (this.props.authData.email !== this.props.profile.email) {
+          if (response.data.action === "removed") {
+            document.getElementById("followBtn").style.background='#d3d3d3';
+            document.getElementById("followBtn").firstChild.data='follow';
+          } else {
+            document.getElementById("followBtn").style.background='#556B2F';
+            document.getElementById("followBtn").firstChild.data='following';
+          }
         }
       });
   }
 
-  editProflie() {
+  editProfile() {
     browserHistory.push('/profile_setup');
   }
 
@@ -118,7 +124,7 @@ export class Profile extends Component {
               
               <p>{this.props.profile.bio || "Hi, I haven\'t filled out my bio yet!"}</p>
               <div>
-                <button className="btn btn-secondary" onClick={this.editProflie.bind(this)}>Edit Profile</button>
+                <button id="editProfileBtn" className="btn btn-secondary" onClick={this.editProfile.bind(this)}>Edit Profile</button>
               </div>
 
               <div id="friends-component">

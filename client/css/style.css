@@ -72,6 +72,10 @@ img.img-responsive.img-rounded {
   height: 50px;
 }
 
+#editProfileBtn {
+  background-color: #d3d3d3;
+}
+
 /** FAVGAMES SECTION **/
 #favGameHeader {
   text-align: left;

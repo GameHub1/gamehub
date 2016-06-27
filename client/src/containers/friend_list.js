@@ -27,21 +27,21 @@ export class FriendList extends Component {
         axios.post('/get_friend_info',{friend1: this.props.authData.email, friend2: URL_array[1]})
           .then((response) => {
             console.log("FRIEND INFO RESPONSE: ", response);
-            if(response.data.status == "Found") {
-              document.getElementById("followBtn").style.background='#556B2F';
-              document.getElementById("followBtn").firstChild.data='following!';
-            }
-            else {
-              document.getElementById("followBtn").style.background='#d3d3d3';
-              document.getElementById("followBtn").firstChild.data='follow';
+            if (this.props.authData.email !== this.props.profile.email) {
+              if(response.data.status == "Found") {
+                document.getElementById("followBtn").style.background='#556B2F';
+                document.getElementById("followBtn").firstChild.data='following!';
+              }
+              else {
+                document.getElementById("followBtn").style.background='#d3d3d3';
+                document.getElementById("followBtn").firstChild.data='follow';
+              }
             }
           });
       });
   }
 
-
   render () {
-
     return (
       <div>
       <table>
@@ -63,13 +63,13 @@ export class FriendList extends Component {
       </div>
     );
   }
-
 }
 
 function mapStateToProps(state) {
   return {
     friendList: state.friendList,
-    authData: state.authData
+    authData: state.authData, 
+    profile: state.profile
   };
 }
 
