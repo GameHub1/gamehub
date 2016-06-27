@@ -34,6 +34,9 @@ export class Profile extends Component {
           if(response.data.status === "Found") {
             document.getElementById("followBtn").style.background='#556B2F';
             document.getElementById("followBtn").firstChild.data='following';
+          } else {
+            document.getElementById("followBtn").style.background='#d3d3d3';
+            document.getElementById("followBtn").firstChild.data='follow';
           }
         }
       });
