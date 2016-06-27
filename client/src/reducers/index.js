@@ -22,7 +22,7 @@ const reducers = {
   media: media,
   searched_users: searchedUsers,
   friendList: friendList,
-  gameFans: gameFans
+  gameFans: gameFans,
   selectedFriend: selectedFriend,
   messages: messages
 };

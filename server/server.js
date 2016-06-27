@@ -84,7 +84,7 @@ const addGameJoin = function(joinReq){
   });
 };
 
-<<<<<<< 5427dc725ecef338608d6581e2f994ae05c3f0a7
+
 const deleteGameJoin = function(joinReq) {
   new GameJoin({
     users_id_fk: joinReq.users_id_fk, games_id_fk: joinReq.games_id_fk
@@ -103,7 +103,7 @@ const deleteGameJoin = function(joinReq) {
     }
   });
 };
-=======
+
 app.post('/get_messages', function(req, res) {
 
   let namespace = req.body.data
@@ -133,7 +133,7 @@ app.post('/get_messages', function(req, res) {
     })
   });
 });
->>>>>>> [feat] message action and reducer with working call to server
+
 
 app.post('/signup', function(req,res) {
   let name = req.body.name;
