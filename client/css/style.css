@@ -10,8 +10,16 @@ body input {
   color: #000000;
 }
 
+textarea {
+  color: black;
+}
+
 ul {
  list-style-type: none;
+}
+
+a {
+  cursor: pointer;
 }
 
 div.mario {
@@ -28,22 +36,35 @@ div.mario {
   background-repeat: no-repeat;
 }
 
-.user-name {
-	float: left;
+/*------------------------------ Profile Component ------------------------------*/
+
+/** LEFT PROFILE SECTION **/
+div.user-info {
+  text-align: left;
+  padding-left: 40px;
 }
 
-.location {
-	float: right;
+a.all-friends {
+  font-size: 20px;
 }
 
-.profile-pic {
-	width: 300px;
-	height: 300px;
+h4.location {
+  color: #777;
 }
 
-.profile-pic img {
+.col-md-4.profile-left {
+  padding: 20px 0px 0px 60px;
+}
+
+.col-md-7.profile-right {
+  padding: 20px 60px 0px 0px;
+}
+
+img.img-responsive.img-rounded {
 	display: block;
-	width: 100%;
+	width: 250px;
+  height: 250px;
+  margin: 0 auto;
 }
 
 .friend_pic img {
@@ -51,10 +72,36 @@ div.mario {
   height: 50px;
 }
 
-textarea {
-	color: black;
+/** FAVGAMES SECTION **/
+#favGameHeader {
+  text-align: left;
 }
 
+.game-list div.col-md-4 {
+  text-align: left;
+}
+
+/** FAVMEDIA SECTION **/
+#mediaHeader {
+  text-align: left;
+}
+
+#favMedia {
+  padding-right: 30px;
+}
+
+#favMediaForm div.input-group {
+  padding-top: 20px;
+}
+
+.allFavMediaBox {
+  width: 660px;
+  height: 320px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  padding: 20px;
+  text-align: left;
+}
 
 /*#mario:after {
   content : "";
@@ -76,7 +123,7 @@ textarea {
   font-family: 'Syncopate', sans-serif;
   font-size: 26px;
   color: #ffffff;
-  /*text-align: left;*/
+  cursor: pointer;
 }
 
 .navbar {
@@ -130,23 +177,6 @@ textarea {
 .navbar-form input.form-control {
   width: 500px;
   color: #000000;
-}
-
-.allFavMediaBox {
-  padding-left: 400px;
-}
-
-/*------------------------------ Fav Media and All Fav Media Components ------------------------------*/
-#favMedia {
-  padding-right: 30px;
-}
-
-.allFavMediaBox {
-  width: 660px;
-  height: 320px;
-  overflow-x: hidden;
-  overflow-y: scroll;
-  padding: 20px;
 }
 
 /*------------------------------ Searched Users List Component ------------------------------*/

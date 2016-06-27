@@ -19,6 +19,24 @@ class ProfileForm extends Component {
     setTimeout(function() {
       browserHistory.push(`/profile/${this.props.authData.email}`);
     }.bind(this), 500);
+
+    // return new Promise((resolve, reject) => {
+    //   let prop2 = {
+    //     name: prop.name,
+    //     location: prop.location,
+    //     bio: prop.bio,
+    //     email: this.props.authData.email
+    //   };
+
+    //   resolve({email: this.props.authData.email, prop2: prop2});
+    // })
+    // .then(data => {
+    //   this.props.postProfile(data.prop2);
+    //   return data.email;
+    // })
+    // .then(authDataEmail => {
+    // browserHistory.push(`/profile/${authDataEmail}`);
+    // })
   }
 
   render() {
