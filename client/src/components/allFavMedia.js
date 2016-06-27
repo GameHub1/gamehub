@@ -29,7 +29,7 @@ export default class AllFavMedia extends Component {
     } else {
       return (
         <div>
-          NO MEDIA
+          Share your skills by uploading a gameplay video.
         </div>
       );
     }

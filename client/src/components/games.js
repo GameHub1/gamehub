@@ -4,29 +4,62 @@ import { deleteGame } from '../actions/index';
 import {browserHistory} from 'react-router';
 
 export class GameList extends Component {
-    
-    goToGamesPage(game) {
+  goToGamesPage(game) {
     browserHistory.push(`/game/${game}`);
   }
 
-    onItemClick(item, e) {
-      console.log(item);
-      //this.props.deleteGame([{gameTitle: item}, this.props.authData.email]);
-    }
+  onItemClick(item, e) {
+    console.log(item);
+    //this.props.deleteGame([{gameTitle: item}, this.props.authData.email]);
+  }
 
-  	render() {
-			return (
-			<div>
-	  	<h3>Favorite Games</h3>
-				<ul>
-				{this.props.games.map((game, index) => {
-          //let boundItemClick = this.onItemClick.bind(this, game);
-					return (<li key={game} onClick={() => {this.goToGamesPage(game);}}>{game}</li>);
-				})}
-			 </ul>
-		 </div>
-		);
-	}
+  render() {
+    let firstThird = Math.floor(this.props.games.length / 3);
+    let secondThird = Math.floor(firstThird * 2);
+    let firstSection = this.props.games.slice(0, firstThird);
+    let secondSection = this.props.games.slice(firstThird, secondThird);
+    let thirdSection = this.props.games.slice(secondThird);
+
+    return (
+      <div className="game-list">
+        <div className="row">
+          <div className="col-md-4">
+            <ul>
+              {firstSection.map((game) => {
+                return (
+                  <li key={game} onClick={() => {this.goToGamesPage(game);}}>
+                    <span className="glyphicon glyphicon-heart-empty"></span> {game}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+          <div className="col-md-4">
+            <ul>
+              {secondSection.map((game) => {
+                return (
+                  <li key={game} onClick={() => {this.goToGamesPage(game);}}>
+                    <span className="glyphicon glyphicon-heart-empty"></span> {game}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+          <div className="col-md-4">
+            <ul>
+              {thirdSection.map((game) => {
+                return (
+                  <li key={game} onClick={() => {this.goToGamesPage(game);}}>
+                    <span className="glyphicon glyphicon-heart-empty"></span> {game}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
 
 //connect: first argument is mapStateToProps, 2nd is mapDispatchToProps

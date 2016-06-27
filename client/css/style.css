@@ -1,20 +1,25 @@
-/* Website template by freewebsitetemplates.com */
-html {
-	font-family: Arial, Helvetica, sans-serif;
-}
-
 body {
 	background-color: #2C2D28;
 	text-align: center;
   color: #ffffff;
+  padding-top: 65px; 
+  font-family: 'Maven Pro', sans-serif;
 }
 
 body input {
   color: #000000;
 }
 
+textarea {
+  color: black;
+}
+
 ul {
  list-style-type: none;
+}
+
+a {
+  cursor: pointer;
 }
 
 div.mario {
@@ -31,22 +36,35 @@ div.mario {
   background-repeat: no-repeat;
 }
 
-.user-name {
-	float: left;
+/*------------------------------ Profile Component ------------------------------*/
+
+/** LEFT PROFILE SECTION **/
+div.user-info {
+  text-align: left;
+  padding-left: 40px;
 }
 
-.location {
-	float: right;
+a.all-friends {
+  font-size: 20px;
 }
 
-.profile-pic {
-	width: 300px;
-	height: 300px;
+h4.location {
+  color: #777;
 }
 
-.profile-pic img {
+.col-md-4.profile-left {
+  padding: 20px 0px 0px 60px;
+}
+
+.col-md-7.profile-right {
+  padding: 20px 60px 0px 0px;
+}
+
+img.img-responsive.img-rounded {
 	display: block;
-	width: 100%;
+	width: 250px;
+  height: 250px;
+  margin: 0 auto;
 }
 
 .friend_pic img {
@@ -54,10 +72,40 @@ div.mario {
   height: 50px;
 }
 
-textarea {
-	color: black;
+#editProfileBtn {
+  background-color: #d3d3d3;
 }
 
+/** FAVGAMES SECTION **/
+#favGameHeader {
+  text-align: left;
+}
+
+.game-list div.col-md-4 {
+  text-align: left;
+}
+
+/** FAVMEDIA SECTION **/
+#mediaHeader {
+  text-align: left;
+}
+
+#favMedia {
+  padding-right: 30px;
+}
+
+#favMediaForm div.input-group {
+  padding-top: 20px;
+}
+
+.allFavMediaBox {
+  width: 660px;
+  height: 320px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  padding: 20px;
+  text-align: left;
+}
 
 /*#mario:after {
   content : "";
@@ -74,12 +122,20 @@ textarea {
   z-index: -1;
 }*/
 
-/*------------------------------ HEADER ------------------------------*/
+/*------------------------------ NAVBAR ------------------------------*/
 #navHeader {
   font-family: 'Syncopate', sans-serif;
   font-size: 26px;
   color: #ffffff;
-  text-align: left;
+  cursor: pointer;
+}
+
+.navbar {
+  margin-bottom: 0px;
+}
+
+.navbar-header {
+  padding-top: 6px;
 }
 
 #header {
@@ -112,25 +168,19 @@ textarea {
 	color: #ffffff;
 }
 
+/*------------------------------ Logout Component ------------------------------*/
+.logoutButton {
+  padding-top: 8px;
+}
 
-/*------------------------------ Search Bar Component ------------------------------*/
-.searchBar {
-  width: 600px;
+/*------------------------------ Search Bar and Searched List Components ------------------------------*/
+.navbar-form {
+  padding-left: 420px;
+}
+
+.navbar-form input.form-control {
+  width: 500px;
   color: #000000;
-}
-
-
-/*------------------------------ Fav Media and All Fav Media Components ------------------------------*/
-#favMedia {
-  padding-right: 30px;
-}
-
-.allFavMediaBox {
-  width: 660px;
-  height: 320px;
-  overflow-x: hidden;
-  overflow-y: scroll;
-  padding: 20px;
 }
 
 /*------------------------------ Searched Users List Component ------------------------------*/
@@ -150,54 +200,8 @@ textarea {
   color: #ffffff;
 }
 
-/*------------------------------ Blog Page ------------------------------*/
-#blogs {
-	display: inline-block;
-}
-#blogs div.section h3, #blogs div.sidebar h3 {
-	margin: 0 0 20px;
-	text-transform: none;
-}
-#blogs div.section h3 a {
-	color: #0e2934;
-	text-decoration: none;
-}
-
-#blogs div.sidebar {
-	float: right;
-	width: 270px;
-}
-#contents #blogs div.sidebar ul li a {
-	color: #646C6F;
-	text-decoration: none;
-}
-#contents #blogs div.sidebar ul li a:hover {
-	color: #0e2934;
-}
-
-#blogs div.posts {
-	margin: 0 0 40px;
-}
-#blogs div.posts ul {
-	margin: 0;
-	padding: 0 0 0 20px;
-}
-#blogs div.posts ul li {
-	padding-bottom: 10px;
-}
-
-#contents #blogs div.archives ul {
-	display: inline-block;
-	list-style: none;
-	margin: 0;
-	padding: 0;
-}
-#contents #blogs div.archives ul li {
-	float: left;
-	width: 135px;
-	line-height: 30px;
-}
-
-#blogs div.section {
-	margin-right: 300px;
+/*------------------------------ Creating Profile Component ------------------------------*/
+.createProfileSection form {
+  padding-left: 350px;
+  padding-right: 350px;
 }

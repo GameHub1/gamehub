@@ -24,7 +24,7 @@ class FavMedia extends Component {
 
     return (
       <form id="favMediaForm" onSubmit={handleSubmit(this.onSubmit)}>
-        <div id="favMedia" className="input-group">
+        <div className="input-group">
           <input
             id="mediaInput"
             type="text" 
