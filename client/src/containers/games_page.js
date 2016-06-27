@@ -54,39 +54,24 @@ export class GamesPage extends Component {
     let game = URL_array[1].split('%20').join(' ');
     console.log(this.props.gameFans);
 
-    if(this.props.gameFans !== []) {
-      return(
-        <div>
-        {game}
-        <div>
-        <table>
-          <tbody>
-            People that like this game:
-            {this.props.gameFans.map(item => {
-              return (
-              <tr key={item.name}>
-              <td onClick={()=> {this.changeProfile(item.email)}} className="friend_pic">
-              <img src={item.pic_path}/>
-              </td>
-              <td onClick={()=> {this.changeProfile(item.email)}}>
-              {item.name}
-              </td>
-              </tr>
-              )
-            })}
-          </tbody>
-        </table>
-        </div>
-        </div>
-      );
-    }
-    else {
-      return (
-        <div>
-        {game}
-        </div>
-        );
-    }
+    return(
+      <div>
+      {game}
+        People that like this game:
+        {this.props.gameFans.map(item => {
+          return (
+          <div key={item.name}>
+          <span onClick={()=> {this.changeProfile(item.email)}} className="friend_pic">
+          <img src={item.pic_path}/>
+          </span>
+          <span onClick={()=> {this.changeProfile(item.email)}}>
+          {item.name}
+          </span>
+          </div>
+          )
+        })}
+      </div>
+    );
   }
 }
 
