@@ -44,7 +44,7 @@ app.post('/get_friend_info', social.friendInfo);
 app.post('/add_friend', social.addFriend);
 
 app.post('/send_message', messaging.sendMessage);
-app.post('/load_namespace', messaging.loadNamespace);
+app.post('/fetch_messages', messaging.fetchMessages);
 app.post('/create_namespace', messaging.createNamespace);
 
 app.post('/signup', auth.authFunc);
