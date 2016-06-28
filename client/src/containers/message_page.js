@@ -4,6 +4,7 @@ import {bindActionCreators} from 'redux';
 import {showFriends, selectFriend, getMessages} from '../actions/index';
 import axios from 'axios';
 import FriendList from './friend_list';
+import Conversation from './conversation'
 
 
 
@@ -85,12 +86,16 @@ export class MessagePage extends Component {
 
   render () {
 
-      return (
+     return (
         <div>  
           <div>
               <h1> Messages </h1>
+              <br/>
+              <br/>
           </div>
-          <div className='col-md-4'>
+          <div className='col-md-1'>
+          </div>
+          <div className='col-md-3'>
             <div className="row">
               <table>
                 <tbody>
@@ -112,7 +117,10 @@ export class MessagePage extends Component {
           </div>
           <div className='col-md-1'>
           </div>
-          <div className='col-md-7'>
+          <div className='col-md-6'>
+            <div className='row'>
+              <Conversation/>
+            </div>
             <div className='row'>
               <form>
                   <label> Write Message </label>
@@ -120,6 +128,8 @@ export class MessagePage extends Component {
                   <button onClick={(event)=> {this.sendMessage(event)}}>Send</button>
               </form>
             </div>
+          </div>
+          <div className='col-md-1'>
           </div>
         </div>
 

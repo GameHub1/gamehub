@@ -8,7 +8,7 @@ import AllFavMedia from '../components/allFavMedia';
 import FriendList from './friend_list';
 import AddGames from '../components/add_games';
 import {showFriends, showGames, postProfile, renderProfileState} from '../actions/index';
-import {browserHistory} from 'react-router';
+import {browserHistory, Link} from 'react-router';
 
 export class Profile extends Component {
   componentWillMount() {
@@ -133,6 +133,10 @@ export class Profile extends Component {
               <div id="friends-component">
                 <a className="all-friends" onClick={this.findFriends.bind(this)}>See who I am following!</a>
                 <FriendList />
+                <br/>
+                <ul>
+                  <li><h3><Link to={`/message/${this.props.params.id}`}> Message </Link></h3></li>
+                </ul>
               </div>
             </div>
           </div>
