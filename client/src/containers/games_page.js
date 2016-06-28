@@ -14,7 +14,7 @@ export class GamesPage extends Component {
         console.log(response.data.data);
         this.props.showGameFans(response.data.data);
       });
-    
+
   }
 
   changeProfile(email) {
@@ -70,6 +70,8 @@ export class GamesPage extends Component {
                 <br/>
                 <span onClick={()=> {this.changeProfile(item.email)}}>
                   {item.name}
+                  <br/> 
+                  {item.location || ''}
                 </span>
               </div>
             );

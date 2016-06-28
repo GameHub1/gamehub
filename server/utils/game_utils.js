@@ -91,7 +91,7 @@ exports.showGameFans = function(req,res) {
   bookshelf.knex.raw("SELECT * FROM users WHERE users.id IN (SELECT users_games.users_id_fk FROM games inner JOIN users_games ON users_games.games_id_fk = games.id WHERE games.name = '" + game + "');")
     .then(response => {
       let info = response.rows.reduce((acc, cur) => {
-        acc.push({name: cur.fullname, email: cur.email, pic_path: cur.pic_path});
+        acc.push({name: cur.fullname, email: cur.email, pic_path: cur.pic_path, location: cur.location});
         return acc;
       }, []);
       console.log(info);
@@ -100,4 +100,4 @@ exports.showGameFans = function(req,res) {
     .catch(err => {
       console.error(err);
     });
-}; 
+};
