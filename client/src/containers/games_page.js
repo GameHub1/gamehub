@@ -36,6 +36,7 @@ export class GamesPage extends Component {
         let URL_array = window.location.pathname.split('/profile/');
         axios.post('/get_friend_info',{friend1: this.props.authData.email, friend2: URL_array[1]})
           .then((response) => {
+<<<<<<< 2427c9022b99c6cb53c5161d8e4bc45974360827
             console.log("FRIEND INFO RESPONSE: ", response);
             if(response.data.status == "Found") {
               document.getElementById("followBtn").style.background='#556B2F';
@@ -44,6 +45,17 @@ export class GamesPage extends Component {
             else {
               document.getElementById("followBtn").style.background='#d3d3d3';
               document.getElementById("followBtn").firstChild.data='follow';
+=======
+            if (this.props.authData.email !== this.props.profile.email) {
+              if(response.data.status == "Found") {
+                document.getElementById("followBtn").style.background='#556B2F';
+                document.getElementById("followBtn").firstChild.data='following!';
+              }
+              else {
+                document.getElementById("followBtn").style.background='#d3d3d3';
+                document.getElementById("followBtn").firstChild.data='follow';
+              }
+>>>>>>> [fix] reset game input value on submit
             }
           });
       });
@@ -52,8 +64,8 @@ export class GamesPage extends Component {
   render () {
     let URL_array = window.location.pathname.split('/game/');
     let game = URL_array[1].split('%20').join(' ');
-    console.log(this.props.gameFans);
 
+<<<<<<< 2427c9022b99c6cb53c5161d8e4bc45974360827
     return(
       <div>
       {game}
@@ -71,6 +83,29 @@ export class GamesPage extends Component {
 
           )
         })}
+=======
+    return (
+      <div className="container games-page">
+        <div>
+          <h3>Find friends who also enjoy {game}:</h3>
+          <br/>
+        </div>
+        <div className="row">
+          {this.props.gameFans.map(item => {
+            return (
+              <div key={item.email} className="col-md-4 games-page">
+                <span onClick={()=> {this.changeProfile(item.email)}}>
+                  <img className="games-list-profile-img img-rounded" src={item.pic_path} />
+                </span>
+                <br/>
+                <span onClick={()=> {this.changeProfile(item.email)}}>
+                  {item.name}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+>>>>>>> [fix] reset game input value on submit
       </div>
     );
   }
@@ -80,7 +115,8 @@ function mapStateToProps(state) {
   return {
     friendList: state.friendList,
     authData: state.authData,
-    gameFans: state.gameFans
+    gameFans: state.gameFans,
+    profile: state.profile
   };
 }
 

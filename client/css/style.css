@@ -72,8 +72,8 @@ img.img-responsive.img-rounded {
   height: 50px;
 }
 
-#editProfileBtn {
-  background-color: #d3d3d3;
+button#editProfileBtn.btn.btn-secondary {
+  background: #d3d3d3;
 }
 
 /** FAVGAMES SECTION **/
@@ -207,7 +207,6 @@ img.img-responsive.img-rounded {
 }
 
 /*--------------------------------- Conversation Container ----------------------------- */
-
 .conversation {
 
   height: 320px;
@@ -218,3 +217,18 @@ img.img-responsive.img-rounded {
   color: white;
 
 }
+
+/*------------------------------ Game Page Component ------------------------------*/
+img.games-list-profile-img.img-rounded {
+  height: 100px;
+  width: 100px;
+}
+
+.container.games-page {
+  text-align: center;
+}
+
+div.col-md-4.games-page {
+  padding-top: 30px;
+}
+>>>>>>> [fix] reset game input value on submit

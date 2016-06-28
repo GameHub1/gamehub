@@ -3,7 +3,6 @@ import {reduxForm, reset} from 'redux-form';
 import {createFavMedia} from '../actions/index';
 import {browserHistory} from 'react-router';
 
-
 class FavMedia extends Component {
   constructor(props) {
     super(props);
@@ -16,7 +15,7 @@ class FavMedia extends Component {
     this.props.createFavMedia([prop, this.props.profile.email])
       .then(response => {
         dispatch(reset('FavMediaForm'));
-      })
+      });
   }
 
   render() {
