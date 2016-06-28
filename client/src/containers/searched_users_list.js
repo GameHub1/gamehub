@@ -51,7 +51,6 @@ class SearchedUsers extends Component {
 
   goToGamesPage(game) {
     browserHistory.push(`/game/${game}`);
-    this.props.findGames({searchTerm: game});
   }
 
   renderGames(GamesData) {

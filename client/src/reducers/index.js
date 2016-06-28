@@ -11,6 +11,7 @@ import friendList from './friend_reducer.js';
 import gameFans from './game_fans_reducer';
 import selectedFriend from './selected_friend';
 import messages from './message_reducer'
+import searchedGames from './searched_games_reducer'
 
 const logger = createLogger();
 
@@ -23,6 +24,7 @@ const reducers = {
   searched_users: searchedUsers,
   friendList: friendList,
   gameFans: gameFans,
+  searched_games: searchedGames,
   selectedFriend: selectedFriend,
   messages: messages
 };

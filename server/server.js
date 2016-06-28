@@ -301,6 +301,20 @@ app.post('/get_users', function(req, res) {
   }
 });
 
+app.post('/get_games', function(req, res) {
+  if (req.body.searchTerm === '') {
+    res.send([]);
+  } else {
+    bookshelf.knex.raw("SELECT * FROM games WHERE LOWER(name) LIKE LOWER('%" + req.body.searchTerm + "%')")
+    .then(response => {
+      res.send(response.rows);
+    })
+    .catch(err => {
+      console.error(err);
+    });
+  }
+});
+
 app.post('/fetch_games', function(req, res){
   let reqEmail = req.body.email;
   bookshelf.knex.raw("SELECT name FROM games WHERE games.id IN (SELECT users_games.games_id_fk FROM users INNER JOIN users_games ON users.id = users_games.users_id_fk WHERE users.email='"+ reqEmail +"'); ")
