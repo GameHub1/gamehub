@@ -1,4 +1,5 @@
 "use strict";
+
 exports.loadSocket = function(req, res) {
   let namespace = req.body.data
   console.log(namespace);
@@ -18,4 +19,4 @@ exports.loadSocket = function(req, res) {
       socket.emit('message', "Original msg:" + msg + "This is from the server");
     });
   });
-}; 
+};
