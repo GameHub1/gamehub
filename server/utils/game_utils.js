@@ -1,4 +1,4 @@
-"use strict";
+"use strict"; 
 
 const gamejoin = require('./gamejoin_utils.js');
 

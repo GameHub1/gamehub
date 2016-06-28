@@ -1,4 +1,4 @@
-"use strict";
+"use strict"; 
 
 exports.loadSocket = function(req, res) {
   let namespace = req.body.data

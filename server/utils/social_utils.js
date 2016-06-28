@@ -1,4 +1,4 @@
-"use strict";
+"use strict"; 
 
 const bookshelf = require('../db/psqldb.js');
 

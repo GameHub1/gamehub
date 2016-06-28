@@ -1,4 +1,5 @@
 "use strict";
+
 const bookshelf = require('../psqldb.js');
 
 const FavMedia = bookshelf.Model.extend({
