@@ -8,13 +8,13 @@ const Namespace = require('../db/models/message.js');
 const Namespaces = require('../db/collections/messages.js');
 
 exports.sendMessage = function(req, res){
-  const userId, namespaceId;
+  let userId, namespaceId;
   console.log("sendMessage called with :", req.body.text, req.body.namespace, req.body.email);
 
   new User({email: req.body.email}).fetch()
     .then(model => {
       userId = model.get('id');
-      new Namespace({name: req.body.namespace).fetch()
+      new Namespace({name: req.body.namespace}).fetch()
         .then(model => {
           namespaceId = model.get('id');
           new Message({
@@ -33,7 +33,7 @@ exports.sendMessage = function(req, res){
 exports.fetchMessages = function(req, res){
   console.log("loadNamespace function called: ", req.body.namespace);
   Namespace.where({name: req.body.namespace})
-    .fetch(withRelated:['messages'])
+    .fetch({withRelated:['messages']})
       .then(namespace => {
         res.send(namespace.related.messages);
       });
@@ -42,7 +42,7 @@ exports.fetchMessages = function(req, res){
 
 exports.createNamespace = function(req, res){
   console.log("createNamespace function called: ", req.body.namespace);
-  const userId1 , userId2;
+  let userId1 , userId2;
 
   new Namespace({name: req.body.namespace}).fetch()
     .then(found => {
