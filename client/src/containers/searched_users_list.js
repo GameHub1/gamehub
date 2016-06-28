@@ -30,7 +30,7 @@ class SearchedUsers extends Component {
         this.props.renderProfileState(prop);
         console.log("params", this.props.params);
         this.props.showGames({email: email});
-        this.props.createFavMedia([null, email]); 
+        this.props.createFavMedia([null, email]);
 
         let URL_array = window.location.pathname.split('/profile/');
         axios.post('/get_friend_info',{friend1: this.props.authData.email, friend2: URL_array[1]})
