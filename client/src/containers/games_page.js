@@ -50,7 +50,23 @@ export class GamesPage extends Component {
       });
     }
 
+    sendToGamesPage() {
+      let URL_array = window.location.pathname.split('/game/');
+      let game = URL_array[1].split('%20').join(' ');
+      if (game) {
+        axios.post('/show_game_fans', {game: game})
+          .then((response) => {
+            console.log(response.data.data);
+            this.props.showGameFans(response.data.data);
+          });
+      }
+   }
+
   render () {
+    $(window).on('popstate', function (e) {
+      this.sendToGamesPage();
+    }.bind(this));
+
     let URL_array = window.location.pathname.split('/game/');
     let game = URL_array[1].split('%20').join(' ');
 

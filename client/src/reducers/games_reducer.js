@@ -5,9 +5,11 @@ import {FETCH_GAMES} from '../actions/index.js';
 export default function (state=[], action) {
   switch(action.type) {
     case CREATE_GAME:
-    console.log("Game reducer consoled")
-     let game = [action.payload[0].gameTitle];
-      return [state, ...game];
+      console.log("Game reducer consoled")
+      let game = [action.payload[0].gameTitle];
+      let state2 = state.slice();
+      state2[state2.length] = game;
+      return state2;
     case DELETE_GAME:
       let deletedGame = [action.payload[0].gameTitle];
       console.log("Deleting game: ", deletedGame);

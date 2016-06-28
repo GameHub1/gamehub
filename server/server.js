@@ -312,6 +312,7 @@ app.post('/favmedia', function(req, res) {
     .then(userID => {
       bookshelf.knex.raw(`SELECT * FROM favmedias WHERE users_id_fk = ${userID}`)
         .then(data => {
+          console.log(data);
           res.send(data.rows);
         });
     })
