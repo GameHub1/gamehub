@@ -16,6 +16,7 @@ export const RENDER_PROFILE = 'RENDER_PROFILE';
 export const FIND_GAME_FANS = 'FIND_GAME_FANS';
 export const SELECT_FRIEND = 'SELECT_FRIEND';
 export const GET_MESSAGES = 'GET_MESSAGES';
+export const FIND_GAMES = 'FIND_GAMES';
 
 //this.props.params.id
 //^ user's email
@@ -137,6 +138,14 @@ export function fetchUsers(props) {
     // redux-promise (middleware) will resolve the request promise for us so we will get the resolved data as the payload instead
     // redux-promise will ask if the payload is a promise or not
       // if so, it will stop the action, and it will create a new action and send it to the reducers ONLY when promise resolves
+    payload: request
+  };
+}
+
+export function findGames(props) {
+  const request = axios.post('/get_games', props);
+  return {
+    type: FIND_GAMES,
     payload: request
   };
 }
