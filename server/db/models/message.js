@@ -1,3 +1,4 @@
+"use strict";
 const bookshelf = require('../psqldb.js');
 const User = require('./user.js');
 const Namespace = require('./namespace.js'); 

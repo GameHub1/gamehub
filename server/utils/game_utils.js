@@ -1,3 +1,4 @@
+"use strict";
 const gamejoin = require('./gamejoin_utils.js');
 
 const bookshelf = require('../db/psqldb.js');

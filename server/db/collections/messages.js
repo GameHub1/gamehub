@@ -1,3 +1,4 @@
+"use strict";
 const bookshelf = require('../psqldb.js');
 const Message = require('../models/message.js');
 

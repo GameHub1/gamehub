@@ -53,23 +53,18 @@ export class MessagePage extends Component {
 
       event.preventDefault();
 
-      console.log('this is name', name);
-
-      console.log("this is the event", event);
-
-      console.log('inside sendMessage');
-
       let msg = $('.messageToSend').val();
 
       console.log("This is the msg", msg);
 
       let channel = io.connect('http://localhost/' + this.state.channel);
 
-      channel.emit('message', 'test');
+      channel.emit('message', msg);
 
-      channel.on('updateState', function () {
+      channel.on('updateConversation', function (msg) {
          // update state
-         console.log('inside updateState!');
+         console.log('inside update conversation!')
+         $('.conversation').append(document.createTextNode(msg));
       });
 
 /// example code below
