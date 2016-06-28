@@ -57,7 +57,6 @@ exports.newGame = function(req, res) {
       });
     });
   };
-<<<<<<< 6d27c9ee61634adcad69835e72095503a8024912
 
 exports.deleteGame = function(req, res){
   let gameTitle = req.body[0].gameTitle;
