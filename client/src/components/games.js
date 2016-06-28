@@ -28,7 +28,7 @@ export class GameList extends Component {
               {firstSection.map((game) => {
                 return (
                   <li key={game} onClick={() => {this.goToGamesPage(game);}}>
-                    <span className="glyphicon glyphicon-heart-empty"></span> {game}
+                    <span className="glyphicon glyphicon-star-empty"></span> {game}
                   </li>
                 );
               })}
@@ -39,7 +39,7 @@ export class GameList extends Component {
               {secondSection.map((game) => {
                 return (
                   <li key={game} onClick={() => {this.goToGamesPage(game);}}>
-                    <span className="glyphicon glyphicon-heart-empty"></span> {game}
+                    <span className="glyphicon glyphicon-star-empty"></span> {game}
                   </li>
                 );
               })}
@@ -50,7 +50,7 @@ export class GameList extends Component {
               {thirdSection.map((game) => {
                 return (
                   <li key={game} onClick={() => {this.goToGamesPage(game);}}>
-                    <span className="glyphicon glyphicon-heart-empty"></span> {game}
+                    <span className="glyphicon glyphicon-star-empty"></span> {game}
                   </li>
                 );
               })}

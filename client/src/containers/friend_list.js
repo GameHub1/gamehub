@@ -48,7 +48,7 @@ export class FriendList extends Component {
         <tbody>
           {this.props.friendList.map(item => {
             return (
-            <tr key={item.name}>
+            <tr key={item.email}>
             <td onClick={()=> {this.changeProfile(item.email)}} className="friend_pic">
             <img src={item.pic_path}/>
             </td>
