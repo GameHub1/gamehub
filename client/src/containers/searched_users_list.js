@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Router, Route, Link, browserHistory } from 'react-router';
-import {postProfile, showFriends, renderProfileState, showGames, createFavMedia, findGames} from '../actions/index';
+import {postProfile, showFriends, renderProfileState, showGames, createFavMedia, findGames, showGameFans} from '../actions/index';
 import {bindActionCreators} from 'redux';
 import axios from 'axios';
 
@@ -51,6 +51,11 @@ class SearchedUsers extends Component {
 
   goToGamesPage(game) {
     browserHistory.push(`/game/${game}`);
+    axios.post('/show_game_fans', {game: game})
+      .then((response) => {
+        console.log(response.data.data);
+        this.props.showGameFans(response.data.data);
+      });
   }
 
   renderGames(GamesData) {
@@ -105,7 +110,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps (dispatch) {
-  return bindActionCreators({postProfile, showFriends, renderProfileState, showGames, createFavMedia, findGames}, dispatch);
+  return bindActionCreators({postProfile, showFriends, renderProfileState, showGames, createFavMedia, findGames, showGameFans}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchedUsers);
