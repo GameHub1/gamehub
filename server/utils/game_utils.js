@@ -57,3 +57,46 @@ exports.newGame = function(req, res) {
       });
     });
   };
+
+exports.deleteGame = function(req, res){
+  let gameTitle = req.body[0].gameTitle;
+  let email = req.body[1];
+  let joinReq = {users_id_fk: 0, games_id_fk: 0};
+  console.log(gameTitle, email);
+
+  setTimeout(function(){
+    new Game({name: gameTitle}).fetch().then(model => {
+      joinReq.games_id_fk = model.get('id');
+      console.log("gameID: ", joinReq.games_id_fk);
+      console.log("setTimeout join req:", joinReq);
+      deleteGameJoin(joinReq);
+    })
+    .catch(err => {
+      console.error(err);
+    });
+  }, 500);
+
+  new User({email: email}).fetch().then(model => {
+    joinReq.users_id_fk  = model.get('id');
+    console.log("User ID: ", joinReq.users_id_fk);
+  })
+  .catch(err => {
+    console.error(err);
+  });
+};
+
+exports.showGameFans = function(req,res) {
+  let game = req.body.game;
+  bookshelf.knex.raw("SELECT * FROM users WHERE users.id IN (SELECT users_games.users_id_fk FROM games inner JOIN users_games ON users_games.games_id_fk = games.id WHERE games.name = '" + game + "');")
+    .then(response => {
+      let info = response.rows.reduce((acc, cur) => {
+        acc.push({name: cur.fullname, email: cur.email, pic_path: cur.pic_path});
+        return acc;
+      }, []);
+      console.log(info);
+      res.send({data: info});
+    })
+    .catch(err => {
+      console.error(err);
+    });
+}; 
