@@ -2,7 +2,7 @@ body {
 	background-color: #2C2D28;
 	text-align: center;
   color: #ffffff;
-  padding-top: 65px; 
+  padding-top: 65px;
   font-family: 'Maven Pro', sans-serif;
 }
 
@@ -83,6 +83,16 @@ button#editProfileBtn.btn.btn-secondary {
 
 .game-list div.col-md-4 {
   text-align: left;
+}
+
+.game-list li {
+	cursor: pointer;
+}
+
+/** FRIENDS SECTION **/
+
+.friends-table td {
+	cursor: pointer;
 }
 
 /** FAVMEDIA SECTION **/
@@ -223,6 +233,9 @@ img.games-list-profile-img.img-rounded {
   height: 100px;
   width: 100px;
 }
+.games-page-link {
+	cursor:pointer;
+}
 
 .container.games-page {
   text-align: center;
@@ -230,4 +243,9 @@ img.games-list-profile-img.img-rounded {
 
 div.col-md-4.games-page {
   padding-top: 30px;
+}
+
+/*------------------------------ Message Page Component ------------------------------*/
+.message-friend {
+	cursor: pointer;
 }

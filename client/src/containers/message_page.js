@@ -111,7 +111,7 @@ export class MessagePage extends Component {
                 <tbody>
                   {this.props.friendList.map(item => {
                     return (
-                    <tr onClick={() => {this.chooseFriend(item.email)}} key={item.name}>
+                    <tr className="message-friend" onClick={() => {this.chooseFriend(item.email)}} key={item.name}>
                     <td className="friend_pic">
                     <img src={item.pic_path}/>
                     </td>
