@@ -39,7 +39,7 @@ export class GamesPage extends Component {
             console.log("FRIEND INFO RESPONSE: ", response);
             if(response.data.status == "Found") {
               document.getElementById("followBtn").style.background='#556B2F';
-              document.getElementById("followBtn").firstChild.data='following!';
+              document.getElementById("followBtn").firstChild.data='following';
             }
             else {
               document.getElementById("followBtn").style.background='#d3d3d3';
@@ -68,6 +68,7 @@ export class GamesPage extends Component {
           {item.name}
           </span>
           </div>
+
           )
         })}
       </div>
