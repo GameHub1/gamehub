@@ -39,6 +39,10 @@ class ProfileForm extends Component {
     // })
   }
 
+  onCancel() {
+    browserHistory.push(`/profile/${this.props.authData.email}`);
+  }
+
   render() {
     const {fields: {name, location, bio}, handleSubmit} = this.props;
     return (
@@ -50,14 +54,14 @@ class ProfileForm extends Component {
             <span className="input-group-addon" id="basic-addon1">First & Last Name</span>
             <input type="text" className="form-control" 
               aria-describedby="basic-addon1"
-              value={this.props.authData.name} {...name} />
+              {...name} />
           </div>
           <br/>
           <div className="input-group">
             <span className="input-group-addon" id="basic-addon1">Location</span>
             <input type="text" className="form-control" 
               aria-describedby="basic-addon1"
-              value={"San Francisco, CA"} {...location} />
+              {...location} />
           </div>
           <br/>
           <div className="input-group">
@@ -68,7 +72,11 @@ class ProfileForm extends Component {
               {...bio} />
           </div>
           <br/>
-          <button type="submit" className="btn btn-primary">Create Profile</button>
+          <div className="profile-btn">
+              <button onClick={() => {onCancel.bind(this)}} className="btn btn-secondary">Cancel</button>
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <button type="submit" className="btn btn-primary">Create Profile</button>
+          </div>
         </form>
       </div>
     );
