@@ -54,6 +54,7 @@
     "request": "^2.72.0",
     "resolve-url-loader": "^1.4.3",
     "semver": "4.3.2",
+    "socket.io": "^1.4.8",
     "style-loader": "^0.13.1",
     "underscore": "^1.8.3",
     "url-loader": "^0.5.7",
