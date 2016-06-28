@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {fetchUsers} from '../actions/index';
+import {fetchUsers, findGames} from '../actions/index';
 import _ from 'underscore';
 import SearchedUsersList from '../containers/searched_users_list';
 
@@ -24,11 +24,13 @@ class SearchBar extends Component {
 
   onChangeSubmit(event) {
     this.props.fetchUsers({searchTerm: this.state.searchTerm});
+    this.props.findGames({searchTerm: this.state.searchTerm});
   }
 
   onFormSubmit(event) {
     event.preventDefault();
     this.props.fetchUsers({searchTerm: this.state.searchTerm});
+    this.props.findGames({searchTerm: this.state.searchTerm});
   }
 
   hideSearch() {
@@ -55,7 +57,10 @@ class SearchBar extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({fetchUsers: fetchUsers}, dispatch);
+  return bindActionCreators({
+    fetchUsers: fetchUsers,
+    findGames: findGames
+  }, dispatch);
 }
 
 export default connect(null, mapDispatchToProps)(SearchBar);

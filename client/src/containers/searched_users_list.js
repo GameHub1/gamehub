@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Router, Route, Link, browserHistory } from 'react-router';
-import {postProfile, showFriends, renderProfileState, showGames, createFavMedia} from '../actions/index';
+import {postProfile, showFriends, renderProfileState, showGames, createFavMedia, findGames} from '../actions/index';
 import {bindActionCreators} from 'redux';
 import axios from 'axios';
 
@@ -49,6 +49,24 @@ class SearchedUsers extends Component {
 
   }
 
+  goToGamesPage(game) {
+    browserHistory.push(`/game/${game}`);
+    this.props.findGames({searchTerm: game});
+  }
+
+  renderGames(GamesData) {
+    console.log("GAMESDATA: ", GamesData);
+    let game = GamesData.name;
+    let that = this;
+
+    return (
+      <tr id="searchedGamesRow" className="searchRowsGames" key={game} onClick={() => {that.goToGamesPage(game)}}>
+        <td><span className="glyphicon glyphicon-user"></span></td>
+        <td>{game}</td>
+      </tr>
+    );
+  }
+
   renderUsers(userData) {
     const fullname = userData.fullname;
     const email = userData.email;
@@ -67,6 +85,7 @@ class SearchedUsers extends Component {
     return (
       <table id="userList">
         <tbody>
+          {this.props.searched_games.map(this.renderGames.bind(this))}
           {this.props.searched_users.map(this.renderUsers.bind(this))}
         </tbody>
       </table>
@@ -81,12 +100,13 @@ function mapStateToProps(state) {
     form: state.form,
     games: state.games,
     media: state.media,
-    searched_users: state.searched_users
+    searched_users: state.searched_users,
+    searched_games: state.searched_games
   };
 }
 
 function mapDispatchToProps (dispatch) {
-  return bindActionCreators({postProfile, showFriends, renderProfileState, showGames, createFavMedia}, dispatch);
+  return bindActionCreators({postProfile, showFriends, renderProfileState, showGames, createFavMedia, findGames}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchedUsers);

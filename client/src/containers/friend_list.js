@@ -30,7 +30,7 @@ export class FriendList extends Component {
             if (this.props.authData.email !== this.props.profile.email) {
               if(response.data.status == "Found") {
                 document.getElementById("followBtn").style.background='#556B2F';
-                document.getElementById("followBtn").firstChild.data='following!';
+                document.getElementById("followBtn").firstChild.data='following';
               }
               else {
                 document.getElementById("followBtn").style.background='#d3d3d3';
