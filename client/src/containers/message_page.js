@@ -80,6 +80,8 @@ export class MessagePage extends Component {
          $('.conversation').append('<div>' + msg.hours +':' + msg.minutes + ' ' + msg.sender + ": " + msg.text + '</div>');
       });
 
+      document.getElementById("messageForm").reset();
+
 /// example code below
 
       let socket = io.connect('http://localhost/kyle');
@@ -130,7 +132,7 @@ export class MessagePage extends Component {
               <Conversation/>
             </div>
             <div className='row'>
-              <form>
+              <form id="messageForm">
                   <label> Write Message </label>
                   <textarea className='messageToSend' rows = '2' cols= '50'/>
                   <button onClick={(event)=> {this.sendMessage(event)}}>Send</button>
