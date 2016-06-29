@@ -65,7 +65,7 @@ class SearchedUsers extends Component {
 
     return (
       <tr id="searchedGamesRow" className="searchRowsGames" key={game} onClick={() => {that.goToGamesPage(game)}}>
-        <td><span className="glyphicon glyphicon-user"></span></td>
+        <td><i className="fa fa-gamepad" aria-hidden="true"></i></td>
         <td>{game}</td>
       </tr>
     );
