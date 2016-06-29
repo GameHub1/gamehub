@@ -1,9 +1,7 @@
 "use strict"; 
 
 const gamejoin = require('./gamejoin_utils.js');
-
 const bookshelf = require('../db/psqldb.js');
-
 const User = require('../db/models/user.js');
 const Game = require('../db/models/game.js');
 const Games = require('../db/collections/games.js');

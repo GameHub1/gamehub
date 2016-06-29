@@ -1,9 +1,9 @@
 "use strict";
 
 const bookshelf = require('../psqldb.js');
-const FaveMedia = require('../models/favmedia.js');
+const FavMedia = require('../models/favmedia.js');
 
-const FaveMedias = new bookshelf.Collection();
-FaveMedias.model = FaveMedia;
+const FavMedias = new bookshelf.Collection();
+FavMedias.model = FavMedia;
 
-module.exports = FaveMedias;
+module.exports = FavMedias;

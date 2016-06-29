@@ -6,7 +6,7 @@ import {createFavMedia} from '../actions/index';
 
 export default class AllFavMedia extends Component {
   componentWillMount() {
-    //this.props.createFavMedia([null, this.props.profile.email]);
+    // this.props.createFavMedia([null, this.props.profile.email]);
   }
 
   renderAllFavMedia(url) {

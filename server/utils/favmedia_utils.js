@@ -3,6 +3,8 @@
 const User = require('../db/models/user.js');
 const Users = require('../db/collections/users.js');
 const bookshelf = require('../db/psqldb.js');
+const FavMedia = require('../db/models/favmedia.js');
+const FavMedias = require('../db/collections/favmedias.js');
 
 exports.getFavmedia = function(req, res) {
   if (req.body[0] === null) {
