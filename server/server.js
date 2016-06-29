@@ -44,6 +44,7 @@ app.post('/show_game_fans', gamesUtils.showGameFans);
 app.post('/get_games', gamesUtils.getGames);
 app.post('/get_users', socialUtils.fetchUsers);
 app.post("/show_friends", socialUtils.showFriends);
+app.post("/show_followers", socialUtils.showFollowers);
 app.post('/get_friend_info', socialUtils.friendInfo);
 app.post('/add_friend', socialUtils.addFriend);
 
