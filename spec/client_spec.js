@@ -1,4 +1,4 @@
-require('babel-register')();
+
 // const React = require('react');
 // const jasmineEnzyme = require('jasmine-enzyme');
 // const shallow = require('enzyme').shallow;
@@ -14,6 +14,7 @@ require('babel-register')();
 //   //   expect(wrapper.find('form')).to.have.length(1);
 //   // });
 // });
+
 
 
 
