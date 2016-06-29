@@ -65,7 +65,7 @@ export class MessagePage extends Component {
 
       console.log("This is the msg", msg);
 
-      let channel = io.connect('http://localhost/' + this.state.channel);
+      let channel = io.connect(window.location.hostname + '/' + this.state.channel);
 
       channel.emit('message', msg);
 
