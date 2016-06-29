@@ -8,7 +8,7 @@ export default function (state=[], action) {
       console.log("Game reducer consoled")
       let game = [action.payload[0].gameTitle];
       let state2 = state.slice();
-      state2[state2.length] = game;
+      state2.push(game);
       return state2;
     case DELETE_GAME:
       let deletedGame = [action.payload[0].gameTitle];
