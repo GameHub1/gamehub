@@ -38,6 +38,8 @@ export class MessagePage extends Component {
     let identifier = arrayOfEmails[0] + arrayOfEmails[1];
     identifier = identifier.replace(/[^a-zA-Z0-9 ]/g, "");
 
+    $('.conversation').empty();
+
     this.props.getMessages({data:identifier});
 
 
@@ -53,7 +55,13 @@ export class MessagePage extends Component {
 
       event.preventDefault();
 
-      let msg = $('.messageToSend').val();
+      let msgText = $('.messageToSend').val();
+
+      let date = new Date();
+      let hours = date.getHours();
+      let minutes = date.getMinutes()
+
+      let msg = {text: msgText, hours: hours, minutes: minutes, sender: this.props.profile.name};
 
       console.log("This is the msg", msg);
 
@@ -63,8 +71,13 @@ export class MessagePage extends Component {
 
       channel.on('updateConversation', function (msg) {
          // update state
-         console.log('inside update conversation!')
-         $('.conversation').append(document.createTextNode(msg));
+         console.log('inside update conversation!');
+         
+         if (msg.hours > 12) {
+           msg.hours = msg.hours -12
+         }
+
+         $('.conversation').append('<div>' + msg.hours +':' + msg.minutes + ' ' + msg.sender + ": " + msg.text + '</div>');
       });
 
 /// example code below
@@ -138,7 +151,8 @@ export class MessagePage extends Component {
 function mapStateToProps (state) {
   return {
     friendList: state.friendList,
-    selectedFriend: state.selectedFriend
+    selectedFriend: state.selectedFriend,
+    profile: state.profile
   }
 }
 

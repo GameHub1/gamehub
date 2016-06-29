@@ -12,7 +12,7 @@ export class Conversation extends Component {
         return (
             <section>
               <div className="conversation">
-                Conversation here:
+                <h3> Conversation </h3>
               </div>
             </section>
           )
