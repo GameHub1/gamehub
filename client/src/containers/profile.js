@@ -7,7 +7,7 @@ import FavMedia from '../components/favMedia';
 import AllFavMedia from '../components/allFavMedia';
 import FriendList from './friend_list';
 import AddGames from '../components/add_games';
-import {showFriends, showGames, postProfile, renderProfileState} from '../actions/index';
+import {showFriends, showGames, postProfile, renderProfileState, createFavMedia} from '../actions/index';
 import {browserHistory, Link} from 'react-router';
 
 export class Profile extends Component {
@@ -24,6 +24,7 @@ export class Profile extends Component {
         };
         this.props.postProfile(prop);
         this.props.showGames({email: this.props.params.id});
+        this.props.createFavMedia([null, this.props.profile.email]);
       });
     let URL_array = window.location.pathname.split('/profile/');
 
@@ -196,7 +197,7 @@ export class Profile extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({postProfile, showFriends, showGames, renderProfileState}, dispatch);
+  return bindActionCreators({postProfile, showFriends, showGames, renderProfileState, createFavMedia}, dispatch);
 }
 
 function mapStateToProps(state) {
