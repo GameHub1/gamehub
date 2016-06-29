@@ -33,17 +33,19 @@ export class MessagePage extends Component {
     this.props.selectFriend(friend);
     let arrayOfEmails = [this.props.params.id, friend];
     let sortedEmails = arrayOfEmails.sort();
-    
+
 
     let identifier = arrayOfEmails[0] + arrayOfEmails[1];
     identifier = identifier.replace(/[^a-zA-Z0-9 ]/g, "");
-    
+
+    $('.conversation').empty();
+
     this.props.getMessages({data:identifier});
 
-    
-    
+
+
     this.setState({channel: identifier}, function () {
-    
+
     console.log('This is the state', this.state.channel);
 
   });
@@ -53,25 +55,33 @@ export class MessagePage extends Component {
 
       event.preventDefault();
 
-      console.log('this is name', name);
+      let msgText = $('.messageToSend').val();
 
-      console.log("this is the event", event);
+      let date = new Date();
+      let hours = date.getHours();
+      let minutes = date.getMinutes()
 
-      console.log('inside sendMessage');
-
-      let msg = $('.messageToSend').val();
+      let msg = {text: msgText, hours: hours, minutes: minutes, sender: this.props.profile.name};
 
       console.log("This is the msg", msg);
 
       let channel = io.connect('http://localhost/' + this.state.channel);
 
-      channel.emit('message', 'test');
+      channel.emit('message', msg);
 
-      channel.on('updateState', function () {
+      channel.on('updateConversation', function (msg) {
          // update state
-         console.log('inside updateState!');
+         console.log('inside update conversation!');
+         
+         if (msg.hours > 12) {
+           msg.hours = msg.hours -12
+         }
+
+         $('.conversation').append('<div>' + msg.hours +':' + msg.minutes + ' ' + msg.sender + ": " + msg.text + '</div>');
       });
-      
+
+      document.getElementById("messageForm").reset();
+
 /// example code below
 
       let socket = io.connect('http://localhost/kyle');
@@ -79,7 +89,7 @@ export class MessagePage extends Component {
       socket.emit('message', "We sent it full circle");
       socket.on('message', function (msg) {
          console.log(msg);
-         
+
       });
 
   }
@@ -87,7 +97,7 @@ export class MessagePage extends Component {
   render () {
 
      return (
-        <div>  
+        <div>
           <div>
               <h1> Messages </h1>
               <br/>
@@ -122,7 +132,7 @@ export class MessagePage extends Component {
               <Conversation/>
             </div>
             <div className='row'>
-              <form>
+              <form id="messageForm">
                   <label> Write Message </label>
                   <textarea className='messageToSend' rows = '2' cols= '50'/>
                   <button onClick={(event)=> {this.sendMessage(event)}}>Send</button>
@@ -143,7 +153,8 @@ export class MessagePage extends Component {
 function mapStateToProps (state) {
   return {
     friendList: state.friendList,
-    selectedFriend: state.selectedFriend
+    selectedFriend: state.selectedFriend,
+    profile: state.profile
   }
 }
 
