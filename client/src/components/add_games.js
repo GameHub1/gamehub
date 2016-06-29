@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {reduxForm, reset} from 'redux-form';
-import {createGame, showGames} from '../actions/index';
+import {createGame} from '../actions/index';
 
 export class AddGames extends Component {
   onSubmit(prop, dispatch) {
@@ -42,4 +42,4 @@ function mapStateToProps(state) {
 export default reduxForm({
 	form: 'GamesForm',
 	fields: ['gameTitle']
-}, mapStateToProps, {createGame, showGames})(AddGames);
+}, mapStateToProps, {createGame})(AddGames);
