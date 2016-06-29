@@ -80,13 +80,13 @@ export class GamesPage extends Component {
           {this.props.gameFans.map(item => {
             return (
               <div key={item.email} className="col-md-4 games-page">
-                <span onClick={()=> {this.changeProfile(item.email)}}>
+                <span className="games-page-link" onClick={()=> {this.changeProfile(item.email)}}>
                   <img className="games-list-profile-img img-rounded" src={item.pic_path} />
                 </span>
                 <br/>
-                <span onClick={()=> {this.changeProfile(item.email)}}>
+                <span className="games-page-link" onClick={()=> {this.changeProfile(item.email)}}>
                   {item.name}
-                  <br/> 
+                  <br/>
                   {item.location || ''}
                 </span>
               </div>

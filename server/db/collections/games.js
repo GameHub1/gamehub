@@ -1,4 +1,5 @@
 "use strict";
+
 const bookshelf = require('../psqldb.js');
 const Game = require('../models/game.js');
 

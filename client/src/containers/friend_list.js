@@ -44,7 +44,7 @@ export class FriendList extends Component {
   render () {
     return (
       <div>
-      <table>
+      <table className="friends-table">
         <tbody>
           {this.props.friendList.map(item => {
             return (
@@ -68,7 +68,7 @@ export class FriendList extends Component {
 function mapStateToProps(state) {
   return {
     friendList: state.friendList,
-    authData: state.authData, 
+    authData: state.authData,
     profile: state.profile
   };
 }

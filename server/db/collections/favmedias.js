@@ -1,4 +1,5 @@
 "use strict";
+
 const bookshelf = require('../psqldb.js');
 const FaveMedia = require('../models/favmedia.js');
 

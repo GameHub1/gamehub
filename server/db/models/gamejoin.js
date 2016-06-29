@@ -1,4 +1,5 @@
 "use strict";
+
 const bookshelf = require('../psqldb.js');
 
 const GameJoin = bookshelf.Model.extend({
