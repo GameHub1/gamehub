@@ -1,9 +1,12 @@
 import React, {Component} from 'react';
+import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import ReduxLogin from './login_redux';
 import SearchBar from '../containers/search_bar';
 import Logout from '../components/logout';
 import {browserHistory} from 'react-router';
+import {showFriends, postProfile, showGames, createFavMedia} from '../actions/index';
+import axios from 'axios';
 
 export default class RootComponent extends Component {
   constructor(props) {
@@ -13,12 +16,43 @@ export default class RootComponent extends Component {
   }
 
   goToHome() {
-    browserHistory.push(`/profile/${this.props.authData.email}`);
+    const userEmail = this.props.authData.email
+    axios.post('/get_user_info',{email: userEmail})
+      .then((response) => {
+        browserHistory.push(`/profile/${userEmail}`);
+        let prop = {
+          name: response.data.found.fullname,
+          location: response.data.found.location,
+          bio: response.data.found.bio,
+          email: userEmail,
+          pic_path: response.data.found.pic_path
+        };
+        this.props.showFriends([]);
+        this.props.postProfile(prop);
+        this.props.showGames({email: userEmail});
+        this.props.createFavMedia([null, userEmail]);
+
+        let URL_array = window.location.pathname.split('/profile/');
+        axios.post('/get_friend_info',{friend1: this.props.authData.email, friend2: URL_array[1]})
+          .then((response) => {
+            console.log("FRIEND INFO RESPONSE: ", response);
+            if (this.props.authData.email !== this.props.profile.email) {
+              if(response.data.status == "Found") {
+                document.getElementById("followBtn").style.background='#556B2F';
+                document.getElementById("followBtn").firstChild.data='following';
+              }
+              else {
+                document.getElementById("followBtn").style.background='#d3d3d3';
+                document.getElementById("followBtn").firstChild.data='follow';
+              }
+            }
+          });
+      });
   }
 
   render() {
     if (!Array.isArray(this.props.authData)) {
-      return (  
+      return (
         <div>
           <nav className="navbar navbar-inverse navbar-fixed-top">
             <div className="container-fluid navbar">
@@ -49,8 +83,12 @@ export default class RootComponent extends Component {
   }
 }
 
-function mapStateToProps({authData}) {
-  return {authData};
+function mapStateToProps({authData, profile}) {
+  return {authData, profile};
 }
 
-export default connect(mapStateToProps)(RootComponent);
+function mapDispatchToProps (dispatch) {
+  return bindActionCreators({postProfile, showFriends, showGames, createFavMedia}, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(RootComponent);
