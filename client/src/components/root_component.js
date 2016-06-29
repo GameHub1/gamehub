@@ -13,16 +13,9 @@ export default class RootComponent extends Component {
     super(props);
 
     this.goToHome = this.goToHome.bind(this);
-    this.mainProfile = this.mainProfile.bind(this);
   }
 
   goToHome() {
-    browserHistory.push(`/profile/${this.props.authData.email}`);
-    //window.location.reload();
-    //postProfile
-  }
-
-  mainProfile() {
     const userEmail = this.props.authData.email
     axios.post('/get_user_info',{email: userEmail})
       .then((response) => {
@@ -64,7 +57,7 @@ export default class RootComponent extends Component {
           <nav className="navbar navbar-inverse navbar-fixed-top">
             <div className="container-fluid navbar">
               <div className="navbar-header">
-                <span id="navHeader" onClick={this.mainProfile}>GameHub</span>
+                <span id="navHeader" onClick={this.goToHome}>GameHub</span>
               </div>
               <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <SearchBar />
