@@ -20,6 +20,20 @@ exports.fetchGames = function(req, res){
     });
 };
 
+exports.getGames = function(req, res) {
+   if (req.body.searchTerm === '') {
+     res.send([]);
+   } else {
+     bookshelf.knex.raw("SELECT * FROM games WHERE LOWER(name) LIKE LOWER('%" + req.body.searchTerm + "%')")
+     .then(response => {
+       res.send(response.rows);
+     })
+     .catch(err => {
+       console.error(err);
+     });
+   }
+ };
+
 exports.newGame = function(req, res) {
   let gameTitle = req.body[0].gameTitle;
   let email = req.body[1];

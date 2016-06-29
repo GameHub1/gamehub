@@ -41,7 +41,7 @@ app.post('/games', gamesUtils.newGame);
 app.post('/fetch_games', gamesUtils.fetchGames);
 app.post('/delete_game', gamesUtils.deleteGame);
 app.post('/show_game_fans', gamesUtils.showGameFans);
-
+app.post('/get_games', gamesUtils.getGames);
 app.post('/get_users', socialUtils.fetchUsers);
 app.post("/show_friends", socialUtils.showFriends);
 app.post('/get_friend_info', socialUtils.friendInfo);
