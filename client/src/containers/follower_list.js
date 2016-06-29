@@ -2,10 +2,13 @@ import React, {Component, PropTyes} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {Router, Route, Link, browserHistory } from 'react-router';
-import {postProfile, showFriends, showFollowers, showGames, createFavMedia} from '../actions/index';
+import {postProfile, showFriends, showGames, createFavMedia, showFollowers} from '../actions/index';
 import axios from 'axios';
 
-export class FriendList extends Component {
+export class FollowerList extends Component {
+  componentWillMount() {
+    this.props.showFollowers([]);
+  }
 
   changeProfile(email) {
     axios.post('/get_user_info',{email: email})
@@ -45,9 +48,9 @@ export class FriendList extends Component {
   render () {
     return (
       <div>
-      <table className="friends-table">
+      <table className="followers-table">
         <tbody>
-          {this.props.friendList.map(item => {
+          {this.props.followerList.map(item => {
             return (
             <tr key={item.email}>
             <td onClick={()=> {this.changeProfile(item.email)}} className="friend_pic">
@@ -70,12 +73,13 @@ function mapStateToProps(state) {
   return {
     friendList: state.friendList,
     authData: state.authData,
-    profile: state.profile
+    profile: state.profile,
+    followerList: state.followerList
   };
 }
 
 function mapDispatchToProps (dispatch) {
-  return bindActionCreators({postProfile, showFriends, showFollowers, showGames, createFavMedia}, dispatch);
+  return bindActionCreators({postProfile, showFriends, showGames, createFavMedia, showFollowers}, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(FriendList);
+export default connect(mapStateToProps, mapDispatchToProps)(FollowerList);

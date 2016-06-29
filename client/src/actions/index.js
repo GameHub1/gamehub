@@ -17,6 +17,7 @@ export const FIND_GAME_FANS = 'FIND_GAME_FANS';
 export const SELECT_FRIEND = 'SELECT_FRIEND';
 export const GET_MESSAGES = 'GET_MESSAGES';
 export const FIND_GAMES = 'FIND_GAMES';
+export const FIND_FOLLOWERS = 'FIND_FOLLOWERS';
 
 //this.props.params.id
 //^ user's email
@@ -62,6 +63,13 @@ export function selectFriend(data) {
 export function showFriends(data) {
   return {
     type: FIND_FRIENDS,
+    payload: data
+  };
+}
+
+export function showFollowers(data) {
+  return {
+    type: FIND_FOLLOWERS,
     payload: data
   };
 }

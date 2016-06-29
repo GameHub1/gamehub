@@ -30,6 +30,18 @@ exports.showFriends = function(req,res) {
     });
 };
 
+exports.showFollowers = function(req,res) {
+  let email = req.body.email;
+  bookshelf.knex.raw("SELECT * FROM users WHERE users.id IN (SELECT friends.friend1_fk FROM users inner JOIN friends ON users.id = friends.friend2_fk WHERE users.email = '" + email + "');")
+    .then(response => {
+      let info = response.rows.reduce((acc, cur) => {
+        acc.push({name: cur.fullname, email: cur.email, pic_path: cur.pic_path});
+        return acc;
+      }, []);
+      res.send({data: info});
+    });
+};
+
 exports.friendInfo = function(req, res){
   new User({ email: req.body.friend1 }).fetch().then(found => {
     if (found) {

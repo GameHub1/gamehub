@@ -7,8 +7,9 @@ import FavMedia from '../components/favMedia';
 import AllFavMedia from '../components/allFavMedia';
 import FriendList from './friend_list';
 import AddGames from '../components/add_games';
-import {showFriends, showGames, postProfile, renderProfileState, createFavMedia} from '../actions/index';
+import {showFriends, showFollowers, showGames, postProfile, renderProfileState, createFavMedia} from '../actions/index';
 import {browserHistory, Link} from 'react-router';
+import FollowerList from './follower_list';
 
 export class Profile extends Component {
   componentWillMount() {
@@ -56,6 +57,7 @@ export class Profile extends Component {
         };
         this.props.renderProfileState(prop);
         this.props.showFriends([]);
+        this.props.showFollowers([]);
         this.props.showGames({email: this.props.params.id});
         let URL_array = window.location.pathname.split('/profile/');
         axios.post('/get_friend_info',{friend1: this.props.authData.email, friend2: URL_array[1]})
@@ -82,6 +84,21 @@ export class Profile extends Component {
        .then(response => {
          let friendArr = response.data.data;
          this.props.showFriends(friendArr);
+         friendArr.forEach(friend => {
+           console.log(friend.name);
+         });
+       })
+       .catch(response => {
+         console.log('Error: ', response);
+       });
+   }
+
+   findFollowers() {
+    let URL_array = window.location.pathname.split('/profile/');
+     axios.post('/show_followers', {email: URL_array[1]})
+       .then(response => {
+         let friendArr = response.data.data;
+         this.props.showFollowers(friendArr);
          friendArr.forEach(friend => {
            console.log(friend.name);
          });
@@ -132,13 +149,19 @@ export class Profile extends Component {
               </div>
 
               <div id="friends-component">
-                <a className="all-friends" onClick={this.findFriends.bind(this)}>See who I am following!</a>
-                <FriendList />
-                <br/>
                 <ul>
                   <li><h3><Link to={`/message/${this.props.params.id}`}> Message </Link></h3></li>
                 </ul>
+                <br/>
+                <a className="all-friends" onClick={this.findFriends.bind(this)}>See who I am following!</a>
+                <FriendList />
               </div>
+
+              <div>
+              <a className="all-friends" onClick={this.findFollowers.bind(this)}>See my followers!</a>
+                <FollowerList />
+              </div>
+              
             </div>
           </div>
           <div className="col-md-1">
@@ -176,6 +199,10 @@ export class Profile extends Component {
                 <a className="all-friends" onClick={this.findFriends.bind(this)}>See who I am following!</a>
                 <FriendList />
               </div>
+              <div>
+                <a className="all-friends" onClick={this.findFollowers.bind(this)}>See my followers!</a>
+                <FollowerList />
+              </div>
             </div>
           </div>
           <div className="col-md-1">
@@ -197,7 +224,7 @@ export class Profile extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({postProfile, showFriends, showGames, renderProfileState, createFavMedia}, dispatch);
+  return bindActionCreators({postProfile, showFriends, showFollowers, showGames, renderProfileState, createFavMedia}, dispatch);
 }
 
 function mapStateToProps(state) {
