@@ -14,7 +14,7 @@ class SearchedUsers extends Component {
 
   changeProfile(email) {
     axios.post('/get_user_info',{email: email})
-      .then((response) => {
+      .then(response => {
 
         browserHistory.push(`/profile/${email}`);
 
@@ -25,17 +25,16 @@ class SearchedUsers extends Component {
           email: email,
           pic_path: response.data.found.pic_path
         };
+
         this.props.showFollowers([]);
         this.props.showFriends([]);
         this.props.renderProfileState(prop);
-        console.log("params", this.props.params);
         this.props.showGames({email: email});
         this.props.createFavMedia([null, email]);
 
         let URL_array = window.location.pathname.split('/profile/');
         axios.post('/get_friend_info',{friend1: this.props.authData.email, friend2: URL_array[1]})
-          .then((response) => {
-            console.log("FRIEND INFO RESPONSE: ", response);
+          .then(response => {
             if(response.data.status == "Found") {
               document.getElementById("followBtn").style.background='#556B2F';
               document.getElementById("followBtn").firstChild.data='following';
@@ -52,14 +51,12 @@ class SearchedUsers extends Component {
   goToGamesPage(game) {
     browserHistory.push(`/game/${game}`);
     axios.post('/show_game_fans', {game: game})
-      .then((response) => {
-        console.log(response.data.data);
+      .then(response => {
         this.props.showGameFans(response.data.data);
       });
   }
 
   renderGames(GamesData) {
-    console.log("GAMESDATA: ", GamesData);
     let game = GamesData.name;
     let that = this;
 
@@ -109,7 +106,7 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return bindActionCreators({postProfile, showFriends, showFollowers, renderProfileState, showGames, createFavMedia, findGames, showGameFans}, dispatch);
 }
 

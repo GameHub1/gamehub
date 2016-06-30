@@ -31,7 +31,6 @@ export class Profile extends Component {
 
     axios.post('/get_friend_info',{friend1: this.props.authData.email, friend2: URL_array[1]})
       .then(response => {
-        console.log("FRIEND INFO RESPONSE: ", response);
         if (this.props.authData.email !== this.props.profile.email) {
           if(response.data.status === "Found") {
             document.getElementById("followBtn").style.background='#556B2F';
@@ -62,7 +61,6 @@ export class Profile extends Component {
         let URL_array = window.location.pathname.split('/profile/');
         axios.post('/get_friend_info',{friend1: this.props.authData.email, friend2: URL_array[1]})
         .then(response => {
-          console.log("FRIEND INFO RESPONSE: ", response);
           if (this.props.authData.email !== this.props.profile.email) {
             if(response.data.status === "Found") {
               document.getElementById("followBtn").style.background='#556B2F';
@@ -75,21 +73,17 @@ export class Profile extends Component {
           }
         });
       });
-
    }
 
    findFriends() {
     let URL_array = window.location.pathname.split('/profile/');
      axios.post('/show_friends', {email: URL_array[1]})
        .then(response => {
-         let friendArr = response.data.data;
-         this.props.showFriends(friendArr);
-         friendArr.forEach(friend => {
-           console.log(friend.name);
-         });
+          let friendArr = response.data.data;
+          this.props.showFriends(friendArr);
        })
        .catch(response => {
-         console.log('Error: ', response);
+          console.log('Error: ', response);
        });
    }
 
@@ -97,14 +91,11 @@ export class Profile extends Component {
     let URL_array = window.location.pathname.split('/profile/');
      axios.post('/show_followers', {email: URL_array[1]})
        .then(response => {
-         let friendArr = response.data.data;
-         this.props.showFollowers(friendArr);
-         friendArr.forEach(friend => {
-           console.log(friend.name);
-         });
+          let friendArr = response.data.data;
+          this.props.showFollowers(friendArr);
        })
        .catch(response => {
-         console.log('Error: ', response);
+          console.log('Error: ', response);
        });
    }
 

@@ -8,7 +8,6 @@ import SearchedUsersList from '../containers/searched_users_list';
 class SearchBar extends Component {
   constructor(props) {
     super(props);
-
     this.state = {searchTerm: ''};
     this.onInputChange = this.onInputChange.bind(this);
     this.onChangeSubmit = _.debounce(this.onChangeSubmit.bind(this), 200);
