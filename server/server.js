@@ -44,7 +44,6 @@ app.post('/fetch_messages', messagingUtils.fetchMessages);
 app.post('/create_namespace', messagingUtils.createNamespace);
 
 app.post('/get_messages', function(req, res) {
-  console.log("TEST", req.body.data)
   let namespace = req.body.data
   console.log(namespace);
   let channel = io.of(`/${namespace}`);

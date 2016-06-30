@@ -14,7 +14,7 @@ export class MessagePage extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {channel: true};
+    this.state = {channel: true, flag: true};
 
 
 
@@ -48,7 +48,30 @@ export class MessagePage extends Component {
 
     console.log('This is the state', this.state.channel);
 
+    this.setState({flag: true})
+
   });
+  }
+
+  receiver () {
+
+      let channel = io.connect('/' + this.state.channel);
+      
+      channel.emit('create', 'gamehub');
+
+      channel.on('updateConversation', function (msg) {
+         // update state
+         console.log('inside update conversation!');
+         
+         if (msg.hours > 12) {
+           msg.hours = msg.hours -12
+         }
+
+         $('.conversation').append('<div>' + msg.hours +':' + msg.minutes + ' ' + msg.sender + ": " + msg.text + '</div>');
+
+      });
+
+     
   }
 
   sendMessage(event) {
@@ -71,16 +94,10 @@ export class MessagePage extends Component {
 
       channel.emit('message', msg);
 
-      channel.on('updateConversation', function (msg) {
-         // update state
-         console.log('inside update conversation!');
-         
-         if (msg.hours > 12) {
-           msg.hours = msg.hours -12
-         }
-
-         $('.conversation').append('<div>' + msg.hours +':' + msg.minutes + ' ' + msg.sender + ": " + msg.text + '</div>');
-      });
+      if (this.state.flag) {
+        this.receiver();
+        this.setState({flag: false});
+      }
 
       document.getElementById("messageForm").reset();
 
