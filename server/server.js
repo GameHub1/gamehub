@@ -16,15 +16,6 @@ const socketUtils = require('./utils/socket_utils.js');
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 
-server.listen(8080);
-
-io.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
-    console.log(data);
-  });
-});
-
 app.use(bodyParser.json({type: '*/*'}));
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -66,20 +57,15 @@ app.post('/get_messages', function(req, res) {
          socket.emit('updateConversation', msg)
       });
    });
-   let kylemike = io.of('/kyle');
-    kylemike.on('connection', function (socket) {
-      console.log("Houston, we have connected");
-      socket.on('message', function (msg) {
-      socket.emit('message', "Original msg:" + msg + "This is from the server");
-    });
-  });
+   
 });
 
 app.use(function(req, res) {
   res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
-app.listen(process.env.PORT || 8000, () => {
+
+server.listen(process.env.PORT || 8000, () => {
   console.log("Listening on port 8000");
 });
 

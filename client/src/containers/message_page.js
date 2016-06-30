@@ -65,7 +65,7 @@ export class MessagePage extends Component {
 
       console.log("This is the msg", msg);
 
-      let channel = io.connect('http://localhost/' + this.state.channel);
+      let channel = io.connect('/' + this.state.channel);
 
       channel.emit('message', msg);
 
@@ -82,15 +82,6 @@ export class MessagePage extends Component {
 
       document.getElementById("messageForm").reset();
 
-/// example code below
-
-      let socket = io.connect('http://localhost/kyle');
-
-      socket.emit('message', "We sent it full circle");
-      socket.on('message', function (msg) {
-         console.log(msg);
-
-      });
 
   }
 
