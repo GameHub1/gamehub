@@ -58,17 +58,21 @@ export default class RootComponent extends Component {
         <div>
           <nav className="navbar navbar-inverse navbar-fixed-top">
             <div className="container-fluid navbar">
-              <div className="navbar-header">
-                <span id="navHeader" onClick={this.goToHome}>GameHub</span>
-                <h3><Link to={`/message/${this.props.params.id}`}> Messages </Link></h3>
-              </div>
-              <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <SearchBar />
-                <div className="logoutButton">
-                  <Logout />
+              <div className="collapse navbar-collapse">
+                <div className="col-xs-2" id="gamehub-logo">
+                  <span id="navHeader" onClick={this.goToHome}>GameHub</span>
+                  </div>
+                  <div className="col-xs-2" id="message-link">
+                    <h3><Link to={`/message/${this.props.params.id}`}> Messages </Link></h3>
+                  </div>
+                  <div className="col-xs-6 collapose navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <SearchBar />
+                  </div>
+                  <div className="col-xs-2" id="logout-button">
+                    <Logout />
+                  </div>
                 </div>
               </div>
-            </div>
           </nav>
           {this.props.children}
         </div>
