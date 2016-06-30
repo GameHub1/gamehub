@@ -1,4 +1,4 @@
-"use strict"; 
+"use strict";
 
 const gamejoin = require('./gamejoin_utils.js');
 const bookshelf = require('../db/psqldb.js');
@@ -64,7 +64,7 @@ exports.newGame = function(req, res) {
     .then(() => {
       new Game({name: gameTitle}).fetch().then(model => {
         joinReq.games_id_fk = model.get('id');
-        addGameJoin(joinReq);
+        gamejoin.addGameJoin(joinReq);
       });
     })
     .catch(err => {
