@@ -8,7 +8,8 @@
     "dev": "nodemon server/server.js",
     "devBuild": "webpack -d --watch",
     "build": "webpack -d",
-    "test": "jasmine"
+    "jtest": "jasmine",
+    "mtest": "mocha -w spec/browser.js spec/client.spec.js"
   },
   "repository": {
     "type": "git",
@@ -62,12 +63,15 @@
   },
   "private": true,
   "devDependencies": {
+    "chai": "^3.5.0",
     "enzyme": "^2.3.0",
+    "expect": "^1.20.2",
     "jasmine": "^2.4.1",
     "jsdom": "^9.3.0",
     "mocha": "^2.5.3",
     "react-addons-test-utils": "^15.1.0",
     "supertest": "^1.2.0",
-    "supertest-as-promised": "^3.1.0"
+    "supertest-as-promised": "^3.1.0",
+    "webpack-dev-server": "^1.14.1"
   }
 }
