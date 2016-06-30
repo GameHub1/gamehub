@@ -14,8 +14,8 @@ export class GameList extends Component {
   }
 
   render() {
-    let firstThird = Math.floor(this.props.games.length / 3);
-    let secondThird = Math.floor(firstThird * 2);
+    let firstThird = Math.ceil(this.props.games.length / 3);
+    let secondThird = Math.ceil(firstThird * 2);
     let firstSection = this.props.games.slice(0, firstThird);
     let secondSection = this.props.games.slice(firstThird, secondThird);
     let thirdSection = this.props.games.slice(secondThird);
