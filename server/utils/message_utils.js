@@ -4,7 +4,7 @@ const bookshelf = require('../db/psqldb.js');
 
 const User = require('../db/models/user.js');
 const Users = require('../db/collections/users.js');
-const Messgae = require('../db/models/message.js');
+const Message = require('../db/models/message.js');
 const Messages = require('../db/collections/messages.js');
 const Namespace = require('../db/models/message.js');
 const Namespaces = require('../db/collections/messages.js');

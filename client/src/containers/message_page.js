@@ -34,7 +34,7 @@ export class MessagePage extends Component {
     this.setState({channel: identifier}, () => {
 
     let channel = io.connect('/' + this.state.channel);
-      
+
     channel.emit('create', 'gamehub');
 
     channel.on('updateConversation', function (msg) {
@@ -42,7 +42,7 @@ export class MessagePage extends Component {
       if (msg.hours > 12) {
         msg.hours = msg.hours -12
       }
-      
+
       if (!storage[msg.time]) {
         storage[msg.time] = msg.text;
         $('.conversation').append('<div>' + msg.hours +':' + msg.minutes + ' ' + msg.sender + ": " + msg.text + '</div>');
@@ -65,7 +65,7 @@ export class MessagePage extends Component {
     let time = date.getTime();
     let msg = {time: time, text: msgText, hours: hours, minutes: minutes, sender: this.props.profile.name};
     let channel = io.connect('/' + this.state.channel);
-    
+
     channel.emit('create', 'gamehub');
     channel.emit('message', msg);
 

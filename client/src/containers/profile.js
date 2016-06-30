@@ -129,20 +129,17 @@ export class Profile extends Component {
         <div className="container">
           <div className="col-md-4 profile-left" id="user_friends">
             <img className="img-responsive img-rounded" src={this.props.profile.pic_path}/>
-            
+
             <div className="user-info">
               <h1 className="user-name">{this.props.profile.name}</h1>
               <h4 className="location">{this.props.profile.location || "San Francisco, CA"}</h4>
-              
+
               <p>{this.props.profile.bio || "Hi, I haven\'t filled out my bio yet!"}</p>
               <div>
                 <button id="editProfileBtn" className="btn btn-secondary" onClick={this.editProfile.bind(this)}>Edit Profile</button>
               </div>
               <br/>
               <div id="friends-component">
-                <ul>
-                  <li><h3><Link to={`/message/${this.props.params.id}`}> Message </Link></h3></li>
-                </ul>
                 <br/>
                 <a className="all-friends" onClick={this.findFriends.bind(this)}>See who I am following!</a>
                 <FriendList />
@@ -152,12 +149,12 @@ export class Profile extends Component {
               <a className="all-friends" onClick={this.findFollowers.bind(this)}>See my followers!</a>
                 <FollowerList />
               </div>
-              
+
             </div>
           </div>
           <div className="col-md-1">
-            
-          </div> 
+
+          </div>
           <div className="col-md-7 profile-right">
             <div>
               <h3 id="favGameHeader">Favorite Games</h3>
@@ -176,11 +173,11 @@ export class Profile extends Component {
         <div className="container">
           <div className="col-md-4 profile-left" id="user_friends">
             <img className="img-responsive img-rounded" src={this.props.profile.pic_path}/>
-              
+
             <div className="user-info">
               <h1 className="user-name">{this.props.profile.name}</h1>
               <h4 className="location">{this.props.profile.location || "San Francisco, CA"}</h4>
-              
+
               <p>{this.props.profile.bio || "Hi, I haven\'t filled out my bio yet!"}</p>
               <div>
                 <button id="followBtn" className="btn btn-secondary" onClick={this.addFriend.bind(this)}> Follow </button>
@@ -197,7 +194,7 @@ export class Profile extends Component {
             </div>
           </div>
           <div className="col-md-1">
-            
+
           </div>
           <div className="col-md-7 profile-right">
             <div>
