@@ -82,15 +82,6 @@ export class MessagePage extends Component {
 
       document.getElementById("messageForm").reset();
 
-/// example code below
-
-      let socket = io.connect('http://localhost/kyle');
-
-      socket.emit('message', "We sent it full circle");
-      socket.on('message', function (msg) {
-         console.log(msg);
-
-      });
 
   }
 

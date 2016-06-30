@@ -57,13 +57,7 @@ app.post('/get_messages', function(req, res) {
          socket.emit('updateConversation', msg)
       });
    });
-   let kylemike = io.of('/kyle');
-    kylemike.on('connection', function (socket) {
-      console.log("Houston, we have connected");
-      socket.on('message', function (msg) {
-      socket.emit('message', "Original msg:" + msg + "This is from the server");
-    });
-  });
+   
 });
 
 app.use(function(req, res) {
