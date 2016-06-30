@@ -66,6 +66,8 @@ export class MessagePage extends Component {
       console.log("This is the msg", msg);
 
       let channel = io.connect('/' + this.state.channel);
+      
+      channel.emit('create', 'gamehub');
 
       channel.emit('message', msg);
 
@@ -86,6 +88,8 @@ export class MessagePage extends Component {
   }
 
   render () {
+
+
 
      return (
         <div>
