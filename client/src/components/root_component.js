@@ -5,7 +5,7 @@ import ReduxLogin from './login_redux';
 import SearchBar from '../containers/search_bar';
 import Logout from '../components/logout';
 import {browserHistory} from 'react-router';
-import {showFriends, postProfile, showGames, createFavMedia} from '../actions/index';
+import {showFriends, showFollowers, postProfile, showGames, createFavMedia} from '../actions/index';
 import axios from 'axios';
 
 export default class RootComponent extends Component {
@@ -28,6 +28,7 @@ export default class RootComponent extends Component {
           pic_path: response.data.found.pic_path
         };
         this.props.showFriends([]);
+        this.props.showFollowers([]);
         this.props.postProfile(prop);
         this.props.showGames({email: userEmail});
         this.props.createFavMedia([null, userEmail]);
@@ -88,7 +89,7 @@ function mapStateToProps({authData, profile}) {
 }
 
 function mapDispatchToProps (dispatch) {
-  return bindActionCreators({postProfile, showFriends, showGames, createFavMedia}, dispatch);
+  return bindActionCreators({postProfile, showFriends, showFollowers, showGames, createFavMedia}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RootComponent);
