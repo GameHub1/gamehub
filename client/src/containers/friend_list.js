@@ -6,10 +6,9 @@ import {postProfile, showFriends, showFollowers, showGames, createFavMedia} from
 import axios from 'axios';
 
 export class FriendList extends Component {
-
   changeProfile(email) {
     axios.post('/get_user_info',{email: email})
-      .then((response) => {
+      .then(response => {
         browserHistory.push(`/profile/${email}`);
         let prop = {
           name: response.data.found.fullname,
@@ -27,7 +26,6 @@ export class FriendList extends Component {
         let URL_array = window.location.pathname.split('/profile/');
         axios.post('/get_friend_info',{friend1: this.props.authData.email, friend2: URL_array[1]})
           .then((response) => {
-            console.log("FRIEND INFO RESPONSE: ", response);
             if (this.props.authData.email !== this.props.profile.email) {
               if(response.data.status == "Found") {
                 document.getElementById("followBtn").style.background='#556B2F';
@@ -42,25 +40,25 @@ export class FriendList extends Component {
       });
   }
 
-  render () {
+  render() {
     return (
       <div>
-      <table className="friends-table">
-        <tbody>
-          {this.props.friendList.map(item => {
-            return (
-            <tr key={item.email}>
-            <td onClick={()=> {this.changeProfile(item.email)}} className="friend_pic">
-            <img src={item.pic_path}/>
-            </td>
-            <td onClick={()=> {this.changeProfile(item.email)}}>
-            {item.name}
-            </td>
-            </tr>
-            )
-          })}
-        </tbody>
-      </table>
+        <table className="friends-table">
+          <tbody>
+            {this.props.friendList.map(item => {
+              return (
+                <tr key={item.email}>
+                  <td onClick={()=> {this.changeProfile(item.email)}} className="friend_pic">
+                    <img className="img-rounded" src={item.pic_path}/>
+                  </td>
+                  <td className="friends-name" onClick={()=> {this.changeProfile(item.email)}}>
+                    {item.name}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
     );
   }
@@ -74,7 +72,7 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return bindActionCreators({postProfile, showFriends, showFollowers, showGames, createFavMedia}, dispatch);
 }
 

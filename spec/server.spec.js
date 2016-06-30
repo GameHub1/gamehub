@@ -1,7 +1,7 @@
 const request = require('supertest-as-promised');
 const app = require('../server/server');
-const bookshelf = require('../server/psqldb.js');
-const db = require('../server/psqldb');
+const bookshelf = require('../server/db/psqldb');
+const db = require('../server/db/psqldb');
 
 beforeEach(() => {
   this.mockUser = {

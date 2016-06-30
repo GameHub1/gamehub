@@ -6,20 +6,18 @@ import axios from 'axios';
 import {browserHistory} from 'react-router';
 
 export class GamesPage extends Component {
-  componentWillMount () {
+  componentWillMount() {
     let URL_array = window.location.pathname.split('/game/');
     let game = URL_array[1].split('%20').join(' ');
     axios.post('/show_game_fans', {game: game})
       .then((response) => {
-        console.log(response.data.data);
         this.props.showGameFans(response.data.data);
       });
-
   }
 
   changeProfile(email) {
     axios.post('/get_user_info',{email: email})
-      .then((response) => {
+      .then(response => {
         browserHistory.push(`/profile/${email}`);
         let prop = {
           name: response.data.found.fullname,
@@ -55,14 +53,13 @@ export class GamesPage extends Component {
       let game = URL_array[1].split('%20').join(' ');
       if (game) {
         axios.post('/show_game_fans', {game: game})
-          .then((response) => {
-            console.log(response.data.data);
+          .then(response => {
             this.props.showGameFans(response.data.data);
           });
       }
    }
 
-  render () {
+  render() {
     $(window).on('popstate', function (e) {
       this.sendToGamesPage();
     }.bind(this));
@@ -107,7 +104,7 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return bindActionCreators({postProfile, showFriends, showGames, createFavMedia, showGameFans}, dispatch);
 }
 
