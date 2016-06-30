@@ -44,20 +44,24 @@ app.post('/fetch_messages', messagingUtils.fetchMessages);
 app.post('/create_namespace', messagingUtils.createNamespace);
 
 app.post('/get_messages', function(req, res) {
+  console.log("TEST", req.body.data)
   let namespace = req.body.data
   console.log(namespace);
   let channel = io.of(`/${namespace}`);
 
    channel.on('connection', function (socket) {
+      socket.on('create', function (room) {
+        socket.join(room);
+      });
       console.log('We are connected!');
-       socket.on('message', function (msg) {
+        socket.in('gamehub').on('message', function (msg) {
          //store msg to database
          //send messages
          console.log('inside message!');
-         socket.emit('updateConversation', msg)
+         socket.to('gamehub').emit('updateConversation', msg)
+        
       });
    });
-   
 });
 
 app.use(function(req, res) {
