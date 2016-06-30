@@ -49,15 +49,15 @@ export class FriendList extends Component {
         <tbody>
           {this.props.friendList.map(item => {
             return (
-            <tr key={item.email}>
-            <td onClick={()=> {this.changeProfile(item.email)}} className="friend_pic">
-            <img src={item.pic_path}/>
-            </td>
-            <td onClick={()=> {this.changeProfile(item.email)}}>
-            {item.name}
-            </td>
-            </tr>
-            )
+              <tr key={item.email}>
+                <td onClick={()=> {this.changeProfile(item.email)}} className="friend_pic">
+                  <img className="img-rounded" src={item.pic_path}/>
+                </td>
+                <td className="friends-name" onClick={()=> {this.changeProfile(item.email)}}>
+                  {item.name}
+                </td>
+              </tr>
+            );
           })}
         </tbody>
       </table>

@@ -147,7 +147,7 @@ export class Profile extends Component {
               <div>
                 <button id="editProfileBtn" className="btn btn-secondary" onClick={this.editProfile.bind(this)}>Edit Profile</button>
               </div>
-
+              <br/>
               <div id="friends-component">
                 <ul>
                   <li><h3><Link to={`/message/${this.props.params.id}`}> Message </Link></h3></li>
@@ -194,7 +194,7 @@ export class Profile extends Component {
               <div>
                 <button id="followBtn" className="btn btn-secondary" onClick={this.addFriend.bind(this)}> Follow </button>
               </div>
-
+              <br/>
               <div id="friends-component">
                 <a className="all-friends" onClick={this.findFriends.bind(this)}>See who I am following!</a>
                 <FriendList />
