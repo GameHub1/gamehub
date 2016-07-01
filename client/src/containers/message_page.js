@@ -63,7 +63,7 @@ export class MessagePage extends Component {
     let hours = date.getHours();
     let minutes = date.getMinutes();
     let time = date.getTime();
-    let msg = {time: time, text: msgText, hours: hours, minutes: minutes, sender: this.props.profile.name};
+    let msg = {time: time, text: msgText, hours: hours, minutes: minutes, sender: this.props.authData.name};
     let channel = io.connect('/' + this.state.channel);
 
     channel.emit('create', 'gamehub');
@@ -127,7 +127,8 @@ function mapStateToProps(state) {
   return {
     friendList: state.friendList,
     selectedFriend: state.selectedFriend,
-    profile: state.profile
+    profile: state.profile,
+    authData: state.authData
   }
 }
 
