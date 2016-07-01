@@ -26,9 +26,9 @@ class FavMedia extends Component {
         <div className="input-group">
           <input
             id="mediaInput"
-            type="text" 
-            placeholder="submit your best gameplays" 
-            className="form-control" 
+            type="text"
+            placeholder="submit your best gameplays"
+            className="form-control"
             aria-describedby="basic-addon2" {...favMediaURL} />
           <span className="input-group-btn">
             <button type="submit" className="btn btn-default">Submit</button>
