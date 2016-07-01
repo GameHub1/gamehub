@@ -161,7 +161,7 @@ img.img-responsive.img-rounded {
 /** Logo **/
 #logo {
 	display: block;
-	padding: 0 0 35px 20px;
+	padding: 0 0 35px 40px;
 }
 
 #headerTitle {
@@ -178,18 +178,23 @@ img.img-responsive.img-rounded {
 	color: #ffffff;
 }
 
-/*------------------------------ Logout Component ------------------------------*/
-.logoutButton {
+div#gamehub-logo.col-xs-3 {
+  padding-top: 8px;
+  padding-left: 100px;
+}
+
+/*------------------------------ Logout & Message Buttons Component ------------------------------*/
+div#logout-button.col-xs-3 {
   padding-top: 8px;
 }
 
 /*------------------------------ Search Bar and Searched List Components ------------------------------*/
 .navbar-form {
-  padding-left: 420px;
+  padding-left: 120px;
 }
 
 .navbar-form input.form-control {
-  width: 500px;
+  width: 480px;
   color: #000000;
 }
 

@@ -14,6 +14,7 @@ export default class RootComponent extends Component {
     super(props);
 
     this.goToHome = this.goToHome.bind(this);
+    this.goToMessage = this.goToMessage.bind(this);
   }
 
   goToHome() {
@@ -52,6 +53,10 @@ export default class RootComponent extends Component {
       });
   }
 
+  goToMessage() {
+    browserHistory.push(`message/${this.props.params.id}`);
+  }
+
   render() {
     if (!Array.isArray(this.props.authData)) {
       return (
@@ -59,20 +64,20 @@ export default class RootComponent extends Component {
           <nav className="navbar navbar-inverse navbar-fixed-top">
             <div className="container-fluid navbar">
               <div className="collapse navbar-collapse">
-                <div className="col-xs-2" id="gamehub-logo">
+                <div className="col-xs-3" id="gamehub-logo">
                   <span id="navHeader" onClick={this.goToHome}>GameHub</span>
-                  </div>
-                  <div className="col-xs-2" id="message-link">
-                    <h3><Link to={`/message/${this.props.params.id}`}> Messages </Link></h3>
-                  </div>
-                  <div className="col-xs-6 collapose navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <SearchBar />
-                  </div>
-                  <div className="col-xs-2" id="logout-button">
-                    <Logout />
-                  </div>
+                </div>
+                
+                <div className="col-xs-6 collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                  <SearchBar />
+                </div>
+                <div className="col-xs-3" id="logout-button">
+                  <button className="btn btn-secondary message-btn" onClick={this.goToMessage}>Messages</button>
+                  &nbsp;&nbsp;&nbsp;&nbsp;
+                  <Logout />
                 </div>
               </div>
+            </div>
           </nav>
           {this.props.children}
         </div>
