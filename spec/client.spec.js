@@ -1,52 +1,45 @@
 import React from 'react';
 import {mount, shallow} from 'enzyme';
-// import {expect} from 'chai';
 import expect from 'expect'
+import store from '../client/src/reducers/index';
 import TestUtils from 'react-addons-test-utils'
-import Logout from '../client/src/components/logout';
+import {Logout} from '../client/src/components/logout';
+import {RootComponent} from '../client/src/components/root_component';
 
 function setup() {
   let props = {
-    addTodo: expect.createSpy()
-  }
+    addTodo: expect.createSpy(),
+    store: store
+  };
 
-  let renderer = TestUtils.createRenderer()
-  renderer.render(<Logout {...props} />)
-  let output = renderer.getRenderOutput()
+  let renderer = TestUtils.createRenderer();
+  renderer.render(<Logout {...props} />);
+  let output = renderer.getRenderOutput();
 
   return {
     props,
     output,
     renderer
-  }
+  };
 }
 
-describe('components', () => {
+describe('Root Component', () => {
+  describe('RootComponent', () => {
+    it ('should render Auth0 Login if no session available', () => {
+      const {output} = setup();
+      console.log('hiiii', output);
+    });
+  });
+});
+
+describe('Logout Component', () => {
   describe('Logout', () => {
     it('should render correctly', () => {
       const {output} = setup();
+      expect(output.type).toBe('button');
+      expect(output.props.className).toBe('btn btn-secondary');
+    });
+  });
+});
 
-      expect(output.type).toBe('button')
-      // expect(output.props.className).toBe('header')
-
-      // let [ h1, input ] = output.props.children
-
-      // expect(h1.type).toBe('h1')
-      // expect(h1.props.children).toBe('todos')
-
-      // expect(input.type).toBe(TodoTextInput)
-      // expect(input.props.newTodo).toBe(true)
-      // expect(input.props.placeholder).toBe('What needs to be done?')
-    })
-
-    // it('should call addTodo if length of text is greater than 0', () => {
-    //   const { output, props } = setup()
-    //   let input = output.props.children[1]
-    //   input.props.onSave('')
-    //   expect(props.addTodo.calls.length).toBe(0)
-    //   input.props.onSave('Use Redux')
-    //   expect(props.addTodo.calls.length).toBe(1)
-    // })
-  })
-})
 
