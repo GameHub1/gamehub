@@ -55,6 +55,12 @@ export class MessagePage extends Component {
     });
   }
 
+  handleKeyPress(event) {
+    if(event.key === 'Enter') {
+      this.sendMessage(event);
+    }
+  }
+
   sendMessage(event) {
     event.preventDefault();
 
@@ -73,6 +79,7 @@ export class MessagePage extends Component {
   }
 
   render() {
+
     return (
       <div>
         <div>
@@ -111,7 +118,7 @@ export class MessagePage extends Component {
           <div className='row'>
             <form id="messageForm">
               <label> Write Message </label>
-              <textarea className="messageToSend" rows="2" cols="50"/>
+              <textarea onKeyPress={(event) => {this.handleKeyPress(event)}} className="messageToSend" rows="2" cols="50"/>
               <button onClick={(event)=> {this.sendMessage(event)}}>Send</button>
             </form>
           </div>
