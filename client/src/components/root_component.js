@@ -54,7 +54,7 @@ export default class RootComponent extends Component {
   }
 
   goToMessage() {
-    browserHistory.push(`message/${this.props.params.id}`);
+    browserHistory.push(`message/${this.props.authData.email}`);
   }
 
   render() {
