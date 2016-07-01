@@ -3,7 +3,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import axios from 'axios';
 import GameList from '../components/games';
-import FavMedia from '../components/fav_media';
+import FavMedia from '../components/favmedia';
 import AllFavMedia from '../components/all_favmedia';
 import FriendList from './friend_list';
 import AddGames from '../components/add_games';
