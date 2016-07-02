@@ -61,20 +61,19 @@ export default class RootComponent extends Component {
       return (
         <div>
          <nav className="navbar navbar-inverse navbar-fixed-top">
-           <div className="container-fluid navbar">
-             <div className="collapse navbar-collapse">
-               <div className="col-xs-3" id="gamehub-logo">
+           <div className="container">
+             <div className="navbar">
+               <div className="nav navbar-nav navbar-left navbar-header" id="gamehub-logo">
                  <span id="navHeader" onClick={this.goToHome}>GameHub</span>
                </div>
-
-               <div className="col-xs-6 collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                 <SearchBar />
-               </div>
-               <div className="col-xs-3" id="logout-button">
-                 <button className="btn btn-secondary message-btn" onClick={this.goToMessage}>Messages</button>
-                 &nbsp;&nbsp;&nbsp;&nbsp;
-                 <Logout />
-               </div>
+                 <div className="nav navbar-nav navbar-left" id="bs-example-navbar-collapse-1">
+                   <SearchBar />
+                 </div>
+                 <div className="nav navbar-nav navbar-right" id="logout-button">
+                   <button className="btn btn-default navbar-btn" onClick={this.goToMessage}>Messages</button>
+                   &nbsp;&nbsp;&nbsp;&nbsp;
+                   <Logout />
+                 </div>
              </div>
            </div>
          </nav>
