@@ -222,3 +222,71 @@ describe('POST /show_followers', () => {
       });
   });
 });
+
+describe('POST /get_user_info', () => {
+  it("Should an object containting the user's info", done => {
+    request(app)
+      .post('/get_user_info')
+      .send({email: "kyle@mks.com"})
+      .then(res => {
+        expect(Object.keys(res.body.found).length>3).toEqual(true);
+        done();
+      });
+  });
+
+  it("Should retun a 'not found' status for an incorrect email", done => {
+    request(app)
+      .post('/get_user_info')
+      .send({email: 'balogne@balogne.com'})
+      .then(res => {
+        expect(res.body.status).toBe("Not Found");
+        done();
+      });
+  });
+});
+
+describe('POST /get_friend_info', () => {
+  it("Should return a status of 'Found' for two individuals who are friends", done => {
+    request(app)
+      .post('/get_friend_info')
+      .send({friend1: 'kyle@mks.com', friend2: 'captainhook@mks.com'})
+      .then(res => {
+        expect(res.body.status).toBe("Found");
+        done();
+      });
+  });
+
+  it("Should return a status of 'Not Found' for two individuls who are not friends", done => {
+    request(app)
+      .post('/get_friend_info')
+      .send({friend1: 'g1na1011@gmail.com', friend2: 'captainhook@mks.com'})
+      .then(res => {
+        expect(res.body.status).toBe("Not Found");
+        done();
+      });
+  });
+})
+
+describe('POST /show_game_fans', () => {
+  it('Should return an array of fans of a game', done => {
+    request(app)
+      .post('/show_game_fans')
+      .send({game: 'Starcraft'})
+      .then(res => {
+        expect(res.body.data.length).toBeGreaterThan(1);
+        done();
+      });
+  });
+});
+
+describe ('POST /add_friend', () => {
+  it("Should return a string indicating whether the friend was added or removed", done => {
+    request(app)
+      .post('/add_friend')
+      .send({friend1: "kyle@mks.com", friend2: "captainhook@mks.com"})
+      .then(res => {
+        expect(typeof res.body.action).toEqual('string');
+        done();
+      })
+  })
+})
