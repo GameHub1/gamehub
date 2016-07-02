@@ -28,7 +28,6 @@ export const FIND_FOLLOWERS = 'FIND_FOLLOWERS';
 
 //link up in mapDispatchToProps
 
-
 export function showGameFans(props) {
   return {
     type: FIND_GAME_FANS,
@@ -41,8 +40,7 @@ export function getMessages(emails) {
   return {
     type: GET_MESSAGES,
     payload: request
-  }
-
+  };
 }
 
 export function showGames(props) {

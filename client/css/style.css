@@ -45,6 +45,10 @@ div.mario {
   background-color: #e8e8e8;
 }
 
+button.btn.btn-primary {
+  color: #ffffff;
+}
+
 /*------------------------------ Profile Component ------------------------------*/
 
 /** LEFT PROFILE SECTION **/
@@ -232,14 +236,14 @@ div#logout-button.col-xs-3 {
 
 /*--------------------------------- Conversation Container ----------------------------- */
 .conversation {
-
-  height: 320px;
+  height: 250px;
   overflow-x: hidden;
   overflow-y: scroll;
   padding: 20px;
-  border: 10px solid gray;
+  border: 4px solid gray;
+  border-radius: 25px;
   color: white;
-
+  background-color: rgba(238, 238, 238, 0.12);
 }
 
 /*------------------------------ Game Page Component ------------------------------*/
@@ -262,4 +266,21 @@ div.col-md-4.games-page {
 /*------------------------------ Message Page Component ------------------------------*/
 .message-friend {
 	cursor: pointer;
+}
+
+table.message-list {
+  text-align: left;
+  width: 210px;
+}
+
+div.row.message-frds-section {
+  text-align: left;
+}
+
+h3.message-headers {
+  color: rgba(91, 175, 222, 0.94);
+}
+
+#messageForm {
+  text-align: right;
 }
