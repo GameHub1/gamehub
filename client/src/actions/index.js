@@ -1,5 +1,3 @@
-//add axios to package.json
-
 import axios from 'axios';
 
 export const POST_PROFILE = 'POST_PROFILE';
@@ -10,7 +8,6 @@ export const CREATE_FAVMEDIA = 'CREATE_FAVMEDIA';
 export const FETCH_ALL_FAVMEDIA = 'FETCH_ALL_FAVMEDIA';
 export const FETCH_USERS = 'FETCH_USERS';
 export const FETCH_GAMES = 'FETCH_GAMES';
-export const DELETE_GAME = 'DELETE_GAME';
 export const FIND_FRIENDS = 'FIND_FRIENDS';
 export const RENDER_PROFILE = 'RENDER_PROFILE';
 export const FIND_GAME_FANS = 'FIND_GAME_FANS';
@@ -18,15 +15,6 @@ export const SELECT_FRIEND = 'SELECT_FRIEND';
 export const GET_MESSAGES = 'GET_MESSAGES';
 export const FIND_GAMES = 'FIND_GAMES';
 export const FIND_FOLLOWERS = 'FIND_FOLLOWERS';
-
-//this.props.params.id
-//^ user's email
-
-//call in componentWillMount
-//call in changeUsers in friendsList
-//call in changeUsers in serach bar
-
-//link up in mapDispatchToProps
 
 export function showGameFans(props) {
   return {
@@ -45,7 +33,6 @@ export function getMessages(emails) {
 
 export function showGames(props) {
   const request = axios.post('/fetch_games', props);
-  console.log('these are the games', request)
   return {
     type: FETCH_GAMES,
     payload: request
@@ -109,14 +96,6 @@ export function createGame(props) {
   const request = axios.post('/games', props);
   return {
     type: CREATE_GAME,
-    payload: props
-  };
-}
-
-export function deleteGame(props) {
-  const request = axios.post('/delete_game', props);
-  return {
-    type: DELETE_GAME,
     payload: props
   };
 }
