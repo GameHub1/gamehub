@@ -150,7 +150,7 @@ img.img-responsive.img-rounded {
   font-family: 'Syncopate', sans-serif;
   font-size: 26px;
   color: #ffffff;
-  cursor: pointer;
+
 }
 
 .navbar {
@@ -159,6 +159,7 @@ img.img-responsive.img-rounded {
 
 .navbar-header {
   padding-top: 6px;
+	cursor: pointer;
 }
 
 #header {
@@ -209,7 +210,7 @@ div#logout-button.col-xs-3 {
 }
 
 .navbar-form input.form-control {
-  width: 28em;
+  width: 29em;
   color: #000000;
 }
 
