@@ -37,8 +37,6 @@ export class MessagePage extends Component {
 
     channel.emit('create', 'gamehub');
 
-  
-
     channel.on('updateConversation', function (msg) {
       // update state
       let AMPM = 'AM';
