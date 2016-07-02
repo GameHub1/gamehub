@@ -30,9 +30,9 @@ app.post('/favmedia', favmediaUtils.getFavmedia);
 
 app.post('/games', gamesUtils.newGame);
 app.post('/fetch_games', gamesUtils.fetchGames);
-app.post('/delete_game', gamesUtils.deleteGame);
 app.post('/show_game_fans', gamesUtils.showGameFans);
 app.post('/get_games', gamesUtils.getGames);
+
 app.post('/get_users', socialUtils.fetchUsers);
 app.post("/show_friends", socialUtils.showFriends);
 app.post("/show_followers", socialUtils.showFollowers);
@@ -51,7 +51,7 @@ app.post('/get_messages', function(req, res) {
       socket.join(room);
     });
   socket.in('gamehub').on('message', function (msg) {
-    socket.to('gamehub').emit('updateConversation', msg)    
+    socket.to('gamehub').emit('updateConversation', msg)
     });
   });
   res.send({status: "room created"});
