@@ -68,6 +68,9 @@ export class MessagePage extends Component {
     let date = new Date();
     let hours = date.getHours();
     let minutes = date.getMinutes();
+    if (minutes.toString.length === 1) {
+      minutes = '0' + minutes;
+    }
     let time = date.getTime();
     let msg = {time: time, text: msgText, hours: hours, minutes: minutes, sender: this.props.authData.name};
     let channel = io.connect('/' + this.state.channel);
