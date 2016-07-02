@@ -1,14 +1,12 @@
 import React, {Component, PropTypes} from 'react';
 import {reduxForm} from 'redux-form';
 import {bindActionCreators} from 'redux';
-import {postProfile} from '../actions/index.js';
+import {postProfile} from '../actions/index';
 import {Link} from 'react-router';
 import {browserHistory} from 'react-router';
 
-
 class ProfileForm extends Component {
   onSubmit(prop) {
-    console.log('This is props', prop);
     let prop2 = {
       name: prop.name,
       location: prop.location,
@@ -17,47 +15,56 @@ class ProfileForm extends Component {
     };
     this.props.postProfile(prop2);
 
-    setTimeout(function () {
-    browserHistory.push(`/profile/${this.props.authData.name}`);
-    }.bind(this), 500)
+    setTimeout(function() {
+      browserHistory.push(`/profile/${this.props.authData.email}`);
+    }.bind(this), 500);
   }
 
-  render () {
+  onCancel() {
+    browserHistory.push(`/profile/${this.props.authData.email}`);
+  }
+
+  render() {
     const {fields: {name, location, bio}, handleSubmit} = this.props;
     return (
-      <div>
-        <h1> Set up Profile! </h1>
-
+      <div className="createProfileSection">
+        <h1>Tell us about yourself.</h1>
+        <br/>
         <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-          <div>
-            <label>First name and last name </label>
-            <input type="text"  {...name}/>
+          <div className="input-group">
+            <span className="input-group-addon" id="basic-addon1">First & Last Name</span>
+            <input type="text" className="form-control" 
+              aria-describedby="basic-addon1"
+              {...name} />
           </div>
           <br/>
-
-          <div>
-            <label> Location </label>
-            <input type="text" {...location}/>
+          <div className="input-group">
+            <span className="input-group-addon" id="basic-addon1">Location</span>
+            <input type="text" className="form-control" 
+              aria-describedby="basic-addon1"
+              {...location} />
           </div>
           <br/>
-
-          <div>
-            <label> Small bio </label>
-            <textarea rows = '10' cols = '50' {...bio} />
+          <div className="input-group">
+            <span className="input-group-addon" id="basic-addon1">About You</span>
+            <textarea type="text" className="form-control" 
+              aria-describedby="basic-addon1"
+              rows="4" cols="10"
+              {...bio} />
           </div>
           <br/>
-
-          <button type="submit">Create profile </button>
-
+          <div className="profile-btn">
+              <button onClick={() => {onCancel.bind(this)}} className="btn btn-secondary">Cancel</button>
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <button type="submit" className="btn btn-primary">Create Profile</button>
+          </div>
         </form>
-        
-       
       </div>
     );
   }
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return bindActionCreators({postProfile}, dispatch);
 }
 
@@ -71,10 +78,3 @@ export default ProfileForm = reduxForm({
   form: 'profile',
   fields: ['name', 'location', 'bio']
 }, mapStateToProps, mapDispatchToProps)(ProfileForm);
-
-// export default reduxForm ({
-//   form: "ProfileForm",
-//   fields: ['location', 'bio']},
-//   null, mapDispatchToProps)(ProfileForm)
-
-  //onSubmit={handleSubmit(this.onSubmit.bind(this))}

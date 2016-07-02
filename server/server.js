@@ -2,211 +2,68 @@
 
 const path = require('path');
 const express = require('express');
-const bookshelf = require('./psqldb.js');
 const bodyParser = require('body-parser');
 const app = express();
+
+const authUtils = require('./utils/auth_utils.js')
+const messagingUtils = require('./utils/message_utils.js');
+const favmediaUtils = require('./utils/favmedia_utils.js');
+const gamesUtils = require('./utils/game_utils.js');
+const socialUtils = require('./utils/social_utils.js');
+const userUtils = require('./utils/user_utils.js');
+const socketUtils = require('./utils/socket_utils.js');
+
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
 
 app.use(bodyParser.json({type: '*/*'}));
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(express.static(path.join(__dirname, '../dist/')));
 
-const User = bookshelf.Model.extend({
-  tableName: 'users2'
-});
-const Users = new bookshelf.Collection();
-Users.model = User;
+app.post('/signup', authUtils.authFunc);
 
-const Game = bookshelf.Model.extend({
-  tableName: 'favgames'
-});
-const Games = new bookshelf.Collection();
-Games.model = Game;
+app.post('/get_user_info', userUtils.userInfo);
+app.post('/post_profile', userUtils.editProfile);
 
-const FavMedia = bookshelf.Model.extend({
-  tableName: 'favmedia'
-});
-const FavMedias = new bookshelf.Collection();
-FavMedias.model = FavMedia;
+app.post('/favmedia', favmediaUtils.getFavmedia);
 
-const Friend = bookshelf.Model.extend({
-  tableName: 'friends'
-});
-const Friends = new bookshelf.Collection();
-Friends.model = Friend;
+app.post('/games', gamesUtils.newGame);
+app.post('/fetch_games', gamesUtils.fetchGames);
+app.post('/show_game_fans', gamesUtils.showGameFans);
+app.post('/get_games', gamesUtils.getGames);
 
-app.post('/signup', function(req,res) {
-  let name = req.body.name;
-  let email = req.body.email;
+app.post('/get_users', socialUtils.fetchUsers);
+app.post("/show_friends", socialUtils.showFriends);
+app.post("/show_followers", socialUtils.showFollowers);
+app.post('/get_friend_info', socialUtils.friendInfo);
+app.post('/add_friend', socialUtils.addFriend);
 
-  let pic_path = req.body.pic_path;
-  console.log(req.body);
-  let routeProp = 'val';
+app.post('/send_message', messagingUtils.sendMessage);
+app.post('/fetch_messages', messagingUtils.fetchMessages);
+app.post('/create_namespace', messagingUtils.createNamespace);
 
-	new User({ email: email }).fetch().then(found => {
-    if (found) {
-   		console.log("already in database!");
-      routeProp = 'found';
-      res.send({name: name, email: email, routeProp: routeProp});
-    }
-    else {
-      routeProp = 'not found'
-    	console.log("NOT FOUND! ADDED!");
-		  let testUser = new User({
-			  fullname: name,
-			  email: email,
-        pic_path: pic_path
-		  });
-
-			testUser.save().then(newUser => {
-				Users.add(newUser);
-			});
-
-      res.send({name: name,email: email,routeProp: routeProp});
-    }
-	});
-
-  
-});
-
-app.post('/games', function(req, res) {
-  let gameTitle = req.body[0].gameTitle;
-  let email = req.body[1];
-  console.log(gameTitle, email);
-  new Game({ game: gameTitle, email: email }).fetch().then(found => {
-    if (found) {
-      console.log("already in database!");
-    }
-    else {
-      console.log("NOT FOUND! ADDED!");
-      let newGame = new Game({
-        game: gameTitle,
-        email: email
-      });
-
-      newGame.save().then(newGame2 => {
-        Games.add(newGame2);
-      });
-    }
-  });
-});
-
-app.post('/favmedia', function(req, res) {
-  let favMediaURL = req.body[0].favMediaURL;
-  let email = req.body[1];
-  console.log(favMediaURL, email);
-  new FavMedia({ url: favMediaURL, email: email }).fetch().then(found => {
-    if (found) {
-      console.log("already in database!");
-    }
-    else {
-      console.log("NOT FOUND! ADDED!");
-      let newFavMedia = new FavMedia({
-        url: favMediaURL,
-        email: email
-      });
-
-      newFavMedia.save().then(newFavMedia2 => {
-        FavMedias.add(newFavMedia2);
-      });
-    }
-  });
-});
-
-app.post('/get_users', function(req, res) {
-  console.log(req.body);
-  if (req.body.searchTerm === '') {
-    res.send([]);
-  } else {
-    bookshelf.knex.raw("SELECT * FROM USERS2 WHERE LOWER(fullname) LIKE LOWER('%" + req.body.searchTerm + "%') OR LOWER(email) LIKE LOWER('%" + req.body.searchTerm + "%')")
-    .then(response => {
-      console.log(response.rows);
-      res.send(response.rows);
+app.post('/get_messages', function(req, res) {
+  let namespace = req.body.data
+  let channel = io.of(`/${namespace}`);
+  channel.on('connection', function (socket) {
+    socket.on('create', function (room) {
+      socket.join(room);
     });
-  }
-  
-});
-
-app.get('/get_friends', function(req, res){
-  console.log(req.body);
-  bookshelf.knex.raw("SELECT fullname FROM users2 WHERE users2.id IN (SELECT friends.friend2_fk FROM users2 inner JOIN friends ON users2.id = friends.friend1_fk WHERE users2.email = 'chen.liu.michael@gmail.com');")
-    .then(response => {
-      let info = response.rows.reduce((acc, cur) => {
-        acc.push({name: cur.fullname});
-        return acc;
-      }, []);
-      console.log(info);
-      res.send({data: info});
+  socket.in('gamehub').on('message', function (msg) {
+    socket.to('gamehub').emit('updateConversation', msg)
     });
-});
-
-app.post('/get_user_info', function(req, res){
-  let email = req.body.email;
-  new User({ email: email }).fetch().then(found => {
-    if (found) {
-      res.send({found});
-    }
   });
-});
-
-app.post('/add_friend', function(req, res) {
-  console.log(req.body);
-  if (req.body.friend1 === req.body.friend2){
-    console.log("Tried to friend self. haha!");
-  }
-  else {
-    new User({ email: req.body.friend1 }).fetch().then(found => {
-      if (found) {
-        new User({ email: req.body.friend2 }).fetch().then(found2 => {
-          if (found2) {
-            let friendship = new friend({
-              friend1_fk: found.attributes.id,
-              friend2_fk: found2.attributes.id
-            });
-            friendship.save().then(newFriendship => {
-              Friends.add(newFriendship);
-            });
-          }  
-        });
-      }
-    }); 
-  }
-});
-
-app.post('/post_profile', function(req, res) {
-  let fullname = req.body.name;
-  let location = req.body.location;
-  let bio = req.body.bio;
-  let email = req.body.email;
-  
-  new User({ email: email }).fetch().then(found => {
-    if (found) {
-      var fullname_change = found.attributes.fullname
-      if(found.attributes.fullname === found.attributes.email) {
-        fullname_change = fullname;
-      }
-      console.log(found.attributes);
-      let updateUser = new User({
-        id: found.attributes.id,
-        fullname: fullname_change,
-        email: email,
-        location: location,
-        bio: bio
-      });
-      updateUser.save({email: email}, {method: "update"}).then(newUser => {
-        Users.add(newUser);
-      });
-    }
-    else {
-      console.log("EMAIL ADDRESS NOT FOUND!");
-    }
-  });
+  res.send({status: "room created"});
 });
 
 app.use(function(req, res) {
   res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
-app.listen(process.env.PORT || 8000);
 
-console.log("Listening on port 8000");
+server.listen(process.env.PORT || 8000, () => {
+  console.log("Listening on port 8000");
+});
+
+module.exports = app;

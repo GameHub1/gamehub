@@ -1,13 +1,10 @@
-import React, {Component} from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
-// import thunkMiddleware from 'redux-thunk'
-import App from './src/components/app';
+import {Provider} from 'react-redux';
+import {createStore, applyMiddleware} from 'redux';
 import {Router, browserHistory} from 'react-router';
-import routes, { createStoreMiddleware } from './routes';
+import routes, {createStoreMiddleware} from './routes';
 import storeHolder from './src/reducers/index';
-// import LoginReducer from './src/reducers/login_reducer';
 
 require(__dirname + "/css/style.css");
 

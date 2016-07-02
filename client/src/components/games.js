@@ -1,41 +1,66 @@
 import React, {Component} from 'react';
-import { reduxForm } from 'redux-form';
-import { createGame } from '../actions/index';
+import {connect} from 'react-redux';
+import {browserHistory} from 'react-router';
 
-class Games extends Component {
-  
-	onSubmitPlus(prop) {
-		this.props.createGame([prop, this.props.authData.email]);
-	}
+export class GameList extends Component {
+  goToGamesPage(game) {
+    browserHistory.push(`/game/${game}`);
+  }
 
-  	render() {
-  		const { fields: { gameTitle }, handleSubmit } = this.props;
-			return (
-			<div>
-		  	<form  onSubmit={handleSubmit(this.onSubmitPlus.bind(this))}>
-		  		<div>
-		  			<label> Game: </label>
-		  			<input type="text" {...gameTitle}></input>
-		  			<button type="submit"> Add Game </button>
-		  		</div>
-		  	</form>
-	  	Games:
-	  	</div>
-	  	)
-	  }
+  render() {
+    let firstThird = Math.ceil(this.props.games.length / 3);
+    let secondThird = Math.ceil(firstThird * 2);
+    let firstSection = this.props.games.slice(0, firstThird);
+    let secondSection = this.props.games.slice(firstThird, secondThird);
+    let thirdSection = this.props.games.slice(secondThird);
+
+    return (
+      <div className="game-list">
+        <div className="row">
+          <div className="col-md-4">
+            <ul>
+              {firstSection.map((game) => {
+                return (
+                  <li key={game} onClick={() => {this.goToGamesPage(game);}}>
+                    <span className="glyphicon glyphicon-star-empty"></span> {game}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+          <div className="col-md-4">
+            <ul>
+              {secondSection.map((game) => {
+                return (
+                  <li key={game} onClick={() => {this.goToGamesPage(game);}}>
+                    <span className="glyphicon glyphicon-star-empty"></span> {game}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+          <div className="col-md-4">
+            <ul>
+              {thirdSection.map((game) => {
+                return (
+                  <li key={game} onClick={() => {this.goToGamesPage(game);}}>
+                    <span className="glyphicon glyphicon-star-empty"></span> {game}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
-
 
 function mapStateToProps(state) {
 	return {
-		authData: state.authData
+		games: state.games,
+    authData: state.authData
 	};
 }
 
-//connect: first argument is mapStateToProps, 2nd is mapDispatchToProps
-//reduxForm: 1st is config, 2nd is mapStateToProps, 3rd is mapDispatchToProps
-
-export default reduxForm({
-	form: 'GamesForm',
-	fields: ['gameTitle']
-},mapStateToProps,{ createGame })(Games);
+export default connect(mapStateToProps)(GameList);

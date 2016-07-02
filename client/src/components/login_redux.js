@@ -87,21 +87,18 @@ export class ReduxLogin extends Component {
   }
 
   addNewUser(response) {
-    console.log(response);
-    let pic = response.data.picture_large || response.data.picture
     let newUser = {
       name: this.props.authData.name,
       email: this.props.authData.email,
-      pic_path: pic
+      pic_path: response.data.picture_large || response.data.picture
     }
-    console.log('newuser: ', newUser)
+
     axios.post('/signup', newUser)
       .then((response) => {
 
         // set routing based on result of routeProp;
-        console.log("this is the route prop: ", response)
         if (response.data.routeProp === 'found') {
-            browserHistory.push(`/profile/${this.props.authData.name}`);
+            browserHistory.push(`/profile/${this.props.authData.email}`);
         }
         if (response.data.routeProp === 'not found') {
             browserHistory.push('/profile_setup');
@@ -130,7 +127,6 @@ export class ReduxLogin extends Component {
   }
 
   render() {
-    console.log("Localstoraage.idTOken", this.props.authData.name);
     if (this.props.authData.name) {
       return (
         <div>

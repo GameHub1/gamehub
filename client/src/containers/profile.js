@@ -1,169 +1,218 @@
-import React, {Component, PropTyes} from 'react';
+import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import Games from '../components/games';
-import FavMedia from '../components/favMedia';
 import axios from 'axios';
+import GameList from '../components/games';
+import FavMedia from '../components/favmedia';
+import AllFavMedia from '../components/all_favmedia';
 import FriendList from './friend_list';
-import {showFriends} from '../actions/index';
-import {postProfile} from '../actions/index.js';
+import AddGames from '../components/add_games';
+import {showFriends, showFollowers, showGames, postProfile, renderProfileState, createFavMedia} from '../actions/index';
+import {browserHistory, Link} from 'react-router';
+import FollowerList from './follower_list';
 
 export class Profile extends Component {
-
-  componentWillMount () {
-    axios.post('/get_user_info',{email: this.props.authData.email})
-      .then((response) => {
-        console.log(response);
+  componentWillMount() {
+    axios.post('/get_user_info',{email: this.props.params.id})
+      .then(response => {
         let prop = {
+          id: response.data.found.id,
           name: response.data.found.fullname,
           location: response.data.found.location,
           bio: response.data.found.bio,
-          email: this.props.authData.email,
+          email: this.props.params.id,
           pic_path: response.data.found.pic_path
         };
         this.props.postProfile(prop);
+        this.props.showGames({email: this.props.params.id});
+        this.props.createFavMedia([null, this.props.profile.email]);
+      });
+    let URL_array = window.location.pathname.split('/profile/');
+
+    axios.post('/get_friend_info',{friend1: this.props.authData.email, friend2: URL_array[1]})
+      .then(response => {
+        if (this.props.authData.email !== this.props.profile.email) {
+          if(response.data.status === "Found") {
+            document.getElementById("followBtn").style.background='#5CB85C';
+            document.getElementById("followBtn").firstChild.data='following';
+          } else {
+            document.getElementById("followBtn").style.background='#d3d3d3';
+            document.getElementById("followBtn").firstChild.data='follow';
+          }
+        }
       });
   }
 
-   getState () {
-      console.log('This is media ', this.props.media);
-      console.log('This is games ', this.props.games);
-      console.log('THis is profile', this.props.profile);
+   sendToProfileAction() {
+      axios.post('/get_user_info',{email: this.props.params.id})
+      .then(response => {
+        let prop = {
+          id: response.data.found.id,
+          name: response.data.found.fullname,
+          location: response.data.found.location,
+          bio: response.data.found.bio,
+          email: this.props.params.id,
+          pic_path: response.data.found.pic_path
+        };
+        this.props.renderProfileState(prop);
+        this.props.showFriends([]);
+        this.props.showFollowers([]);
+        this.props.showGames({email: this.props.params.id});
+        let URL_array = window.location.pathname.split('/profile/');
+        axios.post('/get_friend_info',{friend1: this.props.authData.email, friend2: URL_array[1]})
+        .then(response => {
+          if (this.props.authData.email !== this.props.profile.email) {
+            if(response.data.status === "Found") {
+              document.getElementById("followBtn").style.background='#5CB85C';
+              document.getElementById("followBtn").firstChild.data='following';
+            }
+            else {
+              document.getElementById("followBtn").style.background='#d3d3d3';
+              document.getElementById("followBtn").firstChild.data='follow';
+            }
+          }
+        });
+      });
    }
 
    findFriends() {
-     axios.get('/get_friends', "test")
-       .then((response) => {
-         let friendArr = response.data.data;
-         this.props.showFriends(friendArr);
-         console.log("Inside findFriends SUCCESSS: ", friendArr);
-         friendArr.forEach(friend => {
-           console.log(friend.name);
-         });
+    let URL_array = window.location.pathname.split('/profile/');
+     axios.post('/show_friends', {email: URL_array[1]})
+       .then(response => {
+          let friendArr = response.data.data;
+          this.props.showFriends(friendArr);
        })
-       .catch((response) => {
-         console.log('Error: ', response);
+       .catch(response => {
+          console.log('Error: ', response);
+       });
+   }
+
+   findFollowers() {
+    let URL_array = window.location.pathname.split('/profile/');
+     axios.post('/show_followers', {email: URL_array[1]})
+       .then(response => {
+          let friendArr = response.data.data;
+          this.props.showFollowers(friendArr);
+       })
+       .catch(response => {
+          console.log('Error: ', response);
        });
    }
 
   addFriend() {
     let URL_array = window.location.pathname.split('/profile/');
     axios.post('/add_friend', {friend1: this.props.authData.email, friend2: URL_array[1]})
-      .then((response) => {
-        console.log(response);
+      .then(response => {
+        if (this.props.authData.email !== this.props.profile.email) {
+          if (response.data.action === "removed") {
+            document.getElementById("followBtn").style.background='#d3d3d3';
+            document.getElementById("followBtn").firstChild.data='follow';
+          } else {
+            document.getElementById("followBtn").style.background='#5CB85C';
+            document.getElementById("followBtn").firstChild.data='following';
+          }
+        }
       });
   }
 
-  render () {
-    console.log("PROFILE: ", this.props.profile);
-
-    return (
-
-      <div className="container">
-        {/* Profile Header */}
-        <div className="row" id="profile_heading">
-          <div className="col-lg-12">
-            <h1>
-              <span className="user-name">{this.props.profile.name}</span>
-              <small className="location">{this.props.profile.location || "San Francisco, CA"}</small>
-            </h1>
-          </div>
-        </div>
-        {/* Profile Grid */}
-        <div className="col-md-4" id="user_friends">
-          <div className="row" id="user">
-            <div className="profile_pic">
-              <img className="img-responsive" src={this.props.profile.pic_path}/>
-            </div>
-            <button className="btn" onClick = {this.addFriend.bind(this)}> Follow </button>
-          </div>
-          <div className="row" id="friends-component">
-            <h3>Friends</h3>
-            <FriendList />
-            <a>See All Friends</a>
-          </div>
-        </div>
-        <div className="col-md-1" id="barrier">
-        </div>
-        <div className="col-md-7" id="bio_games">
-          <div className="row" id="bio">
-            <p>{this.props.profile.bio || "Hi, I haven\'t filled out my bio yet!"}</p>
-            <a>Edit Profile</a>
-          </div>
-          <div className="row">
-            <h3>Games</h3>
-            <p><strong>Really Good At:</strong></p>
-            <p>Altered Beast, Twilight Imperium, Boss Monster, We Did Not Playtest This At All, Android: Netrunner</p>
-            <p><strong>Enjoys Playing:</strong></p>
-            <p>Gloom, Magic: the Gathering, WWE Smackdown 2012, Limbo, Settlers of Catan, Shadow Hunters</p>
-            <p><strong>Interested In Trying:</strong></p>
-            <p>Fast Food Magnate, Vampire: the Masquerade</p>
-            <a>Add Game</a>
-          </div>
-          <div className="row">
-            <h3>Media</h3>
-            <div>
-              <iframe width={336} height={189} src="https://www.youtube.com/embed/mLyOj_QD4a4" frameBorder={0} allowFullScreen />
-            </div>
-            <a>Add Media</a>
-          </div>
-        </div>
-      </div>
-    );
-
-    //Old profile rendering code:
-
-    // return (
-    //     <div>
-    //       <div>
-    //         <h1>
-    //         {this.props.profile.name}
-    //         </h1>
-    //         <h2>
-    //         Contact:
-    //         {this.props.authData.name}
-    //         </h2>
-    //       </div>
-    //       <div>
-    //         insert profile pic element
-    //         <img src={this.props.profile.pic_path}/>
-    //         <h2> Location :
-    //         {this.props.profile.location}
-    //         </h2>
-    //         <div>
-    //           <h2>
-    //           Bio:
-    //         {this.props.profile.bio}
-    //           </h2>
-    //         </div>
-    //         <div>
-    //           Here are all your friends:
-    //           <FriendList />
-    //         </div>
-    //         <div>
-    //           Here is the media element:
-    //           {this.props.media[1]}
-    //         </div>
-    //       </div>
-    //       <div>
-    //       Here is a the games:
-    //        {this.props.games[1]}
-    //       </div>
-    //       <div>
-    //         <button onClick = {this.getState.bind(this)}> Get state </button>
-    //         <button onClick = {this.findFriends.bind(this)}> Find friends </button>
-    //         <Games />
-    //         <FavMedia />
-    //       </div>
-    //     </div>
-    // );
-
+  editProfile() {
+    browserHistory.push('/profile_setup');
   }
 
+  render() {
+    $(window).on('popstate', function (e) {
+      this.sendToProfileAction();
+    }.bind(this));
+
+    if (this.props.authData.email === this.props.profile.email) {
+      return (
+        <div className="container">
+          <div className="col-md-4 profile-left" id="user_friends">
+            <img className="img-responsive img-rounded" src={this.props.profile.pic_path}/>
+
+            <div className="user-info">
+              <h1 className="user-name">{this.props.profile.name}</h1>
+              <h4 className="location">{this.props.profile.location || "San Francisco, CA"}</h4>
+
+              <p>{this.props.profile.bio || "Hi, I haven\'t filled out my bio yet!"}</p>
+              <div>
+                <button id="editProfileBtn" className="btn btn-secondary" onClick={this.editProfile.bind(this)}>Edit Profile</button>
+              </div>
+              <br/>
+              <div id="friends-component">
+                <br/>
+                <a className="all-friends" onClick={this.findFriends.bind(this)}>See who I am following!</a>
+                <FriendList />
+              </div>
+
+              <div>
+              <a className="all-friends" onClick={this.findFollowers.bind(this)}>See my followers!</a>
+                <FollowerList />
+              </div>
+
+            </div>
+          </div>
+          <div className="col-md-1">
+
+          </div>
+          <div className="col-md-7 profile-right">
+            <div>
+              <h3 id="favGameHeader">Favorite Games</h3>
+              <GameList />
+              <AddGames />
+              <br/><br/>
+              <h3 id="mediaHeader">Gameplays</h3>
+              <AllFavMedia />
+              <FavMedia />
+            </div>
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <div className="container">
+          <div className="col-md-4 profile-left" id="user_friends">
+            <img className="img-responsive img-rounded" src={this.props.profile.pic_path}/>
+
+            <div className="user-info">
+              <h1 className="user-name">{this.props.profile.name}</h1>
+              <h4 className="location">{this.props.profile.location || "San Francisco, CA"}</h4>
+
+              <p>{this.props.profile.bio || "Hi, I haven\'t filled out my bio yet!"}</p>
+              <div>
+                <button id="followBtn" className="btn btn-secondary" onClick={this.addFriend.bind(this)}> Follow </button>
+              </div>
+              <br/>
+              <div id="friends-component">
+                <a className="all-friends" onClick={this.findFriends.bind(this)}>See who I am following!</a>
+                <FriendList />
+              </div>
+              <div>
+                <a className="all-friends" onClick={this.findFollowers.bind(this)}>See my followers!</a>
+                <FollowerList />
+              </div>
+            </div>
+          </div>
+          <div className="col-md-1">
+
+          </div>
+          <div className="col-md-7 profile-right">
+            <div>
+              <h3 id="favGameHeader">Favorite Games</h3>
+              <GameList />
+              <br/><br/>
+              <h3 id="mediaHeader">Gameplays</h3>
+              <AllFavMedia />
+            </div>
+          </div>
+        </div>
+      );
+    }
+  }
 }
 
-function mapDispatchToProps (dispatch) {
-  return bindActionCreators({postProfile, showFriends}, dispatch);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({postProfile, showFriends, showFollowers, showGames, renderProfileState, createFavMedia}, dispatch);
 }
 
 function mapStateToProps(state) {
