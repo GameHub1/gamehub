@@ -14,7 +14,8 @@ import messages from './message_reducer';
 import searchedGames from './searched_games_reducer';
 import followerList from './follower_reducer';
 
-const logger = createLogger();
+// uncomment if you want redux logger back
+// const logger = createLogger();
 
 const reducers = {
   form: formReducer,
@@ -33,6 +34,8 @@ const reducers = {
 
 const reducer = combineReducers(reducers);
 
-const storeHolder = createStore(reducer, {}, applyMiddleware(logger, promise));
+// use the code with the logger applied if you want to use logger again
+// const storeHolder = createStore(reducer, {}, applyMiddleware(logger, promise));
+const storeHolder = createStore(reducer, {}, applyMiddleware(promise));
 
 export default storeHolder;

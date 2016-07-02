@@ -38,16 +38,6 @@ afterEach(() => {
       //   message: 'Failed to create test setup data'
       // };
     });
-    //  db.knex('users')
-    // .where('email', '=', `${this.fakeProfile.email}`)
-    // .del()
-    // .catch(function(error) {
-    //   // uncomment when writing authentication tests
-    //   // throw {
-    //   //   type: 'DatabaseError',
-    //   //   message: 'Failed to create test setup data'
-    //   // };
-    // });
 });
 
 describe ('Server Loading', () => {
@@ -101,21 +91,6 @@ describe ('Sign Up', () => {
   });
 });
 
-// describe('Add Game', () => {
-//   describe('POST /games', () => {
-//     it("adds game information", done => {
-//       request(app)
-//         .post('/games')
-//         .send([{gameTitle: "Super Smash Bros"}, "supermario@mks.com"])
-//         .expect(200)
-//         .then(res => {
-//           done();
-//         })
-//         .catch(done.fail);
-//     });
-//   });
-// });
-
 describe ('POST /favmedia', () => {
   it ('Returns an array of data with existing user who posted videos', done => {
     request(app)
@@ -127,20 +102,6 @@ describe ('POST /favmedia', () => {
       })
       .catch(done.fail);
   });
-
-//   it ('Returns an empty array with non-existing user', done => {
-//     request(app)
-//       .post('/favmedia')
-//       .send([null, 'testingpurposes@test.com'])
-//       .then(res => {
-//         expect(res.statusCode).toEqual(200);
-//       })
-//       .delay(1000)
-//       .then(res => {
-//         expect(res.body.length === 0); 
-//       })
-//       .catch(done.fail);
-//   });
 });
 
 describe ('POST /get_users', () => {
