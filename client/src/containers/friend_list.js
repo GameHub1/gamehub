@@ -26,7 +26,7 @@ export class FriendList extends Component {
         let URL_array = window.location.pathname.split('/profile/');
         axios.post('/get_friend_info',{friend1: this.props.authData.email, friend2: URL_array[1]})
           .then((response) => {
-            if (this.props.authData.email !== this.props.profile.email) {
+            if (this.props.authData.email !== URL_array[1]) {
               if(response.data.status == "Found") {
                 document.getElementById("followBtn").style.background='#556B2F';
                 document.getElementById("followBtn").firstChild.data='following';
