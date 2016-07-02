@@ -150,7 +150,7 @@ img.img-responsive.img-rounded {
   font-family: 'Syncopate', sans-serif;
   font-size: 26px;
   color: #ffffff;
-  cursor: pointer;
+
 }
 
 .navbar {
@@ -159,6 +159,7 @@ img.img-responsive.img-rounded {
 
 .navbar-header {
   padding-top: 6px;
+	cursor: pointer;
 }
 
 #header {
@@ -193,21 +194,23 @@ img.img-responsive.img-rounded {
 
 div#gamehub-logo.col-xs-3 {
   padding-top: 8px;
-  padding-left: 100px;
+  padding-left: 2em;
 }
 
 /*------------------------------ Logout & Message Buttons Component ------------------------------*/
 div#logout-button.col-xs-3 {
   padding-top: 8px;
+	padding-right: 3em;
 }
 
 /*------------------------------ Search Bar and Searched List Components ------------------------------*/
 .navbar-form {
-  padding-left: 120px;
+  padding-left: 5em;
+	float: center;
 }
 
 .navbar-form input.form-control {
-  width: 480px;
+  width: 30em;
   color: #000000;
 }
 

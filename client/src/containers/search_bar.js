@@ -39,11 +39,11 @@ class SearchBar extends Component {
 
   render() {
     return (
-      <form onSubmit={this.onFormSubmit} id="searchInput" className="navbar-form navbar-left" role="search">
+      <form onSubmit={this.onFormSubmit} id="searchInput" className="col-lg-8 col-md-8 col-sm-8 col-xs-8 navbar-form" role="search">
         <div className="form-group">
           <input className="form-control"
             type="text"
-            placeholder="search for a friend"
+            placeholder="search for a friend or a game"
             value={this.state.searchTerm}
             onChange={this.onInputChange}/>
           <div className ="UsersList" onClick = {this.hideSearch}>
