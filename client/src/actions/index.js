@@ -45,6 +45,7 @@ export function getMessages(emails) {
 
 export function showGames(props) {
   const request = axios.post('/fetch_games', props);
+  console.log('these are the games', request)
   return {
     type: FETCH_GAMES,
     payload: request

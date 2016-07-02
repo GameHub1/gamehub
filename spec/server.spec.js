@@ -17,6 +17,14 @@ beforeEach(() => {
     pic_path: 'https://scontent.xx.fbcdn.net/t31.0-1/12771953_10205948725971326_3059424567126164428_o.jpg',
     routeProp: 'val'
   };
+
+  this.fakeProfile = {
+    name: "Fakester",
+    location: "MKS SF",
+    bio: "I love coding",
+    email: "hello@mks.com"
+  };
+
 });
 
 afterEach(() => {
@@ -30,10 +38,21 @@ afterEach(() => {
       //   message: 'Failed to create test setup data'
       // };
     });
+    //  db.knex('users')
+    // .where('email', '=', `${this.fakeProfile.email}`)
+    // .del()
+    // .catch(function(error) {
+    //   // uncomment when writing authentication tests
+    //   // throw {
+    //   //   type: 'DatabaseError',
+    //   //   message: 'Failed to create test setup data'
+    //   // };
+    // });
 });
 
 describe ('Server Loading', () => {
   describe ('GET /', () => {
+
     it ('Returns status code 200', done => {
       request(app)
         .get('/')
@@ -47,6 +66,7 @@ describe ('Server Loading', () => {
 });
 
 describe ('Sign Up', () => {
+
   describe ('POST /signup', () => {
     it ('Adds new user and returns new user object', done => {
       request(app)
@@ -124,7 +144,7 @@ describe ('POST /favmedia', () => {
 });
 
 describe ('POST /get_users', () => {
-  it ('Returns users related to a search term of a name', () => {
+  it ('Returns users related to a search term of a name', (done) => {
     request(app)
       .post('/get_users')
       .send({searchTerm: 'Sam'})
@@ -134,7 +154,7 @@ describe ('POST /get_users', () => {
       });
   });
 
-  it ('Returns an empty array if search term is empty', () => {
+  it ('Returns an empty array if search term is empty', (done) => {
     request(app)
       .post('/get_users')
       .send({searchTerm: ''})
@@ -144,3 +164,61 @@ describe ('POST /get_users', () => {
       });
   });
 })
+
+describe ('POST /post_profile', () => {
+  it("Returns a error response when an unknown profile attempts to update", (done) => {
+      request(app)
+        .post('/post_profile')
+        .send(this.fakeProfile)
+        .then(res => {
+          expect(res.body.status).toEqual("EMAIL ADDRESS NOT FOUND!");
+          done();
+        });
+  });
+
+  it("Returns a confirmation response when a profile is updated", done => {
+     request(app)
+      .post('/post_profile')
+      .send(this.existingUser)
+      .then(res => {
+        expect(res.body.status).toEqual("POST SUCCESSFULL!")
+        done();
+      });
+  });
+});
+
+describe ('POST /get-games', () => {
+  it("Should return an array of games greater than one", done => {
+    request(app)
+    .post('/fetch_games')
+    .send({email: 'kyle@mks.com'})
+    .then(res => {
+      expect(res.body.data.length > 1).toEqual(true);
+      done();
+    });
+  })
+});
+
+describe('POST /show_friends', () => {
+  it("Should return an array of friends for an existing user", done => {
+    request(app)
+      .post('/show_friends')
+      .send({email: 'kyle@mks.com'})
+      .then(res => {
+        expect(res.body.data.length >1).toEqual(true);
+        done();
+      });
+  });
+});
+
+describe('POST /show_followers', () => {
+  it("Should return an array of people who are following this user", done=> {
+    request(app)
+      .post('/show_followers').
+      send({email: 'kyle@mks.com'})
+      .then(res => {
+        expect(res.body.data.length >1).toEqual(true);
+        done();
+      });
+  });
+});

@@ -37,12 +37,12 @@ exports.editProfile = function(req, res) {
       });
       updateUser.save({email: email}, {method: "update"}).then(newUser => {
         Users.add(newUser);
-        res.send("POST SUCCESSFULL!");
+        res.send({status: "POST SUCCESSFULL!"});
       });
     }
     else {
       console.log("EMAIL ADDRESS NOT FOUND!");
-      res.send("EMAIL ADDRESS NOT FOUND!");
+      res.send({status: "EMAIL ADDRESS NOT FOUND!"});
     }
   });
 };
