@@ -20,7 +20,7 @@ export class MessagePage extends Component {
       });
   }
 
-  chooseFriend(friend) {
+  chooseFriend(friend, friendName) {
     let storage = {};
     this.props.selectFriend(friend);
     let arrayOfEmails = [this.props.params.id, friend];
@@ -36,6 +36,8 @@ export class MessagePage extends Component {
     let channel = io.connect('/' + this.state.channel);
 
     channel.emit('create', 'gamehub');
+
+    $('.conversation').append('<div><h4>You are now chatting with: ' + friendName + '</h4></div>');
 
     channel.on('updateConversation', function (msg) {
       // update state
@@ -86,31 +88,28 @@ export class MessagePage extends Component {
   }
 
   render() {
-
     return (
       <div>
-        <div>
-          <h1> Messages </h1>
-          <br/>
-          <br/>
-        </div>
         <div className='col-md-1'>
         </div>
         <div className='col-md-3'>
-          <div className="row">
-            <table>
+          <div className="row message-frds-section">
+            <h3 className="message-headers">Friends List</h3>
+            Choose someone you want to chat with:
+            <br/><br/>
+            <table className="message-list">
               <tbody>
                 {this.props.friendList.map(item => {
                   return (
-                    <tr className="message-friend" onClick={() => {this.chooseFriend(item.email)}} key={item.name}>
+                    <tr className="message-friend" onClick={() => {this.chooseFriend(item.email, item.name)}} key={item.name}>
                       <td className="friend_pic">
-                        <img src={item.pic_path}/>
+                        <img className="img-rounded" src={item.pic_path}/>
                       </td>
                       <td>
                         {item.name}
                       </td>
                     </tr>
-                  )
+                  );
                 })}
               </tbody>
             </table>
@@ -119,18 +118,20 @@ export class MessagePage extends Component {
         <div className='col-md-1'>
         </div>
         <div className='col-md-6'>
-          <div className='row'>
-            <Conversation/>
+          <div className="row">
+            <h3>Chatterbox</h3>
+            <Conversation />
           </div>
-          <div className='row'>
+          <div className="row form-group">
             <form id="messageForm">
-              <label> Write Message </label>
-              <textarea onKeyPress={(event) => {this.handleKeyPress(event)}} className="messageToSend" rows="2" cols="50"/>
-              <button onClick={(event)=> {this.sendMessage(event)}}>Send</button>
+              <br/><span>Type your message...</span><br/>
+              <textarea className="form-control" onKeyPress={(event) => {this.handleKeyPress(event)}} className="messageToSend" rows="2" cols="50"/>
+              <br/>
+              <button className="btn btn-secondary" onClick={(event)=> {this.sendMessage(event)}}>Send</button>
             </form>
           </div>
         </div>
-        <div className='col-md-1'>
+        <div className="col-md-1">
         </div>
       </div>
     );
