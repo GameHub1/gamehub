@@ -55,9 +55,9 @@ export class FollowerList extends Component {
               return (
               <tr key={item.email}>
                 <td onClick={()=> {this.changeProfile(item.email)}} className="friend_pic">
-                  <img src={item.pic_path}/>
+                  <img className="img-rounded" src={item.pic_path}/>
                 </td>
-                <td onClick={()=> {this.changeProfile(item.email)}}>
+                <td className="friends-name" onClick={()=> {this.changeProfile(item.email)}}>
                   {item.name}
                 </td>
               </tr>
