@@ -36,7 +36,7 @@ class SearchedUsers extends Component {
         axios.post('/get_friend_info',{friend1: this.props.authData.email, friend2: URL_array[1]})
           .then(response => {
             if(response.data.status == "Found") {
-              document.getElementById("followBtn").style.background='#556B2F';
+              document.getElementById("followBtn").style.background='#5CB85C';
               document.getElementById("followBtn").firstChild.data='following';
             }
             else {

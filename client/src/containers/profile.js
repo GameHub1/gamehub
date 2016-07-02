@@ -33,7 +33,7 @@ export class Profile extends Component {
       .then(response => {
         if (this.props.authData.email !== this.props.profile.email) {
           if(response.data.status === "Found") {
-            document.getElementById("followBtn").style.background='#556B2F';
+            document.getElementById("followBtn").style.background='#5CB85C';
             document.getElementById("followBtn").firstChild.data='following';
           } else {
             document.getElementById("followBtn").style.background='#d3d3d3';
@@ -63,7 +63,7 @@ export class Profile extends Component {
         .then(response => {
           if (this.props.authData.email !== this.props.profile.email) {
             if(response.data.status === "Found") {
-              document.getElementById("followBtn").style.background='#556B2F';
+              document.getElementById("followBtn").style.background='#5CB85C';
               document.getElementById("followBtn").firstChild.data='following';
             }
             else {
@@ -108,7 +108,7 @@ export class Profile extends Component {
             document.getElementById("followBtn").style.background='#d3d3d3';
             document.getElementById("followBtn").firstChild.data='follow';
           } else {
-            document.getElementById("followBtn").style.background='#556B2F';
+            document.getElementById("followBtn").style.background='#5CB85C';
             document.getElementById("followBtn").firstChild.data='following';
           }
         }

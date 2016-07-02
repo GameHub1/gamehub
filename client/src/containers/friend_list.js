@@ -28,7 +28,7 @@ export class FriendList extends Component {
           .then((response) => {
             if (this.props.authData.email !== URL_array[1]) {
               if(response.data.status == "Found") {
-                document.getElementById("followBtn").style.background='#556B2F';
+                document.getElementById("followBtn").style.background='#5CB85C';
                 document.getElementById("followBtn").firstChild.data='following';
               }
               else {
