@@ -37,15 +37,19 @@ export class MessagePage extends Component {
 
     channel.emit('create', 'gamehub');
 
+  
+
     channel.on('updateConversation', function (msg) {
       // update state
+      let AMPM = 'AM';
       if (msg.hours > 12) {
         msg.hours = msg.hours -12
+        AMPM = 'PM';
       }
 
       if (!storage[msg.time]) {
         storage[msg.time] = msg.text;
-        $('.conversation').append('<div>' + msg.hours +':' + msg.minutes + ' ' + msg.sender + ": " + msg.text + '</div>');
+        $('.conversation').append('<div>' + msg.hours +':' + msg.minutes + ' ' + AMPM + ' ' + msg.sender + ": " + msg.text + '</div>');
       } else {
         return;
       }
@@ -68,7 +72,9 @@ export class MessagePage extends Component {
     let date = new Date();
     let hours = date.getHours();
     let minutes = date.getMinutes();
-    if (minutes.toString.length === 1) {
+    console.log(minutes);
+    console.log(minutes.toString().length);
+    if (minutes.toString().length === 1) {
       minutes = '0' + minutes;
     }
     let time = date.getTime();

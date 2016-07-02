@@ -54,6 +54,7 @@ app.post('/get_messages', function(req, res) {
     socket.to('gamehub').emit('updateConversation', msg)    
     });
   });
+  res.send({status: "room created"});
 });
 
 app.use(function(req, res) {
