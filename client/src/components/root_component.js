@@ -41,7 +41,7 @@ export default class RootComponent extends Component {
             console.log("FRIEND INFO RESPONSE: ", response);
             if (this.props.authData.email !== this.props.profile.email) {
               if(response.data.status == "Found") {
-                document.getElementById("followBtn").style.background='#556B2F';
+                document.getElementById("followBtn").style.background='#5CB85C';
                 document.getElementById("followBtn").firstChild.data='following';
               }
               else {
