@@ -72,8 +72,6 @@ export class MessagePage extends Component {
     let date = new Date();
     let hours = date.getHours();
     let minutes = date.getMinutes();
-    console.log(minutes);
-    console.log(minutes.toString().length);
     if (minutes.toString().length === 1) {
       minutes = '0' + minutes;
     }
